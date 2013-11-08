@@ -7,11 +7,4 @@
     <solid
         android:color="#8027a9e1" />
 
-    <corners
-        android:radius="3dp" />
-
-<<<<<<< HEAD
 </shape>
-=======
-</shape>
->>>>>>> aa3fa95... Re-implemented app sidebar

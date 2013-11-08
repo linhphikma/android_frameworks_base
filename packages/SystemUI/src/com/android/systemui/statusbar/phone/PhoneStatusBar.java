@@ -35,8 +35,11 @@ import android.app.StatusBarManager;
 import android.app.WallpaperManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+<<<<<<< HEAD
 import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
+=======
+>>>>>>> aa3fa95... Re-implemented app sidebar
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -157,6 +160,7 @@ import com.android.systemui.EventLogConstants;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.Prefs;
 import com.android.systemui.R;
+<<<<<<< HEAD
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.doze.DozeHost;
@@ -178,6 +182,9 @@ import com.android.systemui.screenshot.TakeScreenshotService;
 import com.android.systemui.statusbar.ActivatableNotificationView;
 import com.android.systemui.statusbar.BackDropView;
 import com.android.systemui.statusbar.BarTransitions;
+=======
+import com.android.systemui.statusbar.AppSidebar;
+>>>>>>> aa3fa95... Re-implemented app sidebar
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.DismissView;
@@ -1512,6 +1519,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     mHeadsUpObserver);
         }
 
+<<<<<<< HEAD
         WallpaperManager wallpaperManager = (WallpaperManager) mContext.getSystemService(
                 Context.WALLPAPER_SERVICE);
         mKeyguardWallpaper = wallpaperManager.getKeyguardBitmap();
@@ -1535,6 +1543,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         mThemeService = IThemeService.Stub.asInterface(ServiceManager.getService(
                 CMContextConstants.CM_THEME_SERVICE));
+=======
+        SettingsObserver observer = new SettingsObserver(mHandler);
+        observer.observe();
+>>>>>>> aa3fa95... Re-implemented app sidebar
     }
 
     // ================================================================================
@@ -1615,10 +1627,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         } catch (RemoteException ex) {
             // no window manager? good luck with that
         }
+<<<<<<< HEAD
          boolean mAppcircle = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.ENABLE_APP_CIRCLE_BAR, 0) == 1;
               if(mAppcircle) {      
         addAppCircleSidebar();
+=======
+
+
+        if (mRecreating) {
+            removeSidebarView();
+>>>>>>> aa3fa95... Re-implemented app sidebar
         } else {
         if (mAppCircleSidebar !=null) {
         try { 
@@ -1646,6 +1665,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (mNavigationBarView == null) {
             mAssistManager.onConfigurationChanged();
         }
+
+        addSidebarView();
 
         // figure out which pixel-format to use for the status bar.
         mPixelFormat = PixelFormat.OPAQUE;
@@ -6044,9 +6065,72 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         return mKeyguardFadingAwayDelay;
     }
 
+<<<<<<< HEAD
     public long getKeyguardFadingAwayDuration() {
         return mKeyguardFadingAwayDuration;
     }
+=======
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            if (DEBUG) Log.v(TAG, "onReceive: " + intent);
+            String action = intent.getAction();
+            if (Intent.ACTION_CLOSE_SYSTEM_DIALOGS.equals(action)) {
+                int flags = CommandQueue.FLAG_EXCLUDE_NONE;
+                if (Intent.ACTION_CLOSE_SYSTEM_DIALOGS.equals(action)) {
+                    String reason = intent.getStringExtra("reason");
+                    if (reason != null && reason.equals(SYSTEM_DIALOG_REASON_RECENT_APPS)) {
+                        flags |= CommandQueue.FLAG_EXCLUDE_RECENTS_PANEL;
+                    }
+                }
+                animateCollapsePanels(flags);
+            }
+            else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                mScreenOn = false;
+                // no waiting!
+                makeExpandedInvisible();
+                notifyNavigationBarScreenOn(false);
+                notifyHeadsUpScreenOn(false);
+            }
+            else if (Intent.ACTION_CONFIGURATION_CHANGED.equals(action)) {
+                Configuration config = mContext.getResources().getConfiguration();
+                try {
+                    // position app sidebar on left if in landscape orientation and device has a navbar
+                    if (mWindowManagerService.hasNavigationBar() &&
+                            config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        mWindowManager.updateViewLayout(mAppSidebar,
+                                getAppSidebarLayoutParams(AppSidebar.SIDEBAR_POSITION_LEFT));
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mAppSidebar.setPosition(AppSidebar.SIDEBAR_POSITION_LEFT);
+                            }
+                        }, 500);
+                    }
+                } catch (RemoteException e) {
+                }
+            }
+            else if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                mScreenOn = true;
+                // work around problem where mDisplay.getRotation() is not stable while screen is off (bug 7086018)
+                repositionNavigationBar();
+                notifyNavigationBarScreenOn(true);
+            }
+            else if (ACTION_DEMO.equals(action)) {
+                Bundle bundle = intent.getExtras();
+                if (bundle != null) {
+                    String command = bundle.getString("command", "").trim().toLowerCase();
+                    if (command.length() > 0) {
+                        try {
+                            dispatchDemoCommand(command, bundle);
+                        } catch (Throwable t) {
+                            Log.w(TAG, "Error running demo command, intent=" + intent, t);
+                        }
+                    }
+                }
+            }
+        }
+    };
+>>>>>>> aa3fa95... Re-implemented app sidebar
 
     @Override
     public void setBouncerShowing(boolean bouncerShowing) {
@@ -6621,4 +6705,33 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }
     }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.APP_SIDEBAR_POSITION), false, this);
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            int sidebarPosition = Settings.System.getInt(
+                    resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
+            if (sidebarPosition != mSidebarPosition) {
+                mSidebarPosition = sidebarPosition;
+                mWindowManager.updateViewLayout(mAppSidebar, getAppSidebarLayoutParams(sidebarPosition));
+            }
+        }
+    }
+
 }

@@ -507,6 +507,7 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
 		<activity
 			android:name=".nature"
 			android:label="Nature" >
@@ -536,5 +537,22 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+=======
+        <activity android:name=".statusbar.sidebar.SidebarConfigurationActivity"
+                  android:label="@string/title_activity_sidebar_configuration"
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".statusbar.sidebar.SidebarContentProvider"
+            android:authorities="org.chameleonos.sidebar.contentprovider" >
+        </provider>
+
+>>>>>>> aa3fa95... Re-implemented app sidebar
     </application>
 </manifest>
