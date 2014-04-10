@@ -303,6 +303,9 @@ public class NotificationPanelView extends PanelView implements
         @Override
         public void onAnimationEnd(Animation anim) {}
 
+        public void onChildTriggered(View v) {
+        }
+
         @Override
         public void onAnimationRepeat(Animation anim) {}
 
