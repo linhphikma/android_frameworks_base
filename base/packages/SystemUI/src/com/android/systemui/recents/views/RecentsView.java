@@ -883,7 +883,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
                     resolver, Settings.System.FAB_ANIMATION_STYLE, 0,
                     UserHandle.USER_CURRENT);
                 boolean ClearallTasks =   Settings.System.getInt(mContext.getContentResolver(),
-		     Settings.System.RECENTS_CLEAR_ALL_DISMISS_ALL, 0) == 1;	
+		     Settings.System.RECENTS_CLEAR_ALL_DISMISS_ALL, 1) == 1;	
 		if(mButtonsRotation) {	
 			if (mAnimStyle ==0) {	
 			mFloatingButton.startAnimation(animation);
@@ -970,7 +970,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
         boolean showDate = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.RECENTS_FULL_SCREEN_DATE, 0, UserHandle.USER_CURRENT) != 0;
         boolean fullscreenEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.IMMERSIVE_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
+                Settings.System.IMMERSIVE_RECENTS, 1, UserHandle.USER_CURRENT) != 0;
 
         if (fullscreenEnabled) {
             if (showClock) {
