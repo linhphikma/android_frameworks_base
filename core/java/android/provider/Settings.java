@@ -2487,8 +2487,20 @@ public final class Settings {
 		public static final String TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY = "hook_system_ui_translucent_notifications_pref";
 
         /**
-         * Scaling factor for fonts, float.
+         * Whether to enable Swipe Back Layout Gesture
+         * Default: 0
+         *
+         * @hide
          */
+        public static final String SWIPE_BACK_GESTURE_ENABLED = "swipe_back_gesture_enabled";
+
+        /**
+         * Swipe edge of the swipe back layout gesture
+         *
+         * @hide
+         */
+        public static final String SWIPE_BACK_GESTURE_EDGE = "swipe_back_gesture_edge";
+
         public static final String FONT_SCALE = "font_scale";
 
         private static final Validator FONT_SCALE_VALIDATOR = new Validator() {
