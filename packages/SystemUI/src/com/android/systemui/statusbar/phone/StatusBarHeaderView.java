@@ -86,7 +86,6 @@ import com.android.systemui.statusbar.policy.DockBatteryController;
 import com.android.systemui.statusbar.policy.NetworkControllerImpl.EmergencyListener;
 import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.UserInfoController;
-import com.android.systemui.tuner.TunerService;
 
 import java.text.NumberFormat;
 
@@ -119,8 +118,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private TextView mDateExpanded;
     private LinearLayout mSystemIcons;
     private View mSignalCluster;
-    private SettingsButton mSettingsButton;
-    private View mSettingsContainer;
+    private View mSettingsButton;
     private View mQsDetailHeader;
     private TextView mQsDetailHeaderTitle;
     private Switch mQsDetailHeaderSwitch;
@@ -225,8 +223,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mMultiUserAvatar = (ImageView) findViewById(R.id.multi_user_avatar);
         mDateCollapsed = (TextView) findViewById(R.id.date_collapsed);
         mDateExpanded = (TextView) findViewById(R.id.date_expanded);
-        mSettingsButton = (SettingsButton) findViewById(R.id.settings_button);
-        mSettingsContainer = findViewById(R.id.settings_button_container);
+        mSettingsButton = findViewById(R.id.settings_button);
         mSettingsButton.setOnClickListener(this);
         mTaskManagerButton = findViewById(R.id.task_manager_button);
         mTaskManagerButton.setOnLongClickListener(this);
@@ -515,10 +512,11 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mDateCollapsed.setVisibility(mExpanded && mAlarmShowing ? View.VISIBLE : View.INVISIBLE);
         mDateExpanded.setVisibility(mExpanded && mAlarmShowing ? View.INVISIBLE : View.VISIBLE);
         mAlarmStatus.setVisibility(mExpanded && mAlarmShowing ? View.VISIBLE : View.INVISIBLE);
-        mSettingsContainer.setVisibility(mExpanded ? View.VISIBLE : View.INVISIBLE);
+        mSettingsButton.setVisibility(mExpanded ? View.VISIBLE : View.INVISIBLE);
         mWeatherContainer.setVisibility(mExpanded && mShowWeather ? View.VISIBLE : View.GONE);
         mTaskManagerButton.setVisibility(mExpanded && mShowTaskManager ? View.VISIBLE : View.GONE);
         mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.GONE);
+        mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.INVISIBLE);
         if (mSignalCluster != null) {
             updateSignalClusterDetachment();
         }
@@ -553,7 +551,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         RelativeLayout.LayoutParams lp = (LayoutParams) mSystemIconsSuperContainer
                 .getLayoutParams();
         int rule = mExpanded
-                ? mSettingsContainer.getId()
+                ? mSettingsButton.getId()
                 : mMultiUserSwitch.getId();
         int taskManager = mShowTaskManager && mExpanded
                 ? mTaskManagerButton.getId() : rule;
@@ -735,12 +733,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 		} else { 
 		 vibrateheader(0);
 		}
-            if (mSettingsButton.isTunerClick()) {
-                mSettingsButton.consumeClick();
-                mQSPanel.getHost().setEditing(!mQSPanel.getHost().isEditing());
-            } else {
 		startSettingsActivity();
-		}
         } else if (v == mSystemIconsSuperContainer) {
             startBatteryActivity();
         } else if (v == mAlarmStatus && mNextAlarm != null) {
@@ -913,12 +906,11 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         }
         target.batteryY = mSystemIconsSuperContainer.getTop() + mSystemIconsContainer.getTop();
         target.batteryLevelAlpha = getAlphaForVisibility(mBatteryLevel);
-        target.settingsAlpha = getAlphaForVisibility(mSettingsContainer);
+	target.settingsAlpha = getAlphaForVisibility(mSettingsButton);
         target.settingsTranslation = mExpanded
                 ? 0
-                : mMultiUserSwitch.getLeft() - mSettingsContainer.getLeft();
-        target.taskManagerAlpha = getAlphaForVisibility(mTaskManagerButton);
-	target.taskManagerTranslation = mExpanded
+                : mMultiUserSwitch.getLeft() - mSettingsButton.getLeft();
+        target.taskManagerTranslation = mExpanded
                 ? 0
                 : mSettingsButton.getLeft() - mTaskManagerButton.getLeft();
         target.signalClusterAlpha = mSignalClusterDetached ? 0f : 1f;
@@ -973,14 +965,12 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mSignalCluster.setTranslationX(0f);
             mSignalCluster.setTranslationY(0f);
         }
-        if (!mSettingsButton.isAnimating()) {
-            mSettingsContainer.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
-            mSettingsContainer.setTranslationX(values.settingsTranslation);
-            mSettingsButton.setRotation(values.settingsRotation);
-	}
-            mTaskManagerButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
-            mTaskManagerButton.setTranslationX(values.settingsTranslation);
-            mTaskManagerButton.setRotation(values.settingsRotation);
+        mTaskManagerButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
+        mTaskManagerButton.setTranslationX(values.settingsTranslation);
+        mTaskManagerButton.setRotation(values.settingsRotation);
+        mSettingsButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
+        mSettingsButton.setTranslationX(values.settingsTranslation);
+        mSettingsButton.setRotation(values.settingsRotation);
         applyAlpha(mEmergencyCallsOnly, values.emergencyCallsOnlyAlpha);
         if (!mShowingDetail && !mDetailTransitioning) {
             // Otherwise it needs to stay invisible
@@ -992,8 +982,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         if (mDockBatteryLevel != null) {
             applyAlpha(mDockBatteryLevel, values.batteryLevelAlpha);
         }
-        applyAlpha(mSettingsContainer, values.settingsAlpha);
         applyAlpha(mTaskManagerButton, values.settingsAlpha);
+        applyAlpha(mSettingsButton, values.settingsAlpha);
         applyAlpha(mWeatherLine1, values.settingsAlpha);
         applyAlpha(mWeatherimage, values.settingsAlpha);
         applyAlpha(mWeatherLine2, values.settingsAlpha);
