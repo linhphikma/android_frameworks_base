@@ -115,7 +115,7 @@ public class DozeScrimController {
         if (isPulsing()) {
             final boolean pickup = mPulseReason == DozeLog.PULSE_REASON_SENSOR_PICKUP;
             startScrimAnimation(true /* inFront */, 0f,
-                    mDozeParameters.getPulseInDuration(mPulseReason),
+                    mDozeParameters.getPulseInDuration(pickup),
                     pickup ? mPulseInInterpolatorPickup : mPulseInInterpolator,
                     mPulseInFinished);
         }

@@ -288,6 +288,7 @@ public class DozeService extends DreamService {
 
     private void turnDisplayOn() {
         if (DEBUG) Log.d(mTag, "Display on");
+        setDozeScreenBrightness(mDozeParameters.getDozeBrightness());
         setDozeScreenState(mDisplayStateSupported ? Display.STATE_DOZE : Display.STATE_ON);
     }
 
@@ -304,9 +305,13 @@ public class DozeService extends DreamService {
     private void listenForPulseSignals(boolean listen) {
         if (DEBUG) Log.d(mTag, "listenForPulseSignals: " + listen);
         mSigMotionSensor.setListening(listen);
-        mPickupSensor.setListening(listen);
+        if (mDozeParameters.getPulseOnPickup()) {
+            mPickupSensor.setListening(listen);
+        }
         listenForBroadcasts(listen);
-        listenForNotifications(listen);
+        if (mDozeParameters.getPulseOnNotifications()) {
+            listenForNotifications(listen);
+        }
     }
 
     private void listenForBroadcasts(boolean listen) {
@@ -357,7 +362,7 @@ public class DozeService extends DreamService {
             if (DEBUG) Log.d(mTag, "No more schedule resets remaining");
             return;
         }
-        final long pulseDuration = mDozeParameters.getPulseDuration(DozeLog.PULSE_REASON_NOTIFICATION);
+        final long pulseDuration = mDozeParameters.getPulseDuration(false /*pickup*/);
         boolean pulseImmediately = System.currentTimeMillis() >= notificationTimeMs;
         if ((notificationTimeMs - mLastScheduleResetTime) >= pulseDuration) {
             mScheduleResetsRemaining--;
