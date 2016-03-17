@@ -35,10 +35,6 @@
    <integer name="quick_settings_onthego_dialog_short_timeout">3000</integer>
    <integer name="quick_settings_onthego_dialog_long_timeout">6000</integer>
 
-
-    <!-- Doze: alternate schedule -->
-    <string name="doze_pulse_schedule_alternate" translatable="false">1s</string>
-
     <!-- Default value how much apps show the app screenshot on recents view entry -->
     <integer name="expanded_items_default">2</integer>
 
