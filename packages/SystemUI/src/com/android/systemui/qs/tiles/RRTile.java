@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.android.internal.logging.MetricsLogger;
+import org.cyanogenmod.internal.logging.CMMetricsLogger;
 
 public class RRTile extends QSTile<QSTile.BooleanState> {
     private boolean mListening;
@@ -61,9 +61,10 @@ public class RRTile extends QSTile<QSTile.BooleanState> {
         return new BooleanState();
     }
 
+  
     @Override
     public int getMetricsCategory() {
-        return MetricsLogger.DONT_TRACK_ME_BRO;
+        return CMMetricsLogger.DONT_LOG;
     }
 
     @Override

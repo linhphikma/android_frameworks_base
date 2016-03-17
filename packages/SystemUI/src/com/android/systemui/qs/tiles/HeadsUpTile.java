@@ -21,7 +21,8 @@ import android.content.Intent;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 
-import com.android.internal.logging.MetricsLogger;
+import org.cyanogenmod.internal.logging.CMMetricsLogger;
+
 import com.android.systemui.qs.GlobalSetting;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.R;
@@ -49,13 +50,12 @@ public class HeadsUpTile extends QSTile<QSTile.BooleanState> {
         return new BooleanState();
     }
 
-    @Override
-    protected void handleClick() {
-        MetricsLogger.action(mContext, getMetricsCategory());
-        setEnabled(!mState.value);
-        refreshState();
+    
+   @Override
+    public int getMetricsCategory() {
+        return CMMetricsLogger.DONT_LOG;
     }
-
+    
     @Override
     protected void handleLongClick() {
         //mHost.startActivityDismissingKeyguard(NOTIFICATION_SETTINGS);
