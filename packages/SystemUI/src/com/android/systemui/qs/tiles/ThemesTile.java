@@ -28,7 +28,7 @@ import com.android.systemui.qs.QSTile;
 import com.android.systemui.qs.QSTileView;
 import com.android.systemui.statusbar.phone.QSTileHost;
 
-import com.android.internal.logging.MetricsLogger;
+import org.cyanogenmod.internal.logging.CMMetricsLogger;
 
 /** Quick settings tile: Themes **/
 public class ThemesTile extends QSTile<QSTile.BooleanState> {
@@ -43,9 +43,9 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> {
         super.handleDestroy();
     }
 
-   @Override
+    @Override
     public int getMetricsCategory() {
-        return MetricsLogger.DONT_TRACK_ME_BRO;
+        return CMMetricsLogger.DONT_LOG;
     }
 
     @Override

@@ -96,7 +96,6 @@ public class SoundTile extends QSTile<QSTile.State> {
             default:
                 break;
         }
-        MetricsLogger.action(mContext, getMetricsCategory(), newState);
     }
 
     @Override

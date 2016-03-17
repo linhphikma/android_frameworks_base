@@ -21,16 +21,17 @@ import android.content.Intent;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
-
 import com.android.systemui.qs.GlobalSetting;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.R;
 
+import org.cyanogenmod.internal.logging.CMMetricsLogger;
+
 /** Quick settings tile: Heads up **/
 public class HeadsUpTile extends QSTile<QSTile.BooleanState> {
 
-    //private static final Intent NOTIFICATION_SETTINGS = new Intent("android.settings.NOTIFICATION_MANAGER");
+    private static final Intent NOTIFICATION_SETTINGS =
+            new Intent("android.settings.NOTIFICATION_MANAGER");
 
     private final GlobalSetting mSetting;
 
@@ -50,26 +51,21 @@ public class HeadsUpTile extends QSTile<QSTile.BooleanState> {
         return new BooleanState();
     }
 
-    
-   @Override
-    public int getMetricsCategory() {
-        return CMMetricsLogger.DONT_LOG;
+    @Override
+    protected void handleClick() {
+        setEnabled(!mState.value);
+        refreshState();
     }
-    
+
     @Override
     protected void handleLongClick() {
-        //mHost.startActivityDismissingKeyguard(NOTIFICATION_SETTINGS);
+        mHost.startActivityDismissingKeyguard(NOTIFICATION_SETTINGS);
     }
 
     private void setEnabled(boolean enabled) {
         Settings.Global.putInt(mContext.getContentResolver(),
                 Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED,
                 enabled ? 1 : 0);
-    }
-
-    @Override
-    public int getMetricsCategory() {
-        return MetricsLogger.QS_HEADSUP;
     }
 
     @Override
@@ -97,6 +93,11 @@ public class HeadsUpTile extends QSTile<QSTile.BooleanState> {
         } else {
             return mContext.getString(R.string.accessibility_quick_settings_heads_up_changed_off);
         }
+    }
+
+    @Override
+    public int getMetricsCategory() {
+        return CMMetricsLogger.TILE_HEADS_UP;
     }
 
     @Override

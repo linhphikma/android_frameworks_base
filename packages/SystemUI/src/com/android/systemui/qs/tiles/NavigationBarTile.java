@@ -32,6 +32,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.cyanogenmod.internal.logging.CMMetricsLogger;
+
+import com.android.internal.logging.MetricsLogger;
 import com.android.internal.utils.du.DUActionUtils;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSDetailItemsList;
@@ -86,7 +88,7 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
     public int getMetricsCategory() {
         return CMMetricsLogger.DONT_LOG;
     }
-
+    
     @Override
     public DetailAdapter getDetailAdapter() {
         return new NavbarDetailAdapter();
@@ -98,6 +100,7 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
             refreshState();
         }
     };
+
 
     @Override
     public void setListening(boolean listening) {
@@ -217,10 +220,6 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
     private class NavbarDetailAdapter implements DetailAdapter, AdapterView.OnItemClickListener {
         private QSDetailItemsList mItems;
 
-        @Override
-        public int getMetricsCategory() {
-            return MetricsLogger.DISPLAY;
-        }
 
         @Override
         public int getTitle() {
@@ -231,6 +230,11 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
         public Boolean getToggleState() {
             return navbarEnabled();
         }
+        
+        @Override
+	 public int getMetricsCategory() {
+        return MetricsLogger.DISPLAY;
+	}
         
         @Override
         public StatusBarPanelCustomTile getCustomTile() {
@@ -246,7 +250,6 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
 
         @Override
         public void setToggleState(boolean state) {
-            MetricsLogger.action(mContext, MetricsLogger.QS_NAVBAR_TOGGLE, state);
             Settings.Secure.putInt(mContext.getContentResolver(),
                     Settings.Secure.NAVIGATION_BAR_VISIBLE, state ? 1 : 0);
         }
