@@ -612,8 +612,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     @Override
     public void onWeatherChanged(WeatherController.WeatherInfo info) {
-	mWeatherimage = (ImageButton) findViewById(R.id.no_weather_image);
         if (info.temp == null || info.condition == null) {	
+            mWeatherimage = (ImageButton) findViewById(R.id.no_weather_image);
 			mWeatherimage.setVisibility(View.VISIBLE);
             mWeatherLine1.setText(null);
             mWeatherLine2.setText(null);
