@@ -951,9 +951,9 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
 		} else {
 		mFloatingButton.startAnimation(animationdefault);
 		mClearRecents.startAnimation(animationdefault); 
-		}
+		}		
+		mFloatingButton.setVisibility(View.GONE);
 		mClearRecents.setVisibility(View.GONE);	
-		mFloatingButton.setVisibility(View.GONE);		
    }	
 
     public void updateTimeVisibility() {

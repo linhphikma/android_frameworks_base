@@ -273,9 +273,6 @@ public class NotificationPanelView extends PanelView implements
     private boolean mTaskManagerShowing;
     private LinearLayout mTaskManagerPanel;
 
-    // QS alpha
-    private int mQSShadeAlpha;
-
     private int mQSBackgroundColor;
 
     public NotificationPanelView(Context context, AttributeSet attrs) {
@@ -2685,9 +2682,6 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_SMART_PULLDOWN),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_TRANSPARENT_SHADE),
-                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -2732,24 +2726,12 @@ public class NotificationPanelView extends PanelView implements
                 mLiveLockScreenEnabled = liveLockScreenEnabled;
                 updateExternalKeyguardView();
 		}
-            mQSShadeAlpha = Settings.System.getInt(
-                    resolver, Settings.System.QS_TRANSPARENT_SHADE, 255);
-            setQSBackgroundAlpha();
             mQsSmartPullDown = Settings.System.getIntForUser(
                     resolver, Settings.System.QS_SMART_PULLDOWN, 0,
                     UserHandle.USER_CURRENT);
         }
     }
 
-    private void setQSBackgroundAlpha() {
-        if (mQsContainer != null) {
-            mQsContainer.getBackground().setAlpha(mQSShadeAlpha);
-        }
-        if (mQsPanel != null) {
-            mQsPanel.setQSShadeAlphaValue(mQSShadeAlpha);
- 		}
-        }
-          
     @Override
     public boolean hasOverlappingRendering() {
         return !mDozing;
