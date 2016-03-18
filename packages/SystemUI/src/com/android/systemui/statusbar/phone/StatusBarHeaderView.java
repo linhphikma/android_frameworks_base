@@ -553,7 +553,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         RelativeLayout.LayoutParams lp = (LayoutParams) mSystemIconsSuperContainer
                 .getLayoutParams();
         int rule = mExpanded
-                ? mSettingsButton.getId()
+                ? mSettingsContainer..getId()
                 : mMultiUserSwitch.getId();
         int taskManager = mShowTaskManager && mExpanded
                 ? mTaskManagerButton.getId() : rule;
