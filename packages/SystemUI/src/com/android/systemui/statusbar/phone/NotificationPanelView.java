@@ -2673,7 +2673,6 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD),
                     false, this, UserHandle.USER_ALL);
-<<<<<<< HEAD
             resolver.registerContentObserver(CMSettings.Secure.getUriFor(
                     CMSettings.Secure.LIVE_LOCK_SCREEN_ENABLED), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -2681,11 +2680,6 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_SMART_PULLDOWN),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_TRANSPARENT_SHADE),
-                    false, this, UserHandle.USER_ALL);
-=======
->>>>>>> parent of 4a271a7... FWB: QS shade transparency (1/2)
             update();
         }
 
