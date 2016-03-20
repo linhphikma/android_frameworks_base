@@ -274,6 +274,9 @@ public class NotificationPanelView extends PanelView implements
     private LinearLayout mTaskManagerPanel;
 
     private int mQSBackgroundColor;
+    // QS alpha
+    private int mQSShadeAlpha;
+    public boolean mTransperency;
 
     public NotificationPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -2673,7 +2676,8 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_SMART_PULLDOWN),
-                    false, this, UserHandle.USER_ALL);
+                     false, this, UserHandle.USER_ALL);
+                   
             update();
         }
 
@@ -2721,6 +2725,22 @@ public class NotificationPanelView extends PanelView implements
             mQsSmartPullDown = Settings.System.getIntForUser(
                     resolver, Settings.System.QS_SMART_PULLDOWN, 0,
                     UserHandle.USER_CURRENT);
+            mQSShadeAlpha = Settings.System.getInt(
+                    resolver, Settings.System.QS_TRANSPARENT_SHADE, 255);
+            setQSBackgroundAlpha();
+        }
+    }
+
+    private void setQSBackgroundAlpha() {
+	mTransperency = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_TRANSP_SWITCH, 0) == 1;
+        if (mTransperency) {         
+        if (mQsContainer != null) {
+            mQsContainer.getBackground().setAlpha(mQSShadeAlpha);
+        }
+        if (mQsPanel != null) {
+            mQsPanel.setQSShadeAlphaValue(mQSShadeAlpha);
+	  }
         }
     }
 

@@ -145,6 +145,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private boolean mHasVibrator;
     private final boolean mShowSilentToggle;
     private static boolean mTorchEnabled = false;
+    public boolean mTransperency;
 
     // Power menu customizations
     String mActions;
@@ -231,6 +232,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
         int powermenuAnimations = isPrimary ? getPowermenuAnimations() : 0;
+        mTransperency = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_TRANSP_SWITCH, 0) == 1;
 
         if (powermenuAnimations == 0) {
          // default AOSP action
@@ -275,11 +278,17 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
                 attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
         }    
+        if(mTransperency) { 
 	attrs.alpha = setPowerMenuAlpha();
 	mDialog.getWindow().setDimAmount(setPowerMenuDialogDim());      
         mDialog.getWindow().setAttributes(attrs);
         mDialog.show();
         mDialog.getWindow().getDecorView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_EXPAND);
+	} else {    
+        mDialog.getWindow().setAttributes(attrs);
+        mDialog.show();
+        mDialog.getWindow().getDecorView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_EXPAND);
+        }
     }
 
     private int getPowermenuAnimations() {
@@ -289,7 +298,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private float setPowerMenuAlpha() {
         int mPowerMenuAlpha = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.TRANSPARENT_POWER_MENU, 100);
+                Settings.System.TRANSPARENT_POWER_MENU, 100);             
         double dAlpha = mPowerMenuAlpha / 100.0;
         float alpha = (float) dAlpha;
         return alpha;

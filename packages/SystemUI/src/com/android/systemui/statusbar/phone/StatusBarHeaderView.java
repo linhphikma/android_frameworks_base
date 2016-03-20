@@ -155,6 +155,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private View mTaskManagerButton;
 
     protected Vibrator mVibrator;
+    // QS header alpha
+    private int mQSHeaderAlpha;
+    public boolean mTransperency;
 
     /**
      * In collapsed QS, the clock and avatar are scaled down a bit post-layout to allow for a nice
@@ -735,8 +738,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     @Override
     public boolean onLongClick(View v) {
-	boolean mQsVibrateHeaderLong = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QUICK_SETTINGS_HEADER_VIBRATE_LONG, 0) == 1;
 	 if (v == mSystemIconsSuperContainer) {
             startBatteryLongClickActivity();
         } else if (v == mClock) {
@@ -1251,6 +1252,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
 	    mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
 		Settings.System.QS_COLOR_SWITCH, 0) == 1;
+		  mQSHeaderAlpha = Settings.System.getInt(
+                    resolver, Settings.System.QS_TRANSPARENT_HEADER, 255);
+           setQSHeaderAlpha();
 	    setHeaderColor();
 	    updateVisibilities();
 	    requestCaptureValues();
@@ -1320,5 +1324,20 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                 mBackgroundImage.setVisibility(View.GONE);
             }
         });
+    }
+    
+       private void setQSHeaderAlpha() {
+       	mTransperency = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_TRANSP_SWITCH, 0) == 1;
+        if(mTransperency) {
+        if (mHeaderView != null) {
+            mHeaderView.getBackground().setAlpha(mQSHeaderAlpha);
+        }
+        if (mBackgroundImage != null) {
+            mBackgroundImage.setAlpha(mQSHeaderAlpha);
+	  }
+        } else {
+        mHeaderView = findViewById(R.id.header);
+        }
     }
 }

@@ -98,7 +98,7 @@ public class VolumeDialog {
     private final VolumeDialogController mController;
 
     private final CustomDialog mDialog;
-    private final ViewGroup mDialogView;
+    private ViewGroup mDialogView;
     private final ViewGroup mDialogContentView;
     private final ImageButton mExpandButton;
     private final View mSettingsButton;
@@ -134,6 +134,7 @@ public class VolumeDialog {
 
     // Volume dialog alpha
     private int mVolumeDialogAlpha;
+    public boolean mTransperency;
 
     public VolumeDialog(Context context, int windowType, VolumeDialogController controller,
                         ZenModeController zenModeController, Callback callback) {
@@ -576,9 +577,13 @@ public class VolumeDialog {
     private void updateRowsH() {
         if (D.BUG) Log.d(TAG, "updateRowsH");
         final VolumeRow activeRow = getActiveRow();
+        mTransperency = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_TRANSP_SWITCH, 0) == 1;
+        if(mTransperency) {     
+        setVolumeAlpha();
+        }
         updateFooterH();
         updateExpandButtonH();
-        setVolumeAlpha();
         if (!mShowing) {
             trimObsoleteH();
         }
@@ -1177,9 +1182,9 @@ public class VolumeDialog {
 
     private void setVolumeAlpha() {
         mVolumeDialogAlpha = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.TRANSPARENT_VOLUME_DIALOG, 255);
+                    Settings.System.TRANSPARENT_VOLUME_DIALOG, 255);        
         if (mDialogView != null) {
             mDialogView.getBackground().setAlpha(mVolumeDialogAlpha);
-        }
+	  }
     }
 }

@@ -763,6 +763,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.ENABLE_APP_CIRCLE_BAR),
 			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_TRANSP_SWITCH),
+			false, this, UserHandle.USER_ALL);
 
 		    update();
         }
@@ -880,7 +883,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.ENABLE_APP_CIRCLE_BAR))) {
            DontStressOnRecreate();
-	}
+	} else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_TRANSP_SWITCH))) {
+          DontStressOnRecreate();
+          }
          update();
         }
 

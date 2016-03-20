@@ -4847,12 +4847,6 @@ public final class Settings {
                 "proximity_auto_speaker_incall_only";
 
         /**
-         * Transparent qs shade
-         * @hide
-         */
-        public static final String QS_TRANSPARENT_SHADE = "qs_transparent_shade";
-
-        /**
          * Whether to apply a shadow on top of the header image
          * value is the alpha value of the shadow image is 0 -> no shadow -> 255 black
          * @hide
@@ -5020,6 +5014,12 @@ public final class Settings {
          * @hide
          */
         public static final String KEY_SMS_BREATH = "sms_breath";
+        
+        /**
+         * Transparent qs  switch
+         * @hide
+         */
+        public static final String QS_TRANSP_SWITCH = "qs_transp_switch";
 
         /**
          * Transparent qs header
@@ -5165,6 +5165,12 @@ public final class Settings {
          * @hide
          */
         public static final String NFC_POLLING_MODE = "nfc_polling";
+
+        /**
+         * Transparent qs shade
+         * @hide
+         */
+        public static final String QS_TRANSPARENT_SHADE = "qs_transparent_shade";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

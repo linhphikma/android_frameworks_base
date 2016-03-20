@@ -108,6 +108,7 @@ public final class ShutdownThread extends Thread {
     // state tracking
     private static Object sIsStartedGuard = new Object();
     private static boolean sIsStarted = false;
+    private static boolean mTransperency = false;
 
     // uncrypt status files
     private static final String UNCRYPT_STATUS_FILE = "/cache/recovery/uncrypt_status";
@@ -289,6 +290,8 @@ public final class ShutdownThread extends Thread {
          
             boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
             int powermenuAnimations = isPrimary ? getPowermenuAnimations(context) : 0;
+            boolean mTransperency = Settings.System.getInt(context.getContentResolver(),
+                    Settings.System.QS_TRANSP_SWITCH, 0) == 1;
 
             if (powermenuAnimations == 0) {
             // default AOSP action
@@ -333,12 +336,16 @@ public final class ShutdownThread extends Thread {
                 attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
                 attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
             }
-
+            
+	    if (mTransperency) {
             attrs.alpha = setRebootDialogAlpha(context);
-
             sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
             sConfirmDialog.getWindow().setDimAmount(setRebootDialogDim(context));
             sConfirmDialog.show();
+            } else {
+            sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+            sConfirmDialog.show();
+            }
         } else {
             beginShutdownSequence(context);
         }
@@ -541,6 +548,8 @@ public final class ShutdownThread extends Thread {
 
             boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
             int powermenuAnimations = isPrimary ? getPowermenuAnimations(context) : 0;
+            mTransperency = Settings.System.getInt(context.getContentResolver(),
+                    Settings.System.QS_TRANSP_SWITCH, 0) == 1;
 
            if (powermenuAnimations == 0) {
            // default AOSP action
@@ -585,11 +594,13 @@ public final class ShutdownThread extends Thread {
                 attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
                 attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
             }
-
+	     if (mTransperency) {
             attrs.alpha = setRebootDialogAlpha(context);
-
             pd.getWindow().setDimAmount(setRebootDialogDim(context));
             pd.show();
+            } else {
+            pd.show();
+            }
         }
 
         sInstance.mProgressDialog = pd;
