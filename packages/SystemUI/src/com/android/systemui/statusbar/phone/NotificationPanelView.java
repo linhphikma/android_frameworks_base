@@ -1735,7 +1735,7 @@ public class NotificationPanelView extends PanelView implements
     public void setTaskManagerVisibility(boolean taskManagerShowing) {
         if (mShowTaskManager) {
             mTaskManagerShowing = taskManagerShowing;
-            cancelAnimation();
+            cancelQsAnimation();
             boolean expandVisually = mQsExpanded || mStackScrollerOverscrolling;
             mQsPanel.setVisibility(expandVisually && !taskManagerShowing
                     ? View.VISIBLE : View.GONE);
@@ -1743,15 +1743,7 @@ public class NotificationPanelView extends PanelView implements
                     && !mKeyguardShowing ? View.VISIBLE : View.GONE);
         }
     }
-
-
-
-  private void cancelAnimation() {
-        if (mQsExpansionAnimator != null) {
-            mQsExpansionAnimator.cancel();
-        }
-    }
-
+    
     @Override
     protected boolean isScrolledToBottom() {
         if (!isInSettings()) {

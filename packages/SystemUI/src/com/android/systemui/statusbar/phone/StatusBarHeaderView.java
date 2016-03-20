@@ -155,9 +155,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private View mTaskManagerButton;
 
     protected Vibrator mVibrator;
-    private boolean mQsVibLongpress = false;	
-    private boolean mQsVibrateHeader = false;
-    private boolean mQsVibrateHeaderLong = false;
 
     /**
      * In collapsed QS, the clock and avatar are scaled down a bit post-layout to allow for a nice
@@ -357,12 +354,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	     
     }
 
-
-    public void vibrateheader(int duration) {
-        if (mVibrator != null) {
-            if (mVibrator.hasVibrator()) { mVibrator.vibrate(duration); }
-        	}
-	}
 
     @Override
     protected void onDetachedFromWindow() {
@@ -723,16 +714,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-	boolean mQsVibrateHeader = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QUICK_SETTINGS_HEADER_VIBRATE, 0) == 1;
-	mQsVibLongpress = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QUICK_SETTINGS_ICON_VIBRATE, 0) == 1;
         if (v == mSettingsButton) {
-	    	if (mQsVibLongpress) {
-		vibrateheader(20);
-		} else { 
-		 vibrateheader(0);
-		}
 		startSettingsActivity();
         } else if (v == mSystemIconsSuperContainer) {
             startBatteryActivity();
@@ -748,16 +730,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         } else if (v == mWeatherContainer) {
             startForecastActivity();
         }
-	if (mQsVibrateHeader) {
-	vibrateheader(20);	
-	} else {
-	vibrateheader(0);
-	}	
+        mQSPanel.vibrateTile(20);
     }
-	
-     public void checktile() {
-
-	}
 
     @Override
     public boolean onLongClick(View v) {
@@ -773,17 +747,20 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             startForecastLongClickActivity();
         } else if (v == mMultiUserSwitch) {
             startUserLongClickActivity();       
+            vibrateheader(20);
         } else if (v == mTaskManagerButton) {
             startTaskManagerLongClickActivity();
-        }
-	if (mQsVibrateHeaderLong) {
-	vibrateheader(20);	
-	} else {
-	vibrateheader(0);
-	}
+        }		
         return false;
     }
 
+    
+    public void vibrateheader(int duration) {
+        if (mVibrator != null) {
+            if (mVibrator.hasVibrator()) { mVibrator.vibrate(duration); }
+        }
+    }
+    
     private void startSettingsActivity() {
         mActivityStarter.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS),
                 true /* dismissShade */);

@@ -112,7 +112,7 @@ public class QSPanel extends ViewGroup {
         updateDetailText();
 	mBrightnessView = LayoutInflater.from(mContext).inflate(
                 R.layout.quick_settings_brightness_dialog, this, false);
-        mDetail.setVisibility(GONE);
+        mDetail.setVisibility(View.GONE);
         mDetail.setClickable(true);
         mFooter = new QSFooter(this, mContext);
         addView(mDetail);

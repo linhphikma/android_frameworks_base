@@ -165,7 +165,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         mDetailDoneButton = (TextView) mDetail.findViewById(android.R.id.button1);
 	mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
         updateDetailText();
-        mDetail.setVisibility(GONE);
+        mDetail.setVisibility(View.GONE);
         mDetail.setClickable(true);
 	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
