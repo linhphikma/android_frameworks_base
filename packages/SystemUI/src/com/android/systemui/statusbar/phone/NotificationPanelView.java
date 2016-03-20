@@ -566,8 +566,8 @@ public class NotificationPanelView extends PanelView implements
     }
 
     public void setQsExpansionEnabled(boolean qsExpansionEnabled) {
-        mQsExpansionEnabled = qsExpansionEnabled;
-        mHeader.setClickable(qsExpansionEnabled);
+        mQsExpansionEnabled = qsExpansionEnabled && !isQSEventBlocked();
+        mHeader.setClickable(mQsExpansionEnabled);
     }
 
     @Override
@@ -885,6 +885,7 @@ public class NotificationPanelView extends PanelView implements
         if (action == MotionEvent.ACTION_DOWN && isFullyCollapsed()
                 && mQsExpansionEnabled) {
             mTwoFingerQsExpandPossible = true;
+            mStatusBar.resetQsPanelVisibility();
         }
         if (mTwoFingerQsExpandPossible && isOpenQsEvent(event)
                 && event.getY(event.getActionIndex()) < mStatusBarMinHeight) {
@@ -1531,6 +1532,7 @@ public class NotificationPanelView extends PanelView implements
         updateNotificationScrim(height);
         if (mKeyguardShowing) {
             updateHeaderKeyguard();
+            mStatusBar.resetQsPanelVisibility();
         }
         if (mStatusBarState == StatusBarState.SHADE_LOCKED
                 || mStatusBarState == StatusBarState.KEYGUARD) {
@@ -2696,6 +2698,7 @@ public class NotificationPanelView extends PanelView implements
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
+	   ContentResolver resolver = mContext.getContentResolver();
 		update();
         }
 
