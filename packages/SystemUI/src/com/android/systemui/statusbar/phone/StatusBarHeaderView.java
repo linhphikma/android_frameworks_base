@@ -205,9 +205,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private UserInfoController mUserInfoController;
 
 
-    // QS header alpha
-    private int mQSHeaderAlpha;
-
     private boolean mQsColorSwitch = false ;	
     private int mHeaderColor;
 
@@ -246,7 +243,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mHeaderView = findViewById(R.id.header);
         mSystemIconsSuperContainer = findViewById(R.id.system_icons_super_container);
         mSystemIconsContainer = (ViewGroup) findViewById(R.id.system_icons_container);
         mSystemIconsSuperContainer.setOnClickListener(this);
@@ -1438,10 +1434,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mShowWeather = CMSettings.System.getInt(
                     resolver, CMSettings.System.STATUS_BAR_SHOW_WEATHER, 1) == 1;
 
-            mQSHeaderAlpha = Settings.System.getInt(
-                    resolver, Settings.System.QS_TRANSPARENT_HEADER, 255);
-            setQSHeaderAlpha();
-
 	    mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
 		Settings.System.QS_COLOR_SWITCH, 0) == 1;
 
@@ -1579,14 +1571,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mEditTileDoneText.setShadowLayer(0, 0, 0, Color.BLACK);
     }
 
-    private void setQSHeaderAlpha() {
-        if (mHeaderView != null) {
-            mHeaderView.getBackground().setAlpha(mQSHeaderAlpha);
-        }
-        if (mBackgroundImage != null) {
-            mBackgroundImage.setAlpha(mQSHeaderAlpha);
-        }
-    }
     private void setStatusBarDetailFontStyle(int font) {
         switch (font) {
             case FONT_NORMAL:
