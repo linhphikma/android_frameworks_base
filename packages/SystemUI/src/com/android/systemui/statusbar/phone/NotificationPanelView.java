@@ -1499,7 +1499,6 @@ public class NotificationPanelView extends PanelView implements
         mNotificationStackScroller.setScrollingEnabled(
                 mStatusBarState != StatusBarState.KEYGUARD && (!mQsExpanded
                         || mQsExpansionFromOverscroll));
-        mQsPanel.setVisibility(expandVisually ? View.VISIBLE : View.INVISIBLE);
         mQsContainer.setVisibility(
                 mKeyguardShowing && !expandVisually ? View.INVISIBLE : View.VISIBLE);
         mScrollView.setTouchEnabled(mQsExpanded);
