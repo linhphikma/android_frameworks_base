@@ -36,6 +36,8 @@ import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -270,6 +272,9 @@ public class NotificationPanelView extends PanelView implements
     private boolean mShowTaskManager;
     private boolean mTaskManagerShowing;
     private LinearLayout mTaskManagerPanel;
+
+    // QS alpha
+    private int mQSShadeAlpha;
 
     private int mQSBackgroundColor;
 
@@ -2678,9 +2683,6 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_TRANSPARENT_SHADE),
-                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(CMSettings.Secure.getUriFor(
                     CMSettings.Secure.LIVE_LOCK_SCREEN_ENABLED), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -2747,7 +2749,7 @@ public class NotificationPanelView extends PanelView implements
                     UserHandle.USER_CURRENT) == 1;
             mDoubleTapToSleepAnywhere = Settings.System.getIntForUser(resolver,
                     Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE, 0, UserHandle.USER_CURRENT) == 1;
-            mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
+        mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0,
                 UserHandle.USER_CURRENT) == 1;
             int mQSBackgroundColor = Settings.System.getInt(
@@ -2761,11 +2763,23 @@ public class NotificationPanelView extends PanelView implements
                 mLiveLockScreenEnabled = liveLockScreenEnabled;
                 updateExternalKeyguardView();
 		}
+            mQSShadeAlpha = Settings.System.getInt(
+                    resolver, Settings.System.QS_TRANSPARENT_SHADE, 255);
+            setQSBackgroundAlpha();
             mQsSmartPullDown = Settings.System.getIntForUser(
                     resolver, Settings.System.QS_SMART_PULLDOWN, 0,
                     UserHandle.USER_CURRENT);
         }
     }
+
+    private void setQSBackgroundAlpha() {
+        if (mQsContainer != null) {
+            mQsContainer.getBackground().setAlpha(mQSShadeAlpha);
+        }
+        if (mQsPanel != null) {
+            mQsPanel.setQSShadeAlphaValue(mQSShadeAlpha);
+ 		}
+        }
           
     @Override
     public boolean hasOverlappingRendering() {
