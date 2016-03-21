@@ -2038,17 +2038,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     return mQSPanel.isEditing();
                 }
 
-<<<<<<< HEAD
-=======
-        // task manager
-        if (mContext.getResources().getBoolean(R.bool.config_showTaskManagerSwitcher)) {
-            mTaskManagerPanel =
-                    (LinearLayout) mStatusBarWindow.findViewById(R.id.task_manager_panel);
-            mTaskManager = new TaskManager(mContext, mTaskManagerPanel);
-            mTaskManager.setActivityStarter(this);
-            mTaskManagerButton = (ImageButton) mHeader.findViewById(R.id.task_manager_button);
-            mTaskManagerButton.setOnClickListener(new OnClickListener() {
->>>>>>> parent of 4c8b39a... CAF Task Manager switch [1/2]
                 @Override
                 public void goToSettingsPage() {
                     if (mState != StatusBarState.SHADE) {
@@ -3558,11 +3547,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mWaitingForKeyguardExit = false;
         disable(mDisabledUnmodified1, mDisabledUnmodified2, !force /* animate */);
         setInteracting(StatusBarManager.WINDOW_STATUS_BAR, true);
-<<<<<<< HEAD
         if (mShowTaskManager) {
-=======
-        if (mContext.getResources().getBoolean(R.bool.config_showTaskManagerSwitcher)) {
->>>>>>> parent of 4c8b39a... CAF Task Manager switch [1/2]
             mTaskManager.refreshTaskManagerView();
         }
     }

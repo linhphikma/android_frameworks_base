@@ -263,12 +263,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSettingsButton = (SettingsButton) findViewById(R.id.settings_button);
         mSettingsContainer = findViewById(R.id.settings_button_container);
         mSettingsButton.setOnClickListener(this);
-<<<<<<< HEAD
-=======
-        if (getResources().getBoolean(R.bool.config_showTaskManagerSwitcher)) {
-            mTaskManagerButton = findViewById(R.id.task_manager_button);
-        }
->>>>>>> parent of 4c8b39a... CAF Task Manager switch [1/2]
         mQsDetailHeader = findViewById(R.id.qs_detail_header);
         mQsDetailHeader.setAlpha(0);
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
