@@ -1358,9 +1358,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         protected void observe() {
             super.observe();
             ContentResolver resolver = mContext.getContentResolver();	
-
-
-            ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(CMSettings.System.getUriFor(
                     CMSettings.System.STATUS_BAR_SHOW_WEATHER), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(CMSettings.System.getUriFor(
