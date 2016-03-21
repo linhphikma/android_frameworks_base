@@ -423,13 +423,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private QSTileHost mQSTileHost;
 
 
-    // task manager
-    private TaskManager mTaskManager;
-    private LinearLayout mTaskManagerPanel;
-    private ImageButton mTaskManagerButton;
-    private boolean mShowTaskManager;
-    private boolean showTaskList = false;
-
     private boolean mShow4G;
     private boolean mShow3G;	
 
@@ -664,9 +657,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.ENABLE_TASK_MANAGER),
-			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.LOCKSCREEN_ALPHA),
 			false, this, UserHandle.USER_ALL);
@@ -2094,21 +2084,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 }
             });
         }
-
-
-        // Task manager
-        mTaskManagerPanel =
-                (LinearLayout) mStatusBarWindowContent.findViewById(R.id.task_manager_panel);
-        mTaskManager = new TaskManager(mContext, mTaskManagerPanel);
-        mTaskManager.setActivityStarter(this);
-        mTaskManagerButton = (ImageButton) mHeader.findViewById(R.id.task_manager_button);
-        mTaskManagerButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                showTaskList = !showTaskList;
-                mNotificationPanel.setTaskManagerVisibility(showTaskList);
-            }
-        });
 
 
         // Set up the initial custom tile listener state.

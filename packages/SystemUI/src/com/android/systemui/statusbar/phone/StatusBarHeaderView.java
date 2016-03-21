@@ -159,11 +159,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private int mStatusBarHeaderDateFont = FONT_NORMAL;	
     private int mStatusBarHeaderDetailFont = FONT_NORMAL;	
 
-
-    // Task manager
-    private boolean mShowTaskManager;
-    private View mTaskManagerButton;
-
     protected Vibrator mVibrator;
     private boolean mQsVibLongpress = false;	
     private boolean mQsVibrateHeader = false;
@@ -268,8 +263,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSettingsButton = (SettingsButton) findViewById(R.id.settings_button);
         mSettingsContainer = findViewById(R.id.settings_button_container);
         mSettingsButton.setOnClickListener(this);
-        mTaskManagerButton = findViewById(R.id.task_manager_button);
-        mTaskManagerButton.setOnLongClickListener(this);
         mQsDetailHeader = findViewById(R.id.qs_detail_header);
         mQsDetailHeader.setAlpha(0);
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -550,9 +543,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSettingsContainer.setVisibility(mExpanded ? View.VISIBLE : View.INVISIBLE);
         mWeatherContainer.setVisibility(mExpanded && mShowWeather ? View.VISIBLE : View.GONE);
         mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.INVISIBLE);
-        if (mTaskManagerButton != null) {
-            mTaskManagerButton.setVisibility(mExpanded && mShowTaskManager ? View.VISIBLE : View.GONE);
-        }
         mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.GONE);
         if (mSignalCluster != null) {
             updateSignalClusterDetachment();

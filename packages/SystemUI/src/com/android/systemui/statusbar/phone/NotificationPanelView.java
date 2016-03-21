@@ -268,9 +268,6 @@ public class NotificationPanelView extends PanelView implements
     private int mStatusBarHeaderHeight;
     private GestureDetector mDoubleTapGesture;
 
-    // Task manager
-    private boolean mShowTaskManager;
-    private LinearLayout mTaskManagerPanel;
 
     // QS alpha
     private int mQSShadeAlpha;
@@ -1722,7 +1719,6 @@ public class NotificationPanelView extends PanelView implements
     }
 
     public void setTaskManagerVisibility(boolean mTaskManagerShowing) {
-        if (mShowTaskManager) {
             cancelAnimation();
             boolean expandVisually = mQsExpanded || mStackScrollerOverscrolling;
             mQsPanel.setVisibility(expandVisually && !mTaskManagerShowing
