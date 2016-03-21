@@ -367,9 +367,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mHeaderView.getBackground().setColorFilter(
                         mHeaderColor, Mode.SRC_IN);
         }
-	if (mBackgroundImage != null) {
-            mBackgroundImage.setColorFilter(mHeaderColor);
-       	 }
 	if ( mQsDetailHeaderTitle != null) {
 	    mQsDetailHeaderTitle.setTextColor(mQsDetailColor);
 	}
@@ -378,9 +375,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	if (mHeaderView != null) {
             mHeaderView.getBackground().setColorFilter(null);
         }
-        if (mBackgroundImage != null) {
-            mBackgroundImage.setColorFilter(null);
-       	 }
 	if ( mQsDetailHeaderTitle != null) {
 	    mQsDetailHeaderTitle.setTextColor(mStockHeaderText);
 		}
