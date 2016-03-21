@@ -53,7 +53,6 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -103,7 +102,7 @@ public class TaskManager {
         mHomeIntent.addCategory(Intent.CATEGORY_HOME);
 
         mTaskManagerList = (LinearLayout) mTaskManagerPanel.findViewById(R.id.task_manager_list);
-        final ImageButton killAllButton = (ImageButton) mTaskManagerPanel.findViewById(R.id.kill_all_button);
+        final Button killAllButton = (Button) mTaskManagerPanel.findViewById(R.id.kill_all_button);
         killAllButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 mHandler.sendEmptyMessage(MSG_KILL_ALL);
