@@ -601,6 +601,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mDockBatteryLevel.setForceShown(mExpanded && mShowBatteryTextExpanded);
             mDockBatteryLevel.setVisibility(View.VISIBLE);
         }
+         applyHeaderBackgroundShadow();
     }
 
 	public void hidepanelItems() {
