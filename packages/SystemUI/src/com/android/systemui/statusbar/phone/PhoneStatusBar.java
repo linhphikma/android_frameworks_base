@@ -427,7 +427,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private TaskManager mTaskManager;
     private LinearLayout mTaskManagerPanel;
     private ImageButton mTaskManagerButton;
-    private boolean mShowTaskManager;
     private boolean showTaskList = false;
 
     private boolean mShow4G;
@@ -625,6 +624,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         protected void observe() {
             super.observe();
 
+<<<<<<< HEAD
 	ContentResolver resolver = mContext.getContentResolver();
 	resolver.registerContentObserver(CMSettings.System.getUriFor(
 			CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
@@ -768,6 +768,57 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			false, this, UserHandle.USER_ALL);
 
 		    update();
+=======
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(CMSettings.System.getUriFor(
+                    CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SCREEN_BRIGHTNESS_MODE), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(CMSettings.System.getUriFor(
+                    CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(CMSettings.System.getUriFor(
+                    CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.APP_SIDEBAR_POSITION),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_RR_LOGO),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_RR_LOGO_COLOR),
+		    false, this, UserHandle.USER_ALL);	
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BATTERY_SAVER_MODE_COLOR),
+		    false, this, UserHandle.USER_ALL);
+ 	   resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_WEATHER_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_WEATHER_SIZE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_WEATHER_FONT_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CUSTOM_HEADER_DEFAULT), 
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.USE_SLIM_RECENTS), false, this,
+                    UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_ROTATION),
+                    false, this, UserHandle.USER_ALL);
+    	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
+            update();
+>>>>>>> parent of d6d2ba1... Task manager improvements
         }
 
 	@Override
@@ -904,6 +955,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             UserHandle.USER_CURRENT);
             mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
             mBrightnessControl = CMSettings.System.getIntForUser(
+<<<<<<< HEAD
 			resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
 			UserHandle.USER_CURRENT) == 1;
 		mQsColorSwitch = Settings.System.getIntForUser(resolver,
@@ -1041,6 +1093,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	  
 	    boolean mShow3G = Settings.System.getIntForUser(resolver,
                     Settings.System.SHOW_THREEG, 0, UserHandle.USER_CURRENT) == 1;	
+=======
+                    resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
+                    UserHandle.USER_CURRENT) == 1;
+            mRRlogo = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
+            mRRLogoColor = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+            showRRLogo(mRRlogo, mRRLogoColor);
+>>>>>>> parent of d6d2ba1... Task manager improvements
 
             if (mNavigationBarView != null) {
                 boolean navLeftInLandscape = CMSettings.System.getIntForUser(resolver,
@@ -2095,6 +2156,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             });
         }
 
+<<<<<<< HEAD
 
         // Task manager
         mTaskManagerPanel =
@@ -2109,6 +2171,24 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 mNotificationPanel.setTaskManagerVisibility(showTaskList);
             }
         });
+=======
+        // task manager
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.ENABLE_TASK_MANAGER, 0) == 1) {
+            mTaskManagerPanel =
+                    (LinearLayout) mStatusBarWindow.findViewById(R.id.task_manager_panel);
+            mTaskManager = new TaskManager(mContext, mTaskManagerPanel);
+            mTaskManager.setActivityStarter(this);
+            mTaskManagerButton = (ImageButton) mHeader.findViewById(R.id.task_manager_button);
+            mTaskManagerButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    showTaskList = !showTaskList;
+                    mNotificationPanel.setTaskManagerVisibility(showTaskList);
+                }
+            });
+        }
+>>>>>>> parent of d6d2ba1... Task manager improvements
 
 
         // Set up the initial custom tile listener state.
@@ -3572,7 +3652,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mWaitingForKeyguardExit = false;
         disable(mDisabledUnmodified1, mDisabledUnmodified2, !force /* animate */);
         setInteracting(StatusBarManager.WINDOW_STATUS_BAR, true);
-        if (mShowTaskManager) {
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.ENABLE_TASK_MANAGER, 0) == 1) {
             mTaskManager.refreshTaskManagerView();
         }
     }
