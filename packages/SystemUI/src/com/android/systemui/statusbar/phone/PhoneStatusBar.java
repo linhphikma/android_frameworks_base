@@ -3547,9 +3547,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mWaitingForKeyguardExit = false;
         disable(mDisabledUnmodified1, mDisabledUnmodified2, !force /* animate */);
         setInteracting(StatusBarManager.WINDOW_STATUS_BAR, true);
-        if (mShowTaskManager) {
-            mTaskManager.refreshTaskManagerView();
-        }
     }
 
     public void animateCollapsePanels() {

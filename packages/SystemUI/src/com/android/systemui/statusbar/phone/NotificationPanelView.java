@@ -302,7 +302,6 @@ public class NotificationPanelView extends PanelView implements
         mKeyguardStatusBar = (KeyguardStatusBarView) findViewById(R.id.keyguard_header);
         mKeyguardStatusView = (KeyguardStatusView) findViewById(R.id.keyguard_status_view);
         mQsContainer = (QSContainer) findViewById(R.id.quick_settings_container);
-        mTaskManagerPanel = (LinearLayout) findViewById(R.id.task_manager_panel);
         mQsPanel = (QSDragPanel) findViewById(R.id.quick_settings_panel);
         mClockView = (TextView) findViewById(R.id.clock_view);
         mScrollView = (ObservableScrollView) findViewById(R.id.scroll_view);
@@ -1498,6 +1497,7 @@ public class NotificationPanelView extends PanelView implements
                 mStatusBarState != StatusBarState.KEYGUARD && (!mQsExpanded
                         || mQsExpansionFromOverscroll));
         mQsContainer.setVisibility(
+        mQsPanel.setVisibility(expandVisually ? View.VISIBLE : View.INVISIBLE);
                 mKeyguardShowing && !expandVisually ? View.INVISIBLE : View.VISIBLE);
         mScrollView.setTouchEnabled(mQsExpanded);
         updateEmptyShadeView();
@@ -1715,16 +1715,6 @@ public class NotificationPanelView extends PanelView implements
             return onHeader || (mScrollView.isScrolledToBottom() && yDiff < 0) && isInQsArea(x, y);
         } else {
             return onHeader;
-        }
-    }
-
-    public void setTaskManagerVisibility(boolean mTaskManagerShowing) {
-            cancelAnimation();
-            boolean expandVisually = mQsExpanded || mStackScrollerOverscrolling;
-            mQsPanel.setVisibility(expandVisually && !mTaskManagerShowing
-                    ? View.VISIBLE : View.GONE);
-            mTaskManagerPanel.setVisibility(expandVisually && mTaskManagerShowing
-                    ? View.VISIBLE : View.GONE);
         }
     }
 
