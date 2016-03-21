@@ -775,8 +775,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     R.string.status_bar_expanded_header_weather_format,
                     info.temp,
                     info.condition));
-            mWeatherLine2.setText(info.city);
         }
+            mWeatherLine2.setText(info.city);
 
     }
 
@@ -1394,7 +1394,13 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         @Override
         protected void observe() {
             super.observe();
-            ContentResolver resolver = mContext.getContentResolver();	
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(CMSettings.System.getUriFor(
+                    CMSettings.System.STATUS_BAR_SHOW_WEATHER), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(CMSettings.System.getUriFor(
+                    CMSettings.System.STATUS_BAR_BATTERY_STYLE), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(CMSettings.System.getUriFor(
+                    CMSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -1461,8 +1467,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	    setweathercolor2();	
 	    setalarmtextcolor();
 	    setbatterytextcolor();	    
-	    updateVisibilities();
-	    requestCaptureValues();
 	    setHeaderColor();
 	    hidepanelItems();   
 	    setStatusBarClockFontStyle(mStatusBarHeaderClockFont);
@@ -1471,6 +1475,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	    setStatusBarAlarmFontStyle(mStatusBarHeaderAlarmFont);
 	    setStatusBarDateFontStyle(mStatusBarHeaderDateFont);
 	    setStatusBarDetailFontStyle(mStatusBarHeaderDetailFont);
+	    updateEverything();
         }
     }
 
