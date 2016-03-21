@@ -5279,12 +5279,15 @@ public final class Settings {
         public static final String BATTERY_LIGHT_REALLY_FULL_COLOR = "battery_light_really_full_color";
 
         /**
+<<<<<<< HEAD
          * Define when Nfc polling is activated.
 	 * @hide
          */
         public static final String NFC_POLLING_MODE = "nfc_polling";
 
         /**
+=======
+>>>>>>> parent of 4a271a7... FWB: QS shade transparency (1/2)
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
