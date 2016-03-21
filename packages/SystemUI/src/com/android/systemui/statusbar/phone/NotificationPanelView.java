@@ -2696,6 +2696,7 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_BACKGROUND_COLOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TRANSPARENT_SHADE),
                     false, this, UserHandle.USER_ALL);
             update();
@@ -2779,7 +2780,6 @@ public class NotificationPanelView extends PanelView implements
             mQsPanel.setQSShadeAlphaValue(mQSShadeAlpha);
  		}
         }
-          
     @Override
     public boolean hasOverlappingRendering() {
         return !mDozing;
