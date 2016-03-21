@@ -904,7 +904,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             UserHandle.USER_CURRENT);
             mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
             mBrightnessControl = CMSettings.System.getIntForUser(
-<<<<<<< HEAD
 			resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
 			UserHandle.USER_CURRENT) == 1;
 		mQsColorSwitch = Settings.System.getIntForUser(resolver,
@@ -1043,9 +1042,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	    boolean mShow3G = Settings.System.getIntForUser(resolver,
                     Settings.System.SHOW_THREEG, 0, UserHandle.USER_CURRENT) == 1;
 
-
-            boolean showTaskManager = Settings.System.getIntForUser(resolver,
-=======
                     resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
             mRRlogo = Settings.System.getIntForUser(resolver,
@@ -1053,9 +1049,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mRRLogoColor = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
             showRRLogo(mRRlogo, mRRLogoColor);	
-            mShowTaskManager = Settings.System.getIntForUser(resolver,
->>>>>>> parent of 78e4493... Task Manager: Use one observer for changes, misc cleanup
-                    Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
 
             if (mNavigationBarView != null) {
                 boolean navLeftInLandscape = CMSettings.System.getIntForUser(resolver,
