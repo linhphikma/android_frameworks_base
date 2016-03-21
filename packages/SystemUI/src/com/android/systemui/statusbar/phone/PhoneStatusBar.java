@@ -427,10 +427,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private TaskManager mTaskManager;
     private LinearLayout mTaskManagerPanel;
     private ImageButton mTaskManagerButton;
-    // task manager enabled
     private boolean mShowTaskManager;
-    // task manager click state
-    private boolean mShowTaskList = false;
+    private boolean showTaskList = false;
 
     private boolean mShow4G;
     private boolean mShow3G;	
@@ -906,6 +904,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             UserHandle.USER_CURRENT);
             mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
             mBrightnessControl = CMSettings.System.getIntForUser(
+<<<<<<< HEAD
 			resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
 			UserHandle.USER_CURRENT) == 1;
 		mQsColorSwitch = Settings.System.getIntForUser(resolver,
@@ -1046,20 +1045,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
 
             boolean showTaskManager = Settings.System.getIntForUser(resolver,
+=======
+                    resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
+                    UserHandle.USER_CURRENT) == 1;
+            mRRlogo = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
+            mRRLogoColor = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+            showRRLogo(mRRlogo, mRRLogoColor);	
+            mShowTaskManager = Settings.System.getIntForUser(resolver,
+>>>>>>> parent of 78e4493... Task Manager: Use one observer for changes, misc cleanup
                     Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
-	    if (mShowTaskManager != showTaskManager) {
-                if (!mShowTaskManager) {
-                    // explicitly reset click state when disabled
-                    mShowTaskList = false;
-                }
-                mShowTaskManager = showTaskManager;
-                if (mHeader != null) {
-                    mHeader.setTaskManagerEnabled(showTaskManager);
-                }
-                if (mNotificationPanel != null) {
-                    mNotificationPanel.setTaskManagerEnabled(showTaskManager);
-                }
-            }
+
             if (mNavigationBarView != null) {
                 boolean navLeftInLandscape = CMSettings.System.getIntForUser(resolver,
                         CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0, UserHandle.USER_CURRENT) == 1;
@@ -2123,15 +2120,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mTaskManagerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                mShowTaskList = !mShowTaskList;
-                mNotificationPanel.setTaskManagerVisibility(mShowTaskList);
+                showTaskList = !showTaskList;
+                mNotificationPanel.setTaskManagerVisibility(showTaskList);
             }
         });
-        if (mRecreating) {
-            mHeader.setTaskManagerEnabled(mShowTaskManager);
-            mNotificationPanel.setTaskManagerEnabled(mShowTaskManager);
-            mShowTaskList = false;
-        }
 
 
         // Set up the initial custom tile listener state.

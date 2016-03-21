@@ -270,7 +270,6 @@ public class NotificationPanelView extends PanelView implements
 
     // Task manager
     private boolean mShowTaskManager;
-    private boolean mTaskManagerShowing;
     private LinearLayout mTaskManagerPanel;
 
     // QS alpha
@@ -1722,25 +1721,13 @@ public class NotificationPanelView extends PanelView implements
         }
     }
 
-    void setTaskManagerEnabled(boolean enabled) {
-        mShowTaskManager = enabled;
-        // explicity restore visibility states when disabled
-        // and TaskManager last state was showing
-        if (!enabled && mTaskManagerShowing) {
-            mTaskManagerShowing = false;
-            mQsPanel.setVisibility(View.VISIBLE);
-            mTaskManagerPanel.setVisibility(View.GONE);
-        }
-    }
-
-    public void setTaskManagerVisibility(boolean taskManagerShowing) {
+    public void setTaskManagerVisibility(boolean mTaskManagerShowing) {
         if (mShowTaskManager) {
-            mTaskManagerShowing = taskManagerShowing;
             cancelAnimation();
             boolean expandVisually = mQsExpanded || mStackScrollerOverscrolling;
-            mQsPanel.setVisibility(expandVisually && !taskManagerShowing
+            mQsPanel.setVisibility(expandVisually && !mTaskManagerShowing
                     ? View.VISIBLE : View.GONE);
-            mTaskManagerPanel.setVisibility(expandVisually && taskManagerShowing
+            mTaskManagerPanel.setVisibility(expandVisually && mTaskManagerShowing
                     ? View.VISIBLE : View.GONE);
         }
     }
@@ -2678,7 +2665,7 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TRANSPARENT_SHADE),
                     false, this, UserHandle.USER_ALL);
-            update();
+           update();
         }
 
         void unobserve() {
@@ -2737,9 +2724,9 @@ public class NotificationPanelView extends PanelView implements
         }
         if (mQsPanel != null) {
             mQsPanel.setQSShadeAlphaValue(mQSShadeAlpha);
- 		}
         }
-          
+    }
+
     @Override
     public boolean hasOverlappingRendering() {
         return !mDozing;
