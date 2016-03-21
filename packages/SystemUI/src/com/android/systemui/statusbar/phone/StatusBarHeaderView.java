@@ -664,11 +664,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	mMultiUserSwitch = (MultiUserSwitch) findViewById(R.id.multi_user_switch);
 	mMultiUserSwitch.setVisibility(View.INVISIBLE);
   	 	}
-        if (Settings.System.getInt(mContext.getContentResolver(),
-              Settings.System.HIDE_PANEL_ALARM, 1) == 1)  {
-	mAlarmStatus = (TextView) findViewById(R.id.alarm_status);
-	mAlarmStatus.setVisibility(View.GONE);
-  	 	}
 	}
 
 
@@ -1491,8 +1486,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 			Settings.System.HIDE_USER_ICON), false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.HEADER_CLOCK_FONT_STYLE), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HIDE_PANEL_ALARM), false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.HEADER_ALARM_FONT_STYLE), false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
