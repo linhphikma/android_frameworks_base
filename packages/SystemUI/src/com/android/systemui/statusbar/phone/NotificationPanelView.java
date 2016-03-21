@@ -128,12 +128,7 @@ public class NotificationPanelView extends PanelView implements
     private KeyguardUserSwitcher mKeyguardUserSwitcher;
     private KeyguardStatusBarView mKeyguardStatusBar;
     private QSContainer mQsContainer;
-<<<<<<< HEAD
     private QSDragPanel mQsPanel;
-=======
-    private QSPanel mQsPanel;
-    private LinearLayout mTaskManagerPanel;
->>>>>>> parent of d6d2ba1... Task manager improvements
     private KeyguardStatusView mKeyguardStatusView;
     private ObservableScrollView mScrollView;
     private TextView mClockView;
@@ -273,7 +268,6 @@ public class NotificationPanelView extends PanelView implements
     private int mStatusBarHeaderHeight;
     private GestureDetector mDoubleTapGesture;
 
-<<<<<<< HEAD
     // Task manager
     private boolean mShowTaskManager;
     private LinearLayout mTaskManagerPanel;
@@ -283,8 +277,6 @@ public class NotificationPanelView extends PanelView implements
 
     private int mQSBackgroundColor;
 
-=======
->>>>>>> parent of d6d2ba1... Task manager improvements
     public NotificationPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWillNotDraw(!DEBUG);
@@ -1730,8 +1722,7 @@ public class NotificationPanelView extends PanelView implements
     }
 
     public void setTaskManagerVisibility(boolean mTaskManagerShowing) {
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.ENABLE_TASK_MANAGER, 0) == 1) {
+        if (mShowTaskManager) {
             cancelAnimation();
             boolean expandVisually = mQsExpanded || mStackScrollerOverscrolling;
             mQsPanel.setVisibility(expandVisually && !mTaskManagerShowing
@@ -2661,7 +2652,6 @@ public class NotificationPanelView extends PanelView implements
                     CMSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN), false, this);
             resolver.registerContentObserver(CMSettings.System.getUriFor(
                     CMSettings.System.DOUBLE_TAP_SLEEP_GESTURE), false, this);
-<<<<<<< HEAD
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD),
                     false, this, UserHandle.USER_ALL);
@@ -2676,9 +2666,6 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.QS_TRANSPARENT_SHADE),
                     false, this, UserHandle.USER_ALL);
            update();
-=======
-            update();
->>>>>>> parent of d6d2ba1... Task manager improvements
         }
 
         void unobserve() {
@@ -2703,7 +2690,6 @@ public class NotificationPanelView extends PanelView implements
                     resolver, CMSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1);
             mDoubleTapToSleepEnabled = CMSettings.System.getInt(
                     resolver, CMSettings.System.DOUBLE_TAP_SLEEP_GESTURE, 1) == 1;
-<<<<<<< HEAD
             mStatusBarLockedOnSecureKeyguard = Settings.Secure.getIntForUser(
                     resolver, Settings.Secure.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD, 1,
                     UserHandle.USER_CURRENT) == 1;
@@ -2738,8 +2724,6 @@ public class NotificationPanelView extends PanelView implements
         }
         if (mQsPanel != null) {
             mQsPanel.setQSShadeAlphaValue(mQSShadeAlpha);
-=======
->>>>>>> parent of d6d2ba1... Task manager improvements
         }
     }
 
@@ -2754,7 +2738,6 @@ public class NotificationPanelView extends PanelView implements
         } else if (source == StatusBarManager.CAMERA_LAUNCH_SOURCE_WIGGLE) {
             mLastCameraLaunchSource = KeyguardBottomAreaView.CAMERA_LAUNCH_SOURCE_WIGGLE;
         } else {
-
             // Default.
             mLastCameraLaunchSource = KeyguardBottomAreaView.CAMERA_LAUNCH_SOURCE_AFFORDANCE;
         }

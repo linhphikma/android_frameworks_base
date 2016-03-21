@@ -153,7 +153,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private int mClockCollapsedSize;
     private int mClockExpandedSize;
 
-<<<<<<< HEAD
     private int mStatusBarHeaderClockFont = FONT_NORMAL;
     private int mStatusBarHeaderWeatherFont = FONT_NORMAL;
     private int mStatusBarHeaderAlarmFont = FONT_NORMAL;
@@ -170,8 +169,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private boolean mQsVibrateHeader = false;
     private boolean mQsVibrateHeaderLong = false;
 
-=======
->>>>>>> parent of d6d2ba1... Task manager improvements
     /**
      * In collapsed QS, the clock and avatar are scaled down a bit post-layout to allow for a nice
      * transition. These values determine that factor.
@@ -271,15 +268,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSettingsButton = (SettingsButton) findViewById(R.id.settings_button);
         mSettingsContainer = findViewById(R.id.settings_button_container);
         mSettingsButton.setOnClickListener(this);
-<<<<<<< HEAD
         mTaskManagerButton = findViewById(R.id.task_manager_button);
         mTaskManagerButton.setOnLongClickListener(this);
-=======
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.ENABLE_TASK_MANAGER, 0) == 1) {
-            mTaskManagerButton = findViewById(R.id.task_manager_button);
-        }
->>>>>>> parent of d6d2ba1... Task manager improvements
         mQsDetailHeader = findViewById(R.id.qs_detail_header);
         mQsDetailHeader.setAlpha(0);
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -561,7 +551,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mWeatherContainer.setVisibility(mExpanded && mShowWeather ? View.VISIBLE : View.GONE);
         mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.INVISIBLE);
         if (mTaskManagerButton != null) {
-            mTaskManagerButton.setVisibility(mExpanded ? View.VISIBLE : View.GONE);
+            mTaskManagerButton.setVisibility(mExpanded && mShowTaskManager ? View.VISIBLE : View.GONE);
         }
         mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.GONE);
         if (mSignalCluster != null) {
@@ -1144,7 +1134,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mSettingsButton.setRotation(values.settingsRotation);
 	}
         if (mTaskManagerButton != null) {
-            mTaskManagerButton.setTranslationX(values.taskManagerTranslation);
+            mTaskManagerButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
+            mTaskManagerButton.setTranslationX(values.settingsTranslation);
+            mTaskManagerButton.setRotation(values.settingsRotation);
         }
         applyAlpha(mEmergencyCallsOnly, values.emergencyCallsOnlyAlpha);
         if (!mShowingDetail && !mDetailTransitioning) {
@@ -1158,7 +1150,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             applyAlpha(mDockBatteryLevel, values.batteryLevelAlpha);
         }
         applyAlpha(mSettingsContainer, values.settingsAlpha);
-        applyAlpha(mTaskManagerButton, values.taskManagerAlpha);
+        applyAlpha(mTaskManagerButton, values.settingsAlpha);
         applyAlpha(mWeatherLine1, values.settingsAlpha);
         applyAlpha(mWeatherimage, values.settingsAlpha);
         applyAlpha(mWeatherLine2, values.settingsAlpha);
@@ -1454,7 +1446,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mShowBatteryTextExpanded = showExpandedBatteryPercentage;
             mShowWeather = CMSettings.System.getInt(
                     resolver, CMSettings.System.STATUS_BAR_SHOW_WEATHER, 1) == 1;
-<<<<<<< HEAD
             mQSHeaderAlpha = Settings.System.getInt(
                     resolver, Settings.System.QS_TRANSPARENT_HEADER, 255);
             setQSHeaderAlpha();
@@ -1497,10 +1488,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	    setStatusBarDateFontStyle(mStatusBarHeaderDateFont);
 	    setStatusBarDetailFontStyle(mStatusBarHeaderDetailFont);
 
-=======
-            updateVisibilities();
-            requestCaptureValues();
->>>>>>> parent of d6d2ba1... Task manager improvements
         }
     }
 
