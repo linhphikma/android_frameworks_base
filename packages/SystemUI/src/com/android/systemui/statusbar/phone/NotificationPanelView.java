@@ -2719,7 +2719,6 @@ public class NotificationPanelView extends PanelView implements
                         Settings.System.QS_HEADER_TEXT_COLOR))
                     || uri.equals(Settings.System.getUriFor(
                         Settings.System.QS_HEADER_COLOR))) {
-
                     setQSBackgroundColor();
                 } else if (uri.equals(Settings.System.getUriFor(
                         Settings.System.QS_ICON_COLOR))
