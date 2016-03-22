@@ -290,6 +290,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             mDialog.getWindow().getDecorView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_EXPAND); 
         }  
 	
+    }
 
     private int getPowermenuAnimations() {
         return Settings.System.getInt(mContext.getContentResolver(),
