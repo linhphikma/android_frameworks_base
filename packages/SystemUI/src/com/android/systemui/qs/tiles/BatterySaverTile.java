@@ -25,8 +25,6 @@ import android.provider.Settings;
 
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.R;
-import com.android.systemui.statusbar.policy.BatteryController;
-import com.android.systemui.statusbar.policy.BatteryStateRegistar;
 
 import cyanogenmod.power.PerformanceManager;
 
@@ -38,15 +36,13 @@ public class BatterySaverTile extends QSTile<QSTile.BooleanState> {
     private static final Intent BATTERY_SETTINGS = new Intent(Intent.ACTION_POWER_USAGE_SUMMARY);
 
     private final PowerManager mPm;
-    private final boolean mHasPowerProfiles;
-
+    private final PerformanceManager mPerformanceManager;
     private boolean mListening;
-    private boolean mPluggedIn;
 
     public BatterySaverTile(Host host) {
         super(host);
         mPm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-        mHasPowerProfiles = PerformanceManager.getInstance(mContext).getNumberOfProfiles() > 0;
+        mPerformanceManager = PerformanceManager.getInstance(mContext);
     }
 
     @Override
@@ -57,7 +53,7 @@ public class BatterySaverTile extends QSTile<QSTile.BooleanState> {
     @Override
     public void handleClick() {
         mPm.setPowerSaveMode(!mState.value);
-        refreshState(!mState.value);
+        refreshState();
     }
 
     @Override
@@ -67,8 +63,8 @@ public class BatterySaverTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
-        state.value = arg instanceof Boolean ? (boolean) arg : mPm.isPowerSaveMode();
-        state.visible =  !mHasPowerProfiles;
+        state.value = mPm.isPowerSaveMode();
+        state.visible = mPerformanceManager.getNumberOfProfiles() == 0;
         state.label = mContext.getString(R.string.quick_settings_battery_saver_label);
         if (state.value) {
             state.icon = ResourceIcon.get(R.drawable.ic_qs_battery_saver_on);
@@ -78,11 +74,6 @@ public class BatterySaverTile extends QSTile<QSTile.BooleanState> {
             state.icon = ResourceIcon.get(R.drawable.ic_qs_battery_saver_off);
             state.contentDescription =  mContext.getString(
                     R.string.accessibility_quick_settings_battery_saver_off);
-        }
-
-        state.enabled = !mPluggedIn;
-        if (mPluggedIn) {
-            state.label = mContext.getString(R.string.quick_settings_battery_saver_label_charging);
         }
     }
 
@@ -102,23 +93,10 @@ public class BatterySaverTile extends QSTile<QSTile.BooleanState> {
         return CMMetricsLogger.TILE_BATTERY_SAVER;
     }
 
-    private BatteryStateRegistar.BatteryStateChangeCallback mBatteryState
-            = new BatteryStateRegistar.BatteryStateChangeCallback() {
+    private ContentObserver mObserver = new ContentObserver(mHandler) {
         @Override
-        public void onBatteryLevelChanged(boolean present, int level, boolean pluggedIn,
-                boolean charging) {
-            mPluggedIn = pluggedIn || charging;
+        public void onChange(boolean selfChange, Uri uri) {
             refreshState();
-        }
-
-        @Override
-        public void onPowerSaveChanged() {
-            refreshState();
-        }
-
-        @Override
-        public void onBatteryStyleChanged(int style, int percentMode) {
-            // ignore
         }
     };
 
@@ -128,9 +106,11 @@ public class BatterySaverTile extends QSTile<QSTile.BooleanState> {
         mListening = listening;
 
         if (listening) {
-            getHost().getBatteryController().addStateChangedCallback(mBatteryState);
+            mContext.getContentResolver().registerContentObserver(
+                    Settings.Global.getUriFor(Settings.Global.LOW_POWER_MODE),
+                    false, mObserver);
         } else {
-            getHost().getBatteryController().removeStateChangedCallback(mBatteryState);
+            mContext.getContentResolver().unregisterContentObserver(mObserver);
         }
     }
 }
