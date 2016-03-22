@@ -2773,17 +2773,13 @@ public class NotificationPanelView extends PanelView implements
     }
 
     private void setQSBackgroundAlpha() {
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.QS_TRANSPARENT_SHADE, 255) != 255) {
-            if (mQsContainer != null) {
-                mQsContainer.getBackground().setAlpha(mQSShadeAlpha);
-            }
-            if (mQsPanel != null) {
-                mQsPanel.setQSShadeAlphaValue(mQSShadeAlpha);
-            }
+        if (mQsContainer != null) {
+            mQsContainer.getBackground().setAlpha(mQSShadeAlpha);
         }
-    }
-        
+        if (mQsPanel != null) {
+            mQsPanel.setQSShadeAlphaValue(mQSShadeAlpha);
+ 		}
+        }
     @Override
     public boolean hasOverlappingRendering() {
         return !mDozing;
