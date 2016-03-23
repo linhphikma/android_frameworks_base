@@ -35,10 +35,8 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.PorterDuff.Mode;
 import android.os.Handler;
 import android.os.UserHandle;
-import android.os.Vibrator;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -73,8 +71,6 @@ import cyanogenmod.app.StatusBarPanelCustomTile;
 import cyanogenmod.providers.CMSettings;
 import org.cyanogenmod.internal.logging.CMMetricsLogger;
 import org.cyanogenmod.internal.util.QSUtils;
-
-import android.provider.Settings;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -111,17 +107,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     private float mLastTouchLocationX, mLastTouchLocationY;
     private int mLocationHits;
     private int mLastLeftShift = -1;
-    private int mLastRightShift = -1;	
-    // QS Colors
-    private int mQsIconColor;
-    private int mLabelColor;
-
-    public QSTileView mTileView;
-
-    protected Vibrator mVibrator;
-    private boolean mQsVibSignlepress = false;	
-
-    private boolean mQsColorSwitch = false;	
+    private int mLastRightShift = -1;
     private boolean mRestored;
     private boolean mRestoring;
     // whether the current view we are dragging in has shifted tiles
@@ -163,24 +149,9 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         mDetailRemoveButton = (TextView) mDetail.findViewById(android.R.id.button3);
         mDetailSettingsButton = (TextView) mDetail.findViewById(android.R.id.button2);
         mDetailDoneButton = (TextView) mDetail.findViewById(android.R.id.button1);
-	mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
         updateDetailText();
         mDetail.setVisibility(GONE);
         mDetail.setClickable(true);
-	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
-	mLabelColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
-	mQsIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
-	 if (mQsColorSwitch) {
-            mDetailDoneButton.setTextColor(mLabelColor);
-            mDetailSettingsButton.setTextColor(mLabelColor);
-	    mDetailRemoveButton.setTextColor(mLabelColor);
-        }
-
-	mQsVibSignlepress = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QUICK_SETTINGS_SP_VIBRATE, 0) == 1;
 
         mQsPanelTop = (QSPanelTopView) LayoutInflater.from(mContext).inflate(R.layout.qs_tile_top,
                 this, false);
@@ -208,12 +179,6 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         addView(mPageIndicator);
         addView(mFooter.getView());
 
-	mTileView = new QSTileView (mContext);
-
-	int color = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_BACKGROUND_COLOR, 0xFFFFFFFF);
-	setDetailBackgroundColor(color);
-
         mClipper = new QSDetailClipper(mDetail);
 
         mBrightnessController = new BrightnessController(getContext(),
@@ -226,7 +191,6 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
                 announceForAccessibility(
                         mContext.getString(R.string.accessibility_desc_quick_settings));
                 closeDetail();
-		vibrateTile(20);
             }
         });
 
@@ -394,24 +358,6 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         return mClipper.isAnimating() || mEditing;
     }
 
-  public void setDetailBackgroundColor(int color) {
-	final Resources res = getContext().getResources();
-	int mStockBg = res.getColor(R.color.quick_settings_panel_background);
-        mQsColorSwitch = Settings.System.getInt(getContext().getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
-        if (mQsColorSwitch) {
-            if (mDetail != null) {
-                    mDetail.getBackground().setColorFilter(
-                            color, Mode.SRC_OVER);
-                } 		
-            } else {
-	if (mDetail != null) {
-                    mDetail.getBackground().setColorFilter(
-                           mStockBg, Mode.SRC_OVER);
-                }
-	 }    
-	}
-
     @Override
     public void setBrightnessMirror(BrightnessMirrorController c) {
         super.onFinishInflate();
@@ -546,18 +492,6 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     protected int getCurrentMaxPageCount() {
         int initialSize = mRecords.size();
         return getPagesForCount(initialSize);
-    }
-
-    public boolean isVibrationEnabled() {
-        return (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.QUICK_SETTINGS_TILES_VIBRATE, 0, UserHandle.USER_CURRENT) == 1);
-    }
-
-    public void vibrateTile(int duration) {
-        if (!isVibrationEnabled()) { return; }
-        if (mVibrator != null) {
-            if (mVibrator.hasVibrator()) { mVibrator.vibrate(duration); }
-        }
     }
 
     @Override
@@ -749,14 +683,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
             @Override
             public void onClick(View v) {
                 if (!mEditing || r.tile instanceof EditTile) {
-		mQsVibSignlepress = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QUICK_SETTINGS_SP_VIBRATE, 0) == 1;
                     r.tile.click();
-			if (mQsVibSignlepress) {
-	  	    vibrateTile(20);	
-		   } else {
-		    vibrateTile(0);
-		   }
                 }
             }
         };
@@ -765,53 +692,31 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
             public void onClick(View v) {
                 if (!mEditing) {
                     r.tile.secondaryClick();
-		mQsVibSignlepress = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QUICK_SETTINGS_SP_VIBRATE, 0) == 1;
-			if (mQsVibSignlepress) {
-	  	    vibrateTile(20);	
-		   } else {
-		    vibrateTile(0);
-		   }	
                 }
             }
         };
         final OnLongClickListener longClick = new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (!mEditing) {	
+                if (!mEditing) {
                     r.tile.longClick();
-                } else {	
+                } else {
                     QSDragPanel.this.onLongClick(r.tileView);
-                }	
+                }
                 return true;
             }
         };
         r.tileView.init(click, clickSecondary, longClick);
         r.tile.setListening(mListening);
-	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
-		Settings.System.QS_COLOR_SWITCH, 0) == 1;
-	updateicons();
-	if (mQsColorSwitch) {
-                r.tileView.setLabelColor();
-                r.tileView.setIconColor();
-            }
         r.tile.refreshState();
-	updateicons();
         r.tileView.setVisibility(mEditing ? View.VISIBLE : View.GONE);
         callback.onStateChanged(r.tile.getState());
-	
+
         if (DEBUG_TILES) {
             Log.d(TAG, "--- makeRecord() called with " + "tile = [" + tile + "]");
         }
         return r;
     }
-
-    public void updateicons() {
-	mLabelColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
-	mQsIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
-	}
 
     private void removeDraggingRecord() {
         // what spec is this tile?
@@ -1488,7 +1393,6 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         mDragging = true;
         return true;
     }
-
 
     private void shiftTiles(DragTileRecord startingTile, boolean forward) {
         if (DEBUG_DRAG) {
@@ -2184,9 +2088,6 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(CMSettings.Secure.getUriFor(
                     CMSettings.Secure.QS_USE_MAIN_TILES), false, this, UserHandle.USER_ALL);
-	    resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_COLOR_SWITCH),
-                    false, this, UserHandle.USER_ALL);	
             update();
         }
 
@@ -2204,8 +2105,6 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
             int currentUserId = ActivityManager.getCurrentUser();
             boolean firstRowLarge = CMSettings.Secure.getIntForUser(resolver,
                     CMSettings.Secure.QS_USE_MAIN_TILES, 1, currentUserId) == 1;
-	    mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(), 
-		    Settings.System.QS_COLOR_SWITCH, 0) == 1;
             if (firstRowLarge != mFirstRowLarge) {
                 mFirstRowLarge = firstRowLarge;
                 setTiles(mHost.getTiles());
