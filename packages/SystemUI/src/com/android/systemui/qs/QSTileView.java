@@ -206,7 +206,10 @@ public class QSTileView extends ViewGroup {
             if (labelText != null) {
                 mLabel.setText(labelText);
             }
-            addView(mLabel);	
+            addView(mLabel);
+	     if (mQsColorSwitch) {
+                mLabel.setTextColor(QsTextColor);
+           	 }	
 	
         }
     }
@@ -515,6 +518,9 @@ public class QSTileView extends ViewGroup {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_ICON_COLOR),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -535,6 +541,11 @@ public class QSTileView extends ViewGroup {
 	if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH))) {
 		 updateColors();
+		setIconColor();
+		}
+	if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_ICON_COLOR))) {
+		updateColors();
 		setIconColor();
 		}
         }
