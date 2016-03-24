@@ -858,11 +858,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                    updatebatterycolor(); 
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUSBAR_COLOR_SWITCH))) {
-                recreateStatusBar();
-                updateRowStates();
-                updateSpeedbump();
-                updateClearAll();
-                updateEmptyShadeView();
+              		updateNetworkSignalColor();
+	      		updateNoSimColor();
+	      		updateAirplaneModeColor();
+	      		updateStatusIconsColor();	
+	      		updateNotificationIconsColor();
+	      		updateNetworkIconColors();
+		 	updateRowStates();
+               		updateSpeedbump();
+                	updateClearAll();
+                	updateEmptyShadeView();
 	   } 
             update();
         }
