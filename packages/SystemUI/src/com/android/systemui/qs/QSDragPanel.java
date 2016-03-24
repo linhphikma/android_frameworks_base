@@ -112,9 +112,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     private int mLocationHits;
     private int mLastLeftShift = -1;
     private int mLastRightShift = -1;	
-    // QS Colors
-    private int mQsIconColor;
-    private int mLabelColor;
+
 
     public QSTileView mTileView;
 
@@ -169,14 +167,12 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         mDetail.setClickable(true);
 	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
-	mLabelColor = Settings.System.getInt(mContext.getContentResolver(),
+	int QsTextColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
-	mQsIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
 	 if (mQsColorSwitch) {
-            mDetailDoneButton.setTextColor(mLabelColor);
-            mDetailSettingsButton.setTextColor(mLabelColor);
-	    mDetailRemoveButton.setTextColor(mLabelColor);
+            mDetailDoneButton.setTextColor(QsTextColor);
+            mDetailSettingsButton.setTextColor(QsTextColor);
+	    mDetailRemoveButton.setTextColor(QsTextColor);
         }
 
 	mQsVibSignlepress = Settings.System.getInt(mContext.getContentResolver(),
@@ -807,9 +803,9 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     }
 
     public void updateicons() {
-	mLabelColor = Settings.System.getInt(mContext.getContentResolver(),
+	int mQsText = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
-	mQsIconColor = Settings.System.getInt(mContext.getContentResolver(),
+	int mQsIcon = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
 	}
 

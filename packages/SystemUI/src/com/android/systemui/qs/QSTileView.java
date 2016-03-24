@@ -75,7 +75,6 @@ public class QSTileView extends ViewGroup {
     private boolean mQsColorSwitch = false;
     public int mIconColor;
     public int mLabelColor;
-
     private SettingsObserver mSettingsObserver;		
 
     private TextView mLabel;
@@ -149,7 +148,7 @@ public class QSTileView extends ViewGroup {
         mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0,
                 UserHandle.USER_CURRENT) == 1;
-	    mLabelColor = Settings.System.getInt(mContext.getContentResolver(),
+	int QsTextColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
         if (mLabel != null && mLabel.isAttachedToWindow()) {
             labelText = mLabel.getText();
@@ -171,7 +170,7 @@ public class QSTileView extends ViewGroup {
                     mDualLabel.setFirstLineCaret(mContext.getDrawable(R.drawable.qs_dual_tile_caret));
                 }
                 if (mQsColorSwitch) {
-                mDualLabel.setTextColor(mLabelColor);
+                mDualLabel.setTextColor(QsTextColor);
            	 } else {
                 mDualLabel.setTextColor(mContext.getColor(R.color.qs_tile_text));
           	}
@@ -210,7 +209,7 @@ public class QSTileView extends ViewGroup {
             }
             addView(mLabel);
 	     if (mQsColorSwitch) {
-                mLabel.setTextColor(mLabelColor);
+                mLabel.setTextColor(QsTextColor);
            	 }	
 	
         }
@@ -524,9 +523,6 @@ public class QSTileView extends ViewGroup {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_ICON_COLOR),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_TEXT_COLOR),
-                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -551,11 +547,6 @@ public class QSTileView extends ViewGroup {
 		}
 	if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_ICON_COLOR))) {
-		updateColors();
-		setIconColor();
-		}
-	if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_TEXT_COLOR))) {
 		updateColors();
 		setIconColor();
 		}
