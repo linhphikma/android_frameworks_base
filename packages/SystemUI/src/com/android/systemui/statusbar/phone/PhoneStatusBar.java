@@ -62,6 +62,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.hardware.display.DisplayManager;
 import android.inputmethodservice.InputMethodService;
 import android.net.Uri;
 import android.media.AudioAttributes;
@@ -70,6 +71,7 @@ import android.media.session.MediaController;
 import android.media.session.MediaSession;
 import android.media.session.MediaSessionManager;
 import android.media.session.PlaybackState;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Bundle;
@@ -184,6 +186,7 @@ import com.android.systemui.statusbar.EmptyShadeView;
 import com.android.systemui.statusbar.ExpandableNotificationRow;
 import com.android.systemui.statusbar.GestureRecorder;
 import com.android.systemui.statusbar.KeyguardIndicationController;
+import com.android.systemui.statusbar.NotificationBackgroundView;
 import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.NotificationData.Entry;
 import com.android.systemui.statusbar.NotificationOverflowContainer;
@@ -2217,6 +2220,68 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
+
+		//BlurOS Project 
+       try {
+            // receiver
+            BroadcastReceiver receiver = new BroadcastReceiver() {
+
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (NotificationPanelView.mKeyguardShowing) {
+                        return;
+                    }
+
+                    String action = intent.getAction();
+
+                    // alterou a rotação ?
+               if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
+                        if (NotificationPanelView.mKeyguardShowing) {
+                            return;
+                        }
+                        // recents
+                        RecentsActivity.onConfigurationChanged();
+
+                        // ----------------------------------------------------------------------
+                        // se na rotação do celular o mod estiver habilitado e o painel expandido
+                        // estiver aberto, fecha o painel expandido forçando o usuário a expandir
+                        // o painel novamente para obtér a imagem desfocada com a rotação atual!!
+                        // ----------------------------------------------------------------------
+
+                        // habilitado ?
+                        if (mExpandedVisible && NotificationPanelView.mBlurredStatusBarExpandedEnabled && (!NotificationPanelView.mKeyguardShowing)) {
+
+                            // fecha o painel
+                            makeExpandedInvisible();
+
+                        }
+                    }
+
+       //             if (action.equals(Intent.ACTION_SCREEN_OFF)) {
+         //               NotificationPanelView.recycle();
+           //         }
+
+                    // atualiza
+
+
+                    // mata
+
+                }
+            };
+
+            // registra o receiver
+            IntentFilter intent = new IntentFilter();
+            intent.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
+            this.mContext.registerReceiver(receiver, intent);
+
+            // inicia
+            RecentsActivity.init(this.mContext);
+
+            // atualizam as preferências
+            updatePreferences(this.mContext);
+        } catch (Exception e){
+            Log.d("Fuck shit", String.valueOf(e));
+        }
 	if (mStatusBarHeaderMachine == null) {
         mStatusBarHeaderMachine = new StatusBarHeaderMachine(mContext);
         }
@@ -2226,6 +2291,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         updateNetworkIconColors();
         return mStatusBarView;
     }
+	
+    public static void updatePreferences(Context context) {
+
+        // atualiza
+        NotificationPanelView.updatePreferences(context);
+        RecentsActivity.updatePreferences(context);
+        NotificationBackgroundView.updatePreferences(context);
+        StatusBarHeaderView.updatePreferences(context);
+        BaseStatusBar.updatePreferences();
+	}
 
     private void clearAllNotifications() {
 
@@ -3560,6 +3635,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     void makeExpandedVisible(boolean force) {
+        NotificationPanelView.startBlurTask();
+
         if (SPEW) Log.d(TAG, "Make expanded visible: expanded visible=" + mExpandedVisible);
         if (!force && (mExpandedVisible || !panelsEnabled())) {
             return;
@@ -3720,6 +3797,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (!mStatusBarKeyguardViewManager.isShowing()) {
             WindowManagerGlobal.getInstance().trimMemory(ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN);
         }
+        NotificationPanelView.recycle();
     }
 
     private void adjustBrightness(int x) {
@@ -4501,6 +4579,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             else if (Intent.ACTION_SCREEN_ON.equals(action)) {
                 mScreenOn = true;
                 notifyNavigationBarScreenOn(true);
+				NotificationPanelView.recycle();
             } else if (Intent.ACTION_KEYGUARD_WALLPAPER_CHANGED.equals(action)) {
                 WallpaperManager wm = (WallpaperManager) mContext.getSystemService(
                         Context.WALLPAPER_SERVICE);

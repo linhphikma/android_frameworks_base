@@ -17,7 +17,9 @@
 package com.android.systemui.statusbar.phone;
 
 import android.app.ActivityManager;
+import android.app.ActivityManagerNative;
 import android.app.AlarmManager;
+import android.app.IUserSwitchObserver;
 import android.app.PendingIntent;
 import android.content.ContentUris;
 import android.content.ContentResolver;
@@ -151,6 +153,11 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     private int mClockCollapsedSize;
     private int mClockExpandedSize;
+
+// BlurOS project 
+    private static boolean mTranslucentHeader;
+    private static int mTranslucencyPercentage;
+    private static StatusBarHeaderView mStatusBarHeaderView;
 
     private int mStatusBarHeaderClockFont = FONT_NORMAL;
     private int mStatusBarHeaderWeatherFont = FONT_NORMAL;
@@ -334,17 +341,40 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
         // RenderThread is doing more harm than good when touching the header (to expand quick
         // settings), so disable it for this view
-        Drawable d = getBackground();
-        if (d instanceof RippleDrawable) {
-            ((RippleDrawable) d).setForceSoftware(true);
-        }
-        d = mSettingsButton.getBackground();
-        if (d instanceof RippleDrawable) {
-            ((RippleDrawable) d).setForceSoftware(true);
-        }
-        d = mSystemIconsSuperContainer.getBackground();
-        if (d instanceof RippleDrawable) {
-            ((RippleDrawable) d).setForceSoftware(true);
+
+         ((RippleDrawable) getBackground()).setForceSoftware(true);
+         ((RippleDrawable) mSettingsButton.getBackground()).setForceSoftware(true);
+         ((RippleDrawable) mSystemIconsSuperContainer.getBackground()).setForceSoftware(true);
+
+        mStatusBarHeaderView = this;
+
+        //ME
+        handleStatusBarHeaderViewBackround();
+    }
+	
+   public static void handleStatusBarHeaderViewBackround() {
+
+        // continua ?
+        if (NotificationPanelView.mNotificationPanelView == null)
+            return;
+
+        // obtém os campos
+        boolean mKeyguardShowing = NotificationPanelView.mKeyguardShowing;
+
+        // continua ?
+        if (mStatusBarHeaderView == null)
+            return;
+
+        if (mKeyguardShowing) {
+
+            // opaco !
+            mStatusBarHeaderView.getBackground().setAlpha(255);
+
+        } else {
+
+            // transparente ?
+            mStatusBarHeaderView.getBackground().setAlpha(mTranslucentHeader ? mTranslucencyPercentage : 255);
+
         }
     }
 
@@ -1215,6 +1245,18 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mTime.setScaleY(1f);
         }
         updateAmPmTranslation();
+    }
+
+    public static void updatePreferences(Context mContext) {
+
+        // atualiza
+        mTranslucentHeader = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.TRANSLUCENT_HEADER_PREFERENCE_KEY, 1) == 1);
+        mTranslucencyPercentage =  Settings.System.getInt(mContext.getContentResolver(), Settings.System.TRANSLUCENTCYCY_PRECENTAGE_PREFERENCE_KEY, 95);
+        mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
+
+        // transparente ?
+        handleStatusBarHeaderViewBackround();
+
     }
 
     public void setEditing(boolean editing) {
