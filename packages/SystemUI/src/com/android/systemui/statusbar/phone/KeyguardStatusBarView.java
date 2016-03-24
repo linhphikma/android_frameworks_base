@@ -71,8 +71,6 @@ public class KeyguardStatusBarView extends RelativeLayout {
 
     private int mSystemIconsSwitcherHiddenExpandedMargin;
     private Interpolator mFastOutSlowInInterpolator;
-   
-    public Boolean mColorSwitch = false ;
 
     private ContentObserver mObserver = new ContentObserver(new Handler()) {
         public void onChange(boolean selfChange, Uri uri) {
@@ -305,49 +303,22 @@ public class KeyguardStatusBarView extends RelativeLayout {
     }
 
     public void updateNetworkIconColors() {
-	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
-	if(mColorSwitch) {
         mSignalCluster.setIgnoreSystemUITuner(true);
         mSignalCluster.setIconTint(
                 StatusBarColorHelper.getNetworkSignalColor(mContext),
                 StatusBarColorHelper.getNoSimColor(mContext),
                 StatusBarColorHelper.getAirplaneModeColor(mContext), 0f);
-	 }
     }
 
     public void updateNetworkSignalColor() {
-	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
-	if(mColorSwitch) {
         mSignalCluster.applyNetworkSignalTint(StatusBarColorHelper.getNetworkSignalColor(getContext()));
-	}
     }
 
     public void updateNoSimColor() {
-	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
-	if(mColorSwitch) {
         mSignalCluster.applyNoSimTint(StatusBarColorHelper.getNoSimColor(getContext()));
-	}
     }
 
     public void updateAirplaneModeColor() {
-	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
-	if(mColorSwitch) {
         mSignalCluster.applyAirplaneModeTint(StatusBarColorHelper.getAirplaneModeColor(getContext()));
-	}
-    }   
-    
-    public void updateBatteryviews() {
-	mBatteryMeterView = (BatteryMeterView) findViewById(R.id.battery);
-	int mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
-    	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
-	if(mColorSwitch) {
-	mBatteryMeterView.setDarkIntensity(mBatteryIconColor);
-	}   
     }
 }
