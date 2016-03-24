@@ -767,133 +767,80 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	@Override
         public void onChange(boolean selfChange, Uri uri) {
             if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.BATTERY_SAVER_MODE_COLOR))) {
-                    mBatterySaverWarningColor = Settings.System.getIntForUser(
-                            mContext.getContentResolver(),
-                            Settings.System.BATTERY_SAVER_MODE_COLOR, 1,
-                            UserHandle.USER_CURRENT);
-                    if (mBatterySaverWarningColor != 0) {
-                        mBatterySaverWarningColor = mContext.getResources()
-                                .getColor(com.android.internal.R.color.battery_saver_mode_color);
-                    }
-            }   else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_WEATHER_COLOR))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_WEATHER_SIZE))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_WEATHER_FONT_STYLE))) {
-               	    recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.USE_SLIM_RECENTS))) {
-                updateRecents();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.RECENT_CARD_BG_COLOR))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.RECENT_CARD_TEXT_COLOR))) {
-                rebuildRecentsScreen();        
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_ROTATION))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.ACCELEROMETER_ROTATION))) {
-                mStatusBarWindowManager.updateKeyguardScreenRotation();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.SHOW_FOURG))) {
-                    mShow4G = Settings.System.getIntForUser(
-                            mContext.getContentResolver(),
-                            Settings.System.SHOW_FOURG,
-                            0, UserHandle.USER_CURRENT) == 1;
-                            recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
-	}  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.SHOW_THREEG))) {
-                    mShow3G = Settings.System.getIntForUser(
-                            mContext.getContentResolver(),
-                            Settings.System.SHOW_THREEG,
-                            0, UserHandle.USER_CURRENT) == 1;
-                            recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
-	} else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR))) {
-                    UpdateNotifDrawerClearAllIconColor();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_RR_LOGO_STYLE))) {
-                recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
-	}  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NETWORK_ICONS_SIGNAL_COLOR))) {
-                updateNetworkSignalColor();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NETWORK_ICONS_NO_SIM_COLOR))) {
-                updateNoSimColor();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NETWORK_ICONS_AIRPLANE_MODE_COLOR))) {
-                updateAirplaneModeColor();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_STATUS_ICONS_COLOR))) {
-                updateStatusIconsColor();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR))) {
-                updateNotificationIconsColor();
-	   }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.BATTERY_ICON_COLOR))) {
-                   updatebatterycolor(); 
-	   } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.BATTERY_TEXT_COLOR))) {
-                   updatebatterycolor(); 
-	   } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUSBAR_COLOR_SWITCH))) {
->>>>>>> parent of 541cee1... Custom SB Logos : Add Resurrection and PitchBlack logos [1/2]
+		Settings.System.BATTERY_SAVER_MODE_COLOR))) {
+		mBatterySaverWarningColor = Settings.System.getIntForUser(
+		mContext.getContentResolver(),
+		Settings.System.BATTERY_SAVER_MODE_COLOR, 1,
+		UserHandle.USER_CURRENT);
+		if (mBatterySaverWarningColor != 0) {
+		mBatterySaverWarningColor = mContext.getResources()
+		.getColor(com.android.internal.R.color.battery_saver_mode_color);
+		}
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE))
+		|| uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_WEATHER_COLOR))
+		|| uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_WEATHER_SIZE))
+		|| uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_WEATHER_FONT_STYLE))) {
+		DontStressOnRecreate();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.USE_SLIM_RECENTS))) {
+		updateRecents();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.RECENT_CARD_BG_COLOR))
+		|| uri.equals(Settings.System.getUriFor(
+		Settings.System.RECENT_CARD_TEXT_COLOR))) {
+		rebuildRecentsScreen();        
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.LOCKSCREEN_ROTATION))
+		|| uri.equals(Settings.System.getUriFor(
+		Settings.System.ACCELEROMETER_ROTATION))) {
+		mStatusBarWindowManager.updateKeyguardScreenRotation();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.SHOW_FOURG))) {
+		mShow4G = Settings.System.getIntForUser(
+		mContext.getContentResolver(),
+		Settings.System.SHOW_FOURG,
+		0, UserHandle.USER_CURRENT) == 1;
+		DontStressOnRecreate();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.SHOW_THREEG))) {
+		mShow3G = Settings.System.getIntForUser(
+		mContext.getContentResolver(),
+		Settings.System.SHOW_THREEG,
+		0, UserHandle.USER_CURRENT) == 1;
+		DontStressOnRecreate();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR))) {
+		UpdateNotifDrawerClearAllIconColor();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_RR_LOGO_STYLE))) {
+		DontStressOnRecreate();
+		}  else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_NETWORK_ICONS_SIGNAL_COLOR))) {
+		updateNetworkSignalColor();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_NETWORK_ICONS_NO_SIM_COLOR))) {
+		updateNoSimColor();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_NETWORK_ICONS_AIRPLANE_MODE_COLOR))) {
+		updateAirplaneModeColor();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_STATUS_ICONS_COLOR))) {
+		updateStatusIconsColor();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR))) {
+		updateNotificationIconsColor();
+		}  else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.BATTERY_ICON_COLOR))) {
+		updatebatterycolor(); 
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.BATTERY_TEXT_COLOR))) {
+		updatebatterycolor(); 
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUSBAR_COLOR_SWITCH))) {
                 updatebatterycolor();    
                 DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
@@ -1053,6 +1000,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_35);
 		} else if ( mCustomlogoStyle == 36) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
+		} else if ( mCustomlogoStyle == 37) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_37);
+		} else if ( mCustomlogoStyle == 38) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_38);
+		} else if ( mCustomlogoStyle == 39) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_39);
+		} else if ( mCustomlogoStyle == 40) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_40);
 		}
 
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
@@ -2016,6 +1971,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_35);
 		} else if ( mCustomlogoStyle == 36) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
+		} else if ( mCustomlogoStyle == 37) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_37);
+		} else if ( mCustomlogoStyle == 38) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_38);
+		} else if ( mCustomlogoStyle == 39) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_39);
+		} else if ( mCustomlogoStyle == 40) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_40);
 		}
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
 
