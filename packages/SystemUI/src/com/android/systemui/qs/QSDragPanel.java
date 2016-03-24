@@ -206,9 +206,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
 
 	mTileView = new QSTileView (mContext);
 
-	int color = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_BACKGROUND_COLOR, 0xFFFFFFFF);
-	setDetailBackgroundColor(color);
+	updateicons();
 
         mClipper = new QSDetailClipper(mDetail);
 

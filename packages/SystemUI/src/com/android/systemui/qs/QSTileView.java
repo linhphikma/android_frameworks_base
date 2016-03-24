@@ -145,9 +145,8 @@ public class QSTileView extends ViewGroup {
     private void recreateLabel() {
         CharSequence labelText = null;
         CharSequence labelDescription = null;
-        mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0,
-                UserHandle.USER_CURRENT) == 1;
+	mQsColorSwitch = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
 	int QsTextColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
         if (mLabel != null) {
@@ -275,9 +274,8 @@ public class QSTileView extends ViewGroup {
 
     public void updateColors() {
         final ContentResolver resolver = mContext.getContentResolver();
-          mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0,
-                UserHandle.USER_CURRENT) == 1;
+        mQsColorSwitch = Settings.System.getInt(resolver,
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         if (mQsColorSwitch) {
            mLabelColor = Settings.System.getInt(resolver,
                     Settings.System.QS_TEXT_COLOR, 0xffffffff);
@@ -414,7 +412,7 @@ public class QSTileView extends ViewGroup {
                 mLabel.setTextColor(mContext.getResources().getColor(state.enabled ?
                         R.color.qs_tile_text : R.color.qs_tile_text_disabled));
             }
-        }	
+        }
     }
 
     protected void setIcon(ImageView iv, QSTile.State state) {
