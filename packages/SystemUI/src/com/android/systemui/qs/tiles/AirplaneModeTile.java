@@ -61,18 +61,10 @@ public class AirplaneModeTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public void handleClick() {
-	 boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         MetricsLogger.action(mContext, getMetricsCategory(), !mState.value);
         setEnabled(!mState.value);
-	 if (!mQSCSwitch) {
-            mEnable.setAllowAnimation(true);
-            mDisable.setAllowAnimation(true);
-        } else {
-	mEnable.setAllowAnimation(true);
-            mDisable.setAllowAnimation(true);
-	}
-
+        mEnable.setAllowAnimation(true);
+        mDisable.setAllowAnimation(true);
     }
 
     @Override
@@ -89,26 +81,16 @@ public class AirplaneModeTile extends QSTile<QSTile.BooleanState> {
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         final int value = arg instanceof Integer ? (Integer)arg : mSetting.getValue();
-	boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         final boolean airplaneMode = value != 0;
         state.value = airplaneMode;
         state.visible = true;
         state.label = mContext.getString(R.string.airplane_mode);
         if (airplaneMode) {
-	    if (mQSCSwitch) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_airplane_on);
-	    } else {
-	    state.icon = mEnable;
-	    }
+            state.icon = mEnable;
             state.contentDescription =  mContext.getString(
                     R.string.accessibility_quick_settings_airplane_on);
         } else {
-	     if (mQSCSwitch) {
-	    state.icon = ResourceIcon.get(R.drawable.ic_qs_airplane_off);
-	    } else {
             state.icon = mDisable;
-	   }
             state.contentDescription =  mContext.getString(
                     R.string.accessibility_quick_settings_airplane_off);
         }

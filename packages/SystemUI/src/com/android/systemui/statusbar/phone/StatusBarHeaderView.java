@@ -349,10 +349,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     }
 
     public void setHeaderColor() {
-	final Resources res = getContext().getResources();
 	mHeaderView = findViewById(R.id.header);
-	int mStockHeader = res.getColor(R.color.system_secondary_color);
-	int mStockHeaderText = res.getColor(R.color.qs_edit_header_instruction_text_color);
 	mQsDetailHeaderTitle = (TextView) mQsDetailHeader.findViewById(android.R.id.title);
 	mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         int mHeaderColor = Settings.System.getInt(mContext.getContentResolver(),
@@ -372,19 +369,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	if ( mQsDetailHeaderTitle != null) {
 	    mQsDetailHeaderTitle.setTextColor(mQsDetailColor);
 	}
-     } else {
-		if (mHeaderView != null) {
-            mHeaderView.getBackground().setColorFilter(
-                        mStockHeader, Mode.SRC_OVER);
-        }
-        if (mBackgroundImage != null) {
-            mBackgroundImage.setColorFilter(mStockHeader);
-       	 }
-	if ( mQsDetailHeaderTitle != null) {
-	    mQsDetailHeaderTitle.setTextColor(mStockHeaderText);
-		}
-	}
-	
+     }
    }
 
     @Override
@@ -1498,17 +1483,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	            update();
         }
 
-	@Override
-        public void onChange(boolean selfChange, Uri uri) {
-	 if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_HEADER_TEXT_COLOR))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_HEADER_COLOR))) {
-               	   setHeaderColor();
-            } 
-            update();
-	}
-
         @Override
         protected void unobserve() {
             super.unobserve();
@@ -1544,9 +1518,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     resolver, Settings.System.QS_TRANSPARENT_HEADER, 255);
             setQSHeaderAlpha();
 
-	    mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
-		Settings.System.QS_COLOR_SWITCH, 0) == 1;
-
             mStatusBarHeaderFontStyle = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_HEADER_FONT_STYLE, FONT_NORMAL,
                 UserHandle.USER_CURRENT);
@@ -1578,9 +1549,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	    setweathercolor2();	
 	    setalarmtextcolor();
 	    setbatterytextcolor();	    
-	    setHeaderColor();
-	    hidepanelItems();   
-	    updateEverything();
+        updateVisibilities();
+        requestCaptureValues();
         }
     }
 

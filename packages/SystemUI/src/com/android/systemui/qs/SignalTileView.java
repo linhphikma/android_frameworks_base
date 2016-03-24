@@ -18,14 +18,8 @@ package com.android.systemui.qs;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.Resources;
-import android.content.ContentResolver;
-import android.database.ContentObserver;
-import android.os.Handler;
-import android.os.UserHandle;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
-import android.net.Uri;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -45,8 +39,7 @@ public final class SignalTileView extends QSTileView {
     private ImageView mOverlay;
     private ImageView mIn;
     private ImageView mOut;
-    private boolean mQSColorSwitch = false;
-    private SettingsObserver mSettingsObserver;	
+    private boolean mQsColorSwitch = false;	
 
     private int mWideOverlayIconStartPadding;
 
@@ -58,15 +51,17 @@ public final class SignalTileView extends QSTileView {
 
         mWideOverlayIconStartPadding = context.getResources().getDimensionPixelSize(
                 R.dimen.wide_type_icon_start_padding_qs);
-	mSettingsObserver = new SettingsObserver(mHandler);
     }
 
     private ImageView addTrafficView(int icon) {
-	updateIconColor();
+	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+	int SignalColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
         final ImageView traffic = new ImageView(mContext);
         traffic.setImageResource(icon);
-	  if ( mQSColorSwitch) {
-            traffic.setColorFilter(mIconColor, Mode.MULTIPLY);	  
+	  if ( mQsColorSwitch ) {
+            traffic.setColorFilter(SignalColor, Mode.MULTIPLY);	  
         }
         traffic.setAlpha(0f);
         addView(traffic);
@@ -74,15 +69,11 @@ public final class SignalTileView extends QSTileView {
     }
 
     @Override
-    public View createIcon() {
-	updateIconColor();
+    protected View createIcon() {
         mIconFrame = new FrameLayout(mContext);
         mSignal = new ImageView(mContext);
         mIconFrame.addView(mSignal);
         mOverlay = new ImageView(mContext);
-	 if (mQSColorSwitch) {
-            mSignal.setColorFilter(mIconColor, Mode.MULTIPLY);
-        }
         mIconFrame.addView(mOverlay, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         return mIconFrame;
     }
@@ -158,62 +149,16 @@ public final class SignalTileView extends QSTileView {
         }
     }
 
-	public void updateIconColor() {
-        mQSColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+    public void setIconColor() {
+	int SignalColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
+	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
-        if (mQSColorSwitch) {
-            mIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.QS_ICON_COLOR, 0xffffffff);
-        	}
-	}
-
-      public void setIconColor() {
-	updateIconColor();
-        if (mQSColorSwitch) {
-            mSignal.setColorFilter(mIconColor, Mode.MULTIPLY);
-            mOverlay.setColorFilter(mIconColor, Mode.MULTIPLY);
-            mIn.setColorFilter(mIconColor, Mode.MULTIPLY);
-            mOut.setColorFilter(mIconColor, Mode.MULTIPLY);
-       		 }
-	}
-
-	class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_COLOR_SWITCH),
-                    false, this, UserHandle.USER_ALL);
-            update();
-        }
-
-        void unobserve() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.unregisterContentObserver(this);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            update();
-        }
-
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-	   ContentResolver resolver = mContext.getContentResolver();
-	   if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_COLOR_SWITCH))) {
-               setIconColor();
-		} 
-	        update();
-        }
-
-        public void update() {
-            ContentResolver resolver = mContext.getContentResolver();
-                setIconColor();
+        if (mQsColorSwitch) {
+            mSignal.setColorFilter(SignalColor, Mode.MULTIPLY);
+            mOverlay.setColorFilter(SignalColor, Mode.MULTIPLY);
+            mIn.setColorFilter(SignalColor, Mode.MULTIPLY);
+            mOut.setColorFilter(SignalColor, Mode.MULTIPLY);
         }
     }
-
 }

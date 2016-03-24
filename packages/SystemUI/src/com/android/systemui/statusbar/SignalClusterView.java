@@ -187,7 +187,9 @@ public class SignalClusterView
         for (PhoneState state : mPhoneStates) {
             mMobileSignalGroup.addView(state.mMobileGroup);
         }
+        if (!mIgnoreSystemUITuner) {
             TunerService.get(mContext).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
+        }
 
         apply();
         applyIconTint();
