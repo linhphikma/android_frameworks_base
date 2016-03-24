@@ -150,7 +150,7 @@ public class QSTileView extends ViewGroup {
                 UserHandle.USER_CURRENT) == 1;
 	int QsTextColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
-        if (mLabel != null) {
+        if (mLabel != null && mLabel.isAttachedToWindow()) {
             labelText = mLabel.getText();
             removeView(mLabel);
         }
@@ -280,9 +280,9 @@ public class QSTileView extends ViewGroup {
                 UserHandle.USER_CURRENT) == 1;
         if (mQsColorSwitch) {
            mLabelColor = Settings.System.getInt(resolver,
-                    Settings.System.QS_TEXT_COLOR, 0xffffffff);
+                    Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
            mIconColor = Settings.System.getInt(resolver,
-                    Settings.System.QS_ICON_COLOR, 0xffffffff);
+                    Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
         }
     }
 
