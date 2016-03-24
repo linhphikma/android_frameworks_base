@@ -628,6 +628,141 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         @Override
         protected void observe() {
             super.observe();
+<<<<<<< HEAD
+	ContentResolver resolver = mContext.getContentResolver();
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
+			CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
+			UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.SCREEN_BRIGHTNESS_MODE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
+			CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
+			CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY), false, this);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_RR_LOGO),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_RR_LOGO_COLOR),
+	        false, this, UserHandle.USER_ALL);	
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.BATTERY_SAVER_MODE_COLOR),
+	        false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_WEATHER_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_WEATHER_SIZE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_WEATHER_FONT_STYLE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.LOCKSCREEN_ROTATION),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.ENABLE_TASK_MANAGER),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.USE_SLIM_RECENTS), false, this,
+			UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.RECENT_CARD_BG_COLOR), false, this,
+			UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.RECENT_CARD_TEXT_COLOR), false, this,
+			UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.SHOW_FOURG),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.SHOW_THREEG),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
+	        false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_RR_LOGO),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_RR_LOGO_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_RR_LOGO_STYLE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_COLOR_SWITCH),
+			false, this, UserHandle.USER_ALL);        
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_NETWORK_ICONS_SIGNAL_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_NETWORK_ICONS_NO_SIM_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_NETWORK_ICONS_AIRPLANE_MODE_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_STATUS_ICONS_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUSBAR_COLOR_SWITCH),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.BATTERY_ICON_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.BATTERY_TEXT_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_BACKGROUND_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_ICON_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.NAVBAR_RECENTS_SWITCH),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.SHOW_CUSTOM_LOGO),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.CUSTOM_LOGO_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.CUSTOM_LOGO_STYLE),
+			false, this, UserHandle.USER_ALL);                   
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.CLEAR_RECENTS_STYLE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.CLEAR_RECENTS_STYLE_ENABLE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.GESTURE_ANYWHERE_ENABLED),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.ENABLE_APP_CIRCLE_BAR),
+			false, this, UserHandle.USER_ALL);
+=======
+
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(CMSettings.System.getUriFor(
                     CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
@@ -772,6 +907,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.GESTURE_ANYWHERE_ENABLED),
                     false, this, UserHandle.USER_ALL);
+>>>>>>> parent of 17808b4... SystemUI : 9 More Custom logos [1/2]
+
 		    update();
         }
 
@@ -904,6 +1041,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                    updatebatterycolor(); 
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUSBAR_COLOR_SWITCH))) {
+>>>>>>> parent of 541cee1... Custom SB Logos : Add Resurrection and PitchBlack logos [1/2]
                 updatebatterycolor();    
                 DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
@@ -958,6 +1096,62 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             UserHandle.USER_CURRENT);
             mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
             mBrightnessControl = CMSettings.System.getIntForUser(
+<<<<<<< HEAD
+			resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
+			UserHandle.USER_CURRENT) == 1;
+		mQsColorSwitch = Settings.System.getIntForUser(resolver,
+			Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
+		mIconColor = Settings.System.getIntForUser(resolver,
+			Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
+		mRRLogoStyle = Settings.System.getIntForUser(
+			resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
+			UserHandle.USER_CURRENT);
+		mRRlogo = Settings.System.getIntForUser(resolver,
+			Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
+		mRRLogoColor = Settings.System.getIntForUser(resolver,
+			Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+	       if ( mRRLogoStyle == 0) {
+			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
+			} else if ( mRRLogoStyle == 1) {
+			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
+			} else if ( mRRLogoStyle == 2) {
+			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+			} else if ( mRRLogoStyle == 3) {
+			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);
+			} 
+			showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
+
+		mCustomlogoStyle = Settings.System.getIntForUser(
+		resolver, Settings.System.CUSTOM_LOGO_STYLE, 0,
+		UserHandle.USER_CURRENT);
+		mCustomlogo = Settings.System.getIntForUser(resolver,
+		Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
+		mCustomlogoColor = Settings.System.getIntForUser(resolver,
+		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+		if ( mCustomlogoStyle == 0) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
+		} else if ( mCustomlogoStyle == 1) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
+		} else if ( mCustomlogoStyle == 2) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
+		} else if ( mCustomlogoStyle == 3) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
+		} else if ( mCustomlogoStyle == 4) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
+		} else if ( mCustomlogoStyle == 5) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
+		} else if ( mCustomlogoStyle == 6) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
+		} else if ( mCustomlogoStyle == 7) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
+		} else if ( mCustomlogoStyle == 8) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
+		} else if ( mCustomlogoStyle == 9) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
+		} else if ( mCustomlogoStyle == 10) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
+		} else if ( mCustomlogoStyle == 11) {
+=======
                     resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
          mQsColorSwitch = Settings.System.getIntForUser(resolver,
@@ -1012,6 +1206,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             } else if ( mCustomlogoStyle == 10) {
                  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
             }  else if ( mCustomlogoStyle == 11) {
+>>>>>>> parent of 17808b4... SystemUI : 9 More Custom logos [1/2]
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
 	    } else if ( mCustomlogoStyle == 12) {
                  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
@@ -1933,6 +2128,25 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
             mCustomlogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+<<<<<<< HEAD
+		if ( mCustomlogoStyle == 0) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
+		} else if ( mCustomlogoStyle == 1) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
+		} else if ( mCustomlogoStyle == 2) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
+		} else if ( mCustomlogoStyle == 3) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
+		} else if ( mCustomlogoStyle == 4) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
+		} else if ( mCustomlogoStyle == 5) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
+		} else if ( mCustomlogoStyle == 6) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
+		} else if ( mCustomlogoStyle == 7) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
+		} else if ( mCustomlogoStyle == 8) {
+=======
 	     if ( mCustomlogoStyle == 0) {
                  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
             } else if ( mCustomlogoStyle == 1) {
@@ -1950,6 +2164,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             } else if ( mCustomlogoStyle == 7) {
                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
             } else if ( mCustomlogoStyle == 8) {
+>>>>>>> parent of 17808b4... SystemUI : 9 More Custom logos [1/2]
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
 	    } else if ( mCustomlogoStyle == 9) {
                  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
@@ -3212,7 +3427,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private void UpdateNotifDrawerClearAllIconColor() {
         int color = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR,
+<<<<<<< HEAD
+                0xFFFFFFFF, mCurrentUserId);
+=======
                 0xffffffff, mCurrentUserId);
+>>>>>>> parent of 17808b4... SystemUI : 9 More Custom logos [1/2]
         if (mDismissView != null) {
             mDismissView.updateIconColor(color);
         }
