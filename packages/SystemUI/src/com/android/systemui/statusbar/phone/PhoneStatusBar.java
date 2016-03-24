@@ -469,14 +469,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private ImageView rrLogo;
     private int mRRLogoColor;	
     private int mRRLogoStyle;
-    private int mIconColor;
-
-   // Custom Logos
-
-    private boolean mCustomlogo;
-    private ImageView mCLogo;
-    private int mCustomlogoColor;	
-    private int mCustomlogoStyle;	
+    private int mIconColor;	
 
     // Weather temperature
     TextView mWeatherTempView;
@@ -751,6 +744,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVBAR_RECENTS_SWITCH),
                     false, this, UserHandle.USER_ALL);
+<<<<<<< HEAD
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SHOW_CUSTOM_LOGO),
                     false, this, UserHandle.USER_ALL);
@@ -772,6 +766,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.GESTURE_ANYWHERE_ENABLED),
                     false, this, UserHandle.USER_ALL);
+=======
+
+>>>>>>> parent of a59d5a7... Statusbar: Custom Logos and Styles [1/2]
 		    update();
         }
 
@@ -919,26 +916,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_BACKGROUND_COLOR))) {
                	updateQsColors();
-       } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.SHOW_CUSTOM_LOGO))) {
-                DontStressOnRecreate();
-	   } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.CUSTOM_LOGO_STYLE))) {
-                DontStressOnRecreate();
-	   } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.CLEAR_RECENTS_STYLE))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.CLEAR_RECENTS_STYLE_ENABLE))) 
-                    {
-               	DontStressOnRecreate();
-	  }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.GESTURE_ANYWHERE_ENABLED))) {
-              DontStressOnRecreate();
-	} else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.ENABLE_APP_CIRCLE_BAR))) {
-           DontStressOnRecreate();
-	}
-         update();
+            }  
+            update();
         }
 
         @Override
@@ -981,53 +960,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);
             } 
             showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
-
-            mCustomlogoStyle = Settings.System.getIntForUser(
-                    resolver, Settings.System.CUSTOM_LOGO_STYLE, 0,
-                    UserHandle.USER_CURRENT);
-            mCustomlogo = Settings.System.getIntForUser(resolver,
-                    Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
-            mCustomlogoColor = Settings.System.getIntForUser(resolver,
-                    Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-	       if ( mCustomlogoStyle == 0) {
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
-            } else if ( mCustomlogoStyle == 1) {
-			  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
-	    } else if ( mCustomlogoStyle == 2) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
-            } else if ( mCustomlogoStyle == 3) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
-            }  else if ( mCustomlogoStyle == 4) {
-			  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
-	    } else if ( mCustomlogoStyle == 5) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
-            } else if ( mCustomlogoStyle == 6) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
-            } else if ( mCustomlogoStyle == 7) {
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
-            } else if ( mCustomlogoStyle == 8) {
-			  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
-	    } else if ( mCustomlogoStyle == 9) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
-            } else if ( mCustomlogoStyle == 10) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
-            }  else if ( mCustomlogoStyle == 11) {
-			  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
-	    } else if ( mCustomlogoStyle == 12) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
-            } else if ( mCustomlogoStyle == 13) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
-            } else if ( mCustomlogoStyle == 14) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
-            }
-            showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
-
-
-
        
            boolean mGestureAnywhere = Settings.System.getIntForUser(resolver,
                     Settings.System.GESTURE_ANYWHERE_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
-
 
 	   int  mQSBackgroundColor = Settings.System.getInt(
                             resolver, Settings.System.QS_BACKGROUND_COLOR, 0xff263238);
@@ -1899,46 +1834,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mRRLogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
        showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
-
-	mCustomlogoStyle = Settings.System.getIntForUser(mContext.getContentResolver(), 
-		    Settings.System.CUSTOM_LOGO_STYLE, 0,
-                    UserHandle.USER_CURRENT);
-            mCustomlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
-            mCustomlogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-	     if ( mCustomlogoStyle == 0) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
-            } else if ( mCustomlogoStyle == 1) {
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
-	    } else if ( mCustomlogoStyle == 2) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
-            } else if ( mCustomlogoStyle == 3) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
-            }  else if ( mCustomlogoStyle == 4) {
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
-	    } else if ( mCustomlogoStyle == 5) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
-            } else if ( mCustomlogoStyle == 6) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
-            } else if ( mCustomlogoStyle == 7) {
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
-            } else if ( mCustomlogoStyle == 8) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
-	    } else if ( mCustomlogoStyle == 9) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
-            } else if ( mCustomlogoStyle == 10) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
-            }  else if ( mCustomlogoStyle == 11) {
-			  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
-	    } else if ( mCustomlogoStyle == 12) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
-            } else if ( mCustomlogoStyle == 13) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
-            } else if ( mCustomlogoStyle == 14) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
-            }
-            showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
 
         mIconColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
@@ -4591,7 +4486,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     public void showRRLogo(boolean show , int color , int style) {
         if (mStatusBarView == null) return;
 
-  	 if (!show) {
+   if (!show) {
             rrLogo.setVisibility(View.GONE);
             return;
         }
@@ -4610,67 +4505,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);       
         }
         rrLogo.setVisibility(View.VISIBLE);
-	}
-
-    public void showmCustomlogo(boolean show , int color , int style) { 
-
-	if (mStatusBarView == null) return;
-
-  	 if (!show) {
-            mCLogo.setVisibility(View.GONE);
-            return;
-        }
-
-	mCLogo.setColorFilter(color, Mode.MULTIPLY);
-     	      if ( style == 0) {
-		 mCLogo.setVisibility(View.GONE);
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
-            } else if ( style == 1) {
-		 mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
-	    } else if ( style == 2) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
-            } else if ( style == 3) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
-            }  else if ( style == 4) {
-		 mCLogo.setVisibility(View.GONE);
-	         mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
-	    } else if ( style == 5) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
-            } else if ( style == 6) {
-		 mCLogo.setVisibility(View.GONE);
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
-	    } else if ( style == 7) {
-		 mCLogo.setVisibility(View.GONE);
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
-            } else if ( style == 8) {
-		 mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
-	    } else if ( style == 9) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
-            } else if ( style == 10) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
-            }  else if ( style == 11) {
-		 mCLogo.setVisibility(View.GONE);
-	         mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
-	    } else if ( style == 12) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
-            } else if ( style == 13) {
-		 mCLogo.setVisibility(View.GONE);
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
-	    } else if ( style == 14) {
-		 mCLogo.setVisibility(View.GONE);
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
-
-		}
-        mCLogo.setVisibility(View.VISIBLE);
-
 	}
   
 
