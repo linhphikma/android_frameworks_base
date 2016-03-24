@@ -401,6 +401,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private BatteryLevelTextView mBatteryTextView;
 
     private boolean mQsColorSwitch = false;
+    public boolean mColorSwitch = false ;
 
     int mPixelFormat;
     Object mQueueLock = new Object();
@@ -716,6 +717,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_COLOR_SWITCH),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BATTERY_ICON_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BATTERY_TEXT_COLOR),
+                    false, this, UserHandle.USER_ALL);
 		    update();
         }
 
@@ -840,7 +850,34 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR))) {
                 updateNotificationIconsColor();
-	   }
+	   }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.BATTERY_ICON_COLOR))) {
+                   updatebatterycolor(); 
+	   } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.BATTERY_TEXT_COLOR))) {
+                   updatebatterycolor(); 
+	   } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_COLOR_SWITCH))) {
+                recreateStatusBar();
+                updateRowStates();
+                updateSpeedbump();
+                updateClearAll();
+                updateEmptyShadeView();
+	   }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.BATTERY_ICON_COLOR))) {
+                 recreateStatusBar();
+                updateRowStates();
+                updateSpeedbump();
+                updateClearAll();
+                updateEmptyShadeView();
+	   }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.BATTERY_TEXT_COLOR))) {
+                recreateStatusBar();
+                updateRowStates();
+                updateSpeedbump();
+                updateClearAll();
+                updateEmptyShadeView();
+	   } 
             update();
         }
 
@@ -2974,11 +3011,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     
     
     private void updateNetworkIconColors() {
+	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
+	    if(mColorSwitch) {
             mIconController.updateNetworkIconColors();
+	   }
         }
         if (mKeyguardStatusBar != null) {
+	     if(mColorSwitch) {
             mKeyguardStatusBar.updateNetworkIconColors();
+	    }
         }
     }
     
@@ -2994,41 +3037,67 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     private void updateNetworkSignalColor() {
+	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
+	    if(mColorSwitch) {
             mIconController.updateNetworkSignalColor();
+		}
         }
         if (mKeyguardStatusBar != null) {
+	    if(mColorSwitch) {
             mKeyguardStatusBar.updateNetworkIconColors();
+	    }
         }
     }
 
     private void updateNoSimColor() {
+	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
+	     if(mColorSwitch) {
             mIconController.updateNoSimColor();
+	   }
         }
         if (mKeyguardStatusBar != null) {
+	     if(mColorSwitch) {
             mKeyguardStatusBar.updateNoSimColor();
+	   }
         }
     }
 
     private void updateAirplaneModeColor() {
+	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
+	    if(mColorSwitch) {
             mIconController.updateAirplaneModeColor();
+	   }
         }
         if (mKeyguardStatusBar != null) {
+	    if(mColorSwitch) {
             mKeyguardStatusBar.updateAirplaneModeColor();
+	    }
         }
     }
 
     private void updateStatusIconsColor() {
+	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
+	    if(mColorSwitch) {
             mIconController.updateStatusIconsColor();
+	    }
         }
     }
 
     private void updateNotificationIconsColor() {
+	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
+	    if(mColorSwitch) {
             mIconController.updateNotificationIconsColor();
+	    }
         }
     }
 
