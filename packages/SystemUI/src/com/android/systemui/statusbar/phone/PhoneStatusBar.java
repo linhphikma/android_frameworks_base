@@ -2282,13 +2282,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         } catch (Exception e){
             Log.d("Fuck shit", String.valueOf(e));
         }
-	if (mStatusBarHeaderMachine == null) {
-        mStatusBarHeaderMachine = new StatusBarHeaderMachine(mContext);
-        }
-        mStatusBarHeaderMachine.addObserver(mHeader);
-        mStatusBarHeaderMachine.updateEnablement();
-        UpdateNotifDrawerClearAllIconColor();
-        updateNetworkIconColors();
         return mStatusBarView;
     }
 	
@@ -3271,10 +3264,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
    public void updateQsColors() {		
-	mHeader.setHeaderColor();
 	mQSPanel.updateicons();
-	mNotificationPanel.setQSBackgroundColor();
-	mNotificationPanel.setQSColors();
 	mQsPanel.updatecolors();
 	mSignalView.setIconColor();
 	mTileView.setIconColor();
