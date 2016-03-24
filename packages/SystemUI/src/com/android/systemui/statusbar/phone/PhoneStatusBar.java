@@ -744,6 +744,31 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVBAR_RECENTS_SWITCH),
                     false, this, UserHandle.USER_ALL);
+<<<<<<< HEAD
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SHOW_CUSTOM_LOGO),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_LOGO_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_LOGO_STYLE),
+                    false, this, UserHandle.USER_ALL);                   
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CLEAR_RECENTS_STYLE),
+                    false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CLEAR_RECENTS_STYLE_ENABLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_NUM_TILE_COLUMNS),
+                    false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.GESTURE_ANYWHERE_ENABLED),
+                    false, this, UserHandle.USER_ALL);
+=======
+
+>>>>>>> parent of a59d5a7... Statusbar: Custom Logos and Styles [1/2]
 		    update();
         }
 
@@ -880,7 +905,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH))) {
-                updateQsColors();
+                DontStressOnRecreate();
+       } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_ICON_COLOR))) {
+                DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_TEXT_COLOR))
                     || uri.equals(Settings.System.getUriFor(
