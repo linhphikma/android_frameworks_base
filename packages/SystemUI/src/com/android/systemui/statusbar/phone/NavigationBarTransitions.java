@@ -23,10 +23,12 @@ import android.os.ServiceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.systemui.statusbar.BarTransitions;
 import com.android.systemui.R;
+import com.android.internal.util.omni.ColorUtils;
 
 public final class NavigationBarTransitions extends BarTransitions {
 
@@ -34,6 +36,7 @@ public final class NavigationBarTransitions extends BarTransitions {
     private final IStatusBarService mBarService;
 
     private boolean mLightsOut;
+    private int mCurrentColor;
 
     public NavigationBarTransitions(NavigationBarView view) {
         super(view, R.drawable.nav_background, R.color.navigation_bar_background_opaque,
@@ -60,6 +63,38 @@ public final class NavigationBarTransitions extends BarTransitions {
 
         // apply to lights out
         applyLightsOut(isLightsOut(mode), animate, force);
+    }
+    
+    @Override
+    public void changeColorIconBackground(int bg_color, int ic_color) {
+        if (ColorUtils.isBrightColor(bg_color)) {
+            ic_color = Color.BLACK;
+        }
+        mCurrentColor = ic_color;
+        setColorButtonNavigationBar(ic_color);
+        super.changeColorIconBackground(bg_color, ic_color);
+    }
+
+    private void setColorButtonNavigationBar(int ic_color) {
+        setKeyButtonViewButtonColor(mView.getSearchLight(), ic_color);
+        setKeyButtonViewButtonColor(mView.getCameraButton(), ic_color);
+    }
+
+    /*private void setKeyButtonViewColor(ButtonInfo info, int ic_color) {
+        View button = mView.findViewWithTag(info);
+        if (button != null) {
+            setKeyButtonViewButtonColor(button, ic_color);
+        }
+    }*/
+
+    private void setKeyButtonViewButtonColor(View button, int ic_color) {
+        if (button instanceof KeyButtonView) {
+            if (ic_color == -3) {
+                ((KeyButtonView) button).clearColorFilterBg();
+            } else {
+                ((KeyButtonView) button).setColorFilterBg(ic_color, PorterDuff.Mode.SRC_ATOP);
+            }
+        }
     }
 
     private void applyLightsOut(boolean lightsOut, boolean animate, boolean force) {

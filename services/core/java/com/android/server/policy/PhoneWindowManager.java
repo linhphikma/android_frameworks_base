@@ -284,6 +284,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private WindowState mKeyguardScrim;
     private boolean mKeyguardHidden;
     private boolean mKeyguardDrawnOnce;
+    private boolean mCurrentColorProgress;
 
     /* Table of Application Launch keys.  Maps from key codes to intent categories.
      *
@@ -1004,6 +1005,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.NAVIGATION_BAR_WIDTH), false, this,
+                    UserHandle.USER_ALL);
+			resolver.registerContentObserver(Settings.PAC.getUriFor(
+                    Settings.PAC.STATUS_BAR_TINTED_COLOR), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -1933,6 +1937,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                                     PowerManagerInternal.POWER_HINT_INTERACTION, duration);
                         }
                     }
+                     @Override
+                    public void onTouchDown() {
+                        sendAppColorBroadcast(20);
+                    }
+                    @Override
+                    public void onTouchUpCancel() {
+                        sendAppColorBroadcast(40);
+                    }
                     @Override
                     public void onDebug() {
                         // no-op
@@ -2275,7 +2287,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     CMSettings.System.VOLBTN_MUSIC_CONTROLS, 1, UserHandle.USER_CURRENT) == 1);
 	     mVolumeAnswer = (Settings.System.getIntForUser(resolver,
                     Settings.System.ANSWER_VOLUME_BUTTON_BEHAVIOR_ANSWER, 0, UserHandle.USER_CURRENT) == 1);
-
+			mCurrentColorProgress = Settings.PAC.getIntForUser(
+                    resolver, Settings.PAC.STATUS_BAR_TINTED_COLOR, 0
+                    , UserHandle.USER_CURRENT) != 0;
             // Configure wake gesture.
             boolean wakeGestureEnabledSetting = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.WAKE_GESTURE_ENABLED, 0,
@@ -8034,6 +8048,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         vis = mNavigationBarController.updateVisibilityLw(transientNavBarAllowed, oldVis, vis);
+        
+        boolean notChangingColor = immersiveSticky
+                                     && hideStatusBarSysui
+                                       && hideNavBarSysui;
+        sendAppImmersiveMode(notChangingColor ? 1 : 0);
 
         return vis;
     }
@@ -8053,6 +8072,52 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 && (vis & flags) != 0
                 && canHideNavigationBar();
     }
+    
+    public void sendAppColorBroadcast(int duration) {
+        if (!mCurrentColorProgress) {
+            return;
+        }
+        try {
+             IStatusBarService statusbar = getStatusBarService();
+             if (statusbar != null) {
+                 statusbar.sendAppColorBroadcast(duration);
+             }
+        } catch (RemoteException e) {
+                 // re-acquire status bar service next time it is needed.
+             mStatusBarService = null;
+        }
+    }
+
+    public void sendActionColorBroadcast(int st_color, int ic_color) {
+        if (!mCurrentColorProgress) {
+            return;
+        }
+        try {
+             IStatusBarService statusbar = getStatusBarService();
+             if (statusbar != null) {
+                 statusbar.sendActionColorBroadcast(st_color, ic_color);
+             }
+        } catch (RemoteException e) {
+                 // re-acquire status bar service next time it is needed.
+             mStatusBarService = null;
+        }
+    }
+
+    private void sendAppImmersiveMode(int whats) {
+        if (!mCurrentColorProgress) {
+            return;
+        }
+        try {
+             IStatusBarService statusbar = getStatusBarService();
+             if (statusbar != null) {
+                 statusbar.sendAppImmersiveMode(whats);
+             }
+        } catch (RemoteException e) {
+                 // re-acquire status bar service next time it is needed.
+             mStatusBarService = null;
+        }
+    }
+
 
     /**
      * @return whether the navigation or status bar can be made translucent

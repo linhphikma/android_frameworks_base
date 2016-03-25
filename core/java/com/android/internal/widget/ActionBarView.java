@@ -695,6 +695,20 @@ public class ActionBarView extends AbsActionBarView implements DecorToolbar {
     public boolean hasLogo() {
         return mLogo != null;
     }
+    
+    /**
+     * @hide
+     */
+    public Drawable getBackgroundActionBar() {
+        return mUpGoerFive.getBackground();
+    }
+
+    /**
+     * @hide
+     */
+    public TextView getTitleViewActionBar() {
+        return mTitleView;
+    }
 
     public void setNavigationMode(int mode) {
         final int oldMode = mNavigationMode;

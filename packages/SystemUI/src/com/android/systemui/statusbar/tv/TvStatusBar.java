@@ -195,4 +195,16 @@ public class TvStatusBar extends BaseStatusBar {
     protected boolean isSnoozedPackage(StatusBarNotification sbn) {
         return false;
     }
+    
+    @Override // CommandQueue
+    public void sendActionColorBroadcast(int st_color, int ic_color) {
+    }
+
+    @Override // CommandQueue
+    public void sendAppColorBroadcast(int duration) {
+    }
+
+    @Override // CommandQueue
+    public void sendAppImmersiveMode(int whats) {
+    }
 }
