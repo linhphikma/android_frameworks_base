@@ -300,7 +300,5 @@
     <!-- Allow Flashlight service to use wakelock -->
     <bool name="flashlight_use_wakelock">false</bool>
 
-    <!-- DSB color transiion duration (ms) -->
-    <integer name="dsb_transition_duration">500</integer>
 </resources>
 

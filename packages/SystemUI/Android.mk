@@ -42,25 +42,6 @@ endif
 include frameworks/base/packages/SettingsLib/common.mk
 
 include $(BUILD_PACKAGE)
-include $(CLEAR_VARS)
-
-LOCAL_MODULE_TAGS := optional
-
-LOCAL_SRC_FILES := \
-    jni/com_android_systemui_statusbar_phone_BarBackgroundUpdaterNative.cpp
-
-LOCAL_SHARED_LIBRARIES := \
-    libutils \
-    libgui \
-    liblog
-
-LOCAL_MODULE := SystemUI
-# LOCAL_CERTIFICATE := platform
-# LOCAL_PRIVILEGED_MODULE := true
-
-# TARGET_OUT_SHARED_LIBRARIES_PRIVILEGED := $(TARGET_OUT_SHARED_LIBRARIES)
-
-include $(BUILD_SHARED_LIBRARY)
 
 ifeq ($(EXCLUDE_SYSTEMUI_TESTS),)
     include $(call all-makefiles-under,$(LOCAL_PATH))
