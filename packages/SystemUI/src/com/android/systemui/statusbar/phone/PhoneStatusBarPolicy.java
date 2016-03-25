@@ -87,6 +87,7 @@ public class PhoneStatusBarPolicy implements Callback {
     private static final String SLOT_MANAGED_PROFILE = "managed_profile";
     private static final String SLOT_SU = "su";
     private static final String SLOT_HEADSET = "headset";
+    private static final String SLOT_SU = "su"; 
 
     private final Context mContext;
     private final StatusBarManager mService;
