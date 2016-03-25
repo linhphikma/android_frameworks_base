@@ -16,6 +16,9 @@
 
 package com.android.systemui.statusbar.phone;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.LayoutTransition;
 import android.animation.LayoutTransition.TransitionListener;
 import android.animation.Animator;
@@ -32,6 +35,7 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -77,9 +81,13 @@ public class NavigationBarView extends BaseNavigationBar {
     final static int PULSE_FADE_OUT_DURATION = 250;
     final static int PULSE_FADE_IN_DURATION = 200;
 
+    View mCurrentView = null;
     int mBarSize;
     boolean mShowMenu;
 
+
+    private int mPreviousOverrideIconColor = 0;
+    private int mOverrideIconColor = 0;
     private BackButtonDrawable mBackIcon, mBackLandIcon;
     private Drawable mBackAltIcon, mBackAltLandIcon;
     private Drawable mRecentIcon;
@@ -99,6 +107,8 @@ public class NavigationBarView extends BaseNavigationBar {
     private boolean mIsLayoutRtl;
     private boolean mWakeAndUnlocking;
 
+    private final int mDSBDuration;
+	
     private GestureDetector mDoubleTapGesture;
     private boolean mIsHandlerCallbackActive = false;
 
@@ -189,6 +199,20 @@ public class NavigationBarView extends BaseNavigationBar {
 
         mSettingsObserver = new SettingsObserver(new Handler());
 
+        mDSBDuration = context.getResources().getInteger(R.integer.dsb_transition_duration);
+        BarBackgroundUpdater.addListener(new BarBackgroundUpdater.UpdateListener(this) {
+
+            @Override
+            public Animator onUpdateNavigationBarIconColor(final int previousIconColor,
+                    final int iconColor) {
+                mPreviousOverrideIconColor = previousIconColor;
+                mOverrideIconColor = iconColor;
+
+                return generateButtonColorsAnimatorSet();
+            }
+
+        });
+
         mDoubleTapGesture = new GestureDetector(mContext,
                 new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -201,6 +225,54 @@ public class NavigationBarView extends BaseNavigationBar {
 
     }
 
+    private AnimatorSet generateButtonColorsAnimatorSet() {
+        final ImageView[] buttons = new ImageView[] {
+            (ImageView) (mCurrentView == null ? null : mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_RECENT)),
+            (ImageView) (mCurrentView == null ? null : mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_BACK)),
+            (ImageView) (mCurrentView == null ? null : mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_HOME)),
+            (ImageView) (mCurrentView == null ? null : mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_CONDITIONAL_MENU)),
+            (ImageView) (mCurrentView == null ? null : mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_ALWAYS_MENU)),
+            (ImageView) (mCurrentView == null ? null : mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_MENU_BIG)),
+            (ImageView) (mCurrentView == null ? null : mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_SEARCH)),
+            (ImageView) (mCurrentView == null ? null : mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_DPAD_LEFT)),
+            (ImageView) (mCurrentView == null ? null : mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_DPAD_RIGHT)),
+            (ImageView) getRecentsButton(),
+            (ImageView) getMenuButton(),
+            (ImageView) getBackButton(),
+			(ImageView) getHomeButton(),
+			(ImageView) getImeSwitchButton()
+        };
+
+        final ArrayList<Animator> anims = new ArrayList<Animator>();
+
+        for (final ImageView button : buttons) {
+            if (button != null) {
+                if (mOverrideIconColor == 0) {
+                    mHandler.post(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            button.setColorFilter(null);
+                        }
+
+                    });
+                } else {
+                    anims.add(ObjectAnimator.ofObject(button, "colorFilter",
+                            new ArgbEvaluator(), mPreviousOverrideIconColor,
+                            mOverrideIconColor).setDuration(mDSBDuration));
+                }
+            }
+        }
+
+        if (anims.isEmpty()) {
+            return null;
+        } else {
+            final AnimatorSet animSet = new AnimatorSet();
+            animSet.playTogether(anims);
+            return animSet;
+        }
+     }
+	 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -259,23 +331,23 @@ public class NavigationBarView extends BaseNavigationBar {
     }
 
     public View getRecentsButton() {
-        return mCurrentView.findViewById(R.id.recent_apps);
+        return mCurrentView == null ? null : mCurrentView.findViewById(R.id.recent_apps);
     }
 
     public View getMenuButton() {
-        return mCurrentView.findViewById(R.id.menu);
+        return mCurrentView == null ? null : mCurrentView.findViewById(R.id.menu);
     }
 
     public View getBackButton() {
-        return mCurrentView.findViewById(R.id.back);
+        return mCurrentView == null ? null : mCurrentView.findViewById(R.id.back);
     }
 
     public View getHomeButton() {
-        return mCurrentView.findViewById(R.id.home);
+        return mCurrentView == null ? null : mCurrentView.findViewById(R.id.home);
     }
 
     private View getImeSwitchButton() {
-        return mCurrentView.findViewById(R.id.ime_switcher);
+        return mCurrentView == null ? null : mCurrentView.findViewById(R.id.ime_switcher);
     }
 
     private void getIcons(Resources res) {
@@ -426,6 +498,16 @@ public class NavigationBarView extends BaseNavigationBar {
     public void onFinishInflate() {
         super.onFinishInflate();
         getImeSwitchButton().setOnClickListener(mImeSwitcherClickListener);
+
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final AnimatorSet animSet = generateButtonColorsAnimatorSet();
+                if (animSet != null) {
+                    animSet.start();
+                }
+            }
+        });
         updateRTLOrder();
     }
 
@@ -455,6 +537,16 @@ public class NavigationBarView extends BaseNavigationBar {
         updateTaskSwitchHelper();
 
         setNavigationIconHints(mNavigationIconHints, true);
+
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final AnimatorSet animSet = generateButtonColorsAnimatorSet();
+                if (animSet != null) {
+                    animSet.start();
+                }
+            }
+        });
     }
 
     private void updateTaskSwitchHelper() {
