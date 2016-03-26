@@ -31,7 +31,7 @@ import com.android.internal.widget.ActionBarContextView;
 import com.android.internal.widget.ActionBarOverlayLayout;
 import com.android.internal.widget.DecorToolbar;
 import com.android.internal.widget.ScrollingTabContainerView;
-
+import com.android.internal.widget.ActionBarView;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
@@ -86,6 +86,7 @@ public class WindowDecorActionBar extends ActionBar implements
     private ActionBarOverlayLayout mOverlayLayout;
     private ActionBarContainer mContainerView;
     private DecorToolbar mDecorToolbar;
+	private ActionBarView mActionView;
     private ActionBarContextView mContextView;
     private ActionBarContainer mSplitView;
     private View mContentView;
@@ -117,6 +118,9 @@ public class WindowDecorActionBar extends ActionBar implements
 
     private int mContextDisplayMode;
     private boolean mHasEmbeddedTabs;
+
+    final Handler mHandler = new Handler();
+    Runnable mTabSelector;
 
     private int mCurWindowVisibility = View.VISIBLE;
 
@@ -494,15 +498,15 @@ public class WindowDecorActionBar extends ActionBar implements
                 }
             }
         }
-        if (mDecorToolbar != null) {
-            TextView titleView = mDecorToolbar.getTitleViewActionBar();
+        if (mActionView != null) {
+            TextView titleView = mActionView.getTitleViewActionBar();
             if (titleView != null) {
                 if (titleView.getVisibility() == View.VISIBLE) {
                     textColor = titleView.getCurrentTextColor();
                 }
             }
             if ((drawable == null) && (textColor != -3)) {
-                drawable = mDecorToolbar.getBackgroundActionBar();
+                drawable = mActionView.getBackgroundActionBar();
                 if (drawable == null) {
                     View viewAV = getCustomView();
                     if (viewAV != null) {
@@ -541,22 +545,14 @@ public class WindowDecorActionBar extends ActionBar implements
             }
         }
 
-        if (mDecorToolbar != null) {
-            TextView titleView = mDecorToolbar.getTitleViewActionBar();
+        if (mActionView != null) {
+            TextView titleView = mActionView.getTitleViewActionBar();
             if (titleView != null) {
                 if (titleView.getVisibility() == View.VISIBLE) {
                     textColor = titleView.getCurrentTextColor();
                 }
             }
-            if ((drawable == null) && (textColor != -3)) {
-                drawable = mDecorToolbar.getBackgroundActionBar();
-                if (drawable == null) {
-                    View viewAV = mDecorToolbar.getCustomNavigationView();
-                    if (viewAV != null) {
-                        drawable = viewAV.getBackground();
-                    }
-                }
-            }
+
         }
 
         int color = ColorUtils.getMainColorFromDrawable(drawable);

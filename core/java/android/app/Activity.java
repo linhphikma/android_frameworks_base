@@ -78,8 +78,10 @@ import android.text.TextUtils;
 import android.text.method.TextKeyListener;
 import android.util.AttributeSet;
 import android.util.EventLog;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.PrintWriterPrinter;
+import android.util.TypedValue;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.view.ActionMode;
@@ -749,7 +751,7 @@ public class Activity extends ContextThemeWrapper
     /*package*/ boolean mWindowAdded = false;
     /*package*/ boolean mVisibleFromServer = false;
     /*package*/ boolean mVisibleFromClient = true;
-    /*package*/ ActionBar mActionBar = null;
+    /*package*/ WindowDecorActionBar mActionBar = null;
     private boolean mEnableDefaultActionBarUp;
 
     private VoiceInteractor mVoiceInteractor;
@@ -1169,8 +1171,8 @@ public class Activity extends ContextThemeWrapper
     }
 
     private boolean getAppColorEnabled() {
-        int enabled = Settings.PAC.getIntForUser(
-                    getContentResolver(), Settings.PAC.STATUS_BAR_TINTED_COLOR, 0
+        int enabled = Settings.System.getIntForUser(
+                    getContentResolver(), Settings.System.STATUS_BAR_TINTED_COLOR, 0
                     , UserHandle.USER_CURRENT_OR_SELF);
         return (enabled != 0);
     }
@@ -2131,36 +2133,6 @@ public class Activity extends ContextThemeWrapper
     public ActionBar getActionBar() {
         initWindowDecorActionBar();
         return mActionBar;
-    }
-
-    /**
-     * Set a {@link android.widget.Toolbar Toolbar} to act as the {@link ActionBar} for this
-     * Activity window.
-     *
-     * <p>When set to a non-null value the {@link #getActionBar()} method will return
-     * an {@link ActionBar} object that can be used to control the given toolbar as if it were
-     * a traditional window decor action bar. The toolbar's menu will be populated with the
-     * Activity's options menu and the navigation button will be wired through the standard
-     * {@link android.R.id#home home} menu select action.</p>
-     *
-     * <p>In order to use a Toolbar within the Activity's window content the application
-     * must not request the window feature {@link Window#FEATURE_ACTION_BAR FEATURE_ACTION_BAR}.</p>
-     *
-     * @param toolbar Toolbar to set as the Activity's action bar
-     */
-    public void setActionBar(@Nullable Toolbar toolbar) {
-        if (getActionBar() instanceof WindowDecorActionBar) {
-            throw new IllegalStateException("This Activity already has an action bar supplied " +
-                    "by the window decor. Do not request Window.FEATURE_ACTION_BAR and set " +
-                    "android:windowActionBar to false in your theme to use a Toolbar instead.");
-        }
-        // Clear out the MenuInflater to make sure that it is valid for the new Action Bar
-        mMenuInflater = null;
-
-        ToolbarActionBar tbab = new ToolbarActionBar(toolbar, getTitle(), this);
-        mActionBar = tbab;
-        mWindow.setCallback(tbab.getWrappedWindowCallback());
-        mActionBar.invalidateOptionsMenu();
     }
 
     /**

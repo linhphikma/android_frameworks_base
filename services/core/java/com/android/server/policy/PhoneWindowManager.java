@@ -1006,8 +1006,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.NAVIGATION_BAR_WIDTH), false, this,
                     UserHandle.USER_ALL);
-			resolver.registerContentObserver(Settings.PAC.getUriFor(
-                    Settings.PAC.STATUS_BAR_TINTED_COLOR), false, this,
+			resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_TINTED_COLOR), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -1937,14 +1937,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                                     PowerManagerInternal.POWER_HINT_INTERACTION, duration);
                         }
                     }
-                     @Override
-                    public void onTouchDown() {
-                        sendAppColorBroadcast(20);
-                    }
-                    @Override
-                    public void onTouchUpCancel() {
-                        sendAppColorBroadcast(40);
-                    }
                     @Override
                     public void onDebug() {
                         // no-op
@@ -2287,8 +2279,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     CMSettings.System.VOLBTN_MUSIC_CONTROLS, 1, UserHandle.USER_CURRENT) == 1);
 	     mVolumeAnswer = (Settings.System.getIntForUser(resolver,
                     Settings.System.ANSWER_VOLUME_BUTTON_BEHAVIOR_ANSWER, 0, UserHandle.USER_CURRENT) == 1);
-			mCurrentColorProgress = Settings.PAC.getIntForUser(
-                    resolver, Settings.PAC.STATUS_BAR_TINTED_COLOR, 0
+			mCurrentColorProgress = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_TINTED_COLOR, 0
                     , UserHandle.USER_CURRENT) != 0;
             // Configure wake gesture.
             boolean wakeGestureEnabledSetting = Settings.Secure.getIntForUser(resolver,

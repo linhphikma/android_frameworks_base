@@ -789,22 +789,22 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.ENABLE_APP_CIRCLE_BAR),
 			false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.PAC.getUriFor(
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.PAC.STATUS_BAR_TINTED_COLOR), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.PAC.getUriFor(
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.PAC.STATUS_BAR_TINTED_OPTION), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.PAC.getUriFor(
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.PAC.STATUS_BAR_TINTED_FILTER), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.PAC.getUriFor(
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.PAC.STATUS_BAR_TINTED_GRADIENT), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.PAC.getUriFor(
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.PAC.STATUS_BAR_TINTED_STATBAR_TRANSPARENT), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.PAC.getUriFor(
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.PAC.STATUS_BAR_TINTED_NAVBAR_TRANSPARENT), false, this,
                     UserHandle.USER_ALL);
 
