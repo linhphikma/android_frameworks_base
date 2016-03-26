@@ -2487,23 +2487,7 @@ public final class Settings {
 		public static final String TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY = "hook_system_ui_translucent_notifications_pref";
 
         /**
-         * Whether to enable Swipe Back Layout Gesture
-         * Default: 0
-         *
-         * @hide
-         */
-        public static final String SWIPE_BACK_GESTURE_ENABLED = "swipe_back_gesture_enabled";
-
-        /**
-         * Swipe edge of the swipe back layout gesture
-         *
-         * @hide
-         */
-        public static final String SWIPE_BACK_GESTURE_EDGE = "swipe_back_gesture_edge";
-
-        /**
-         * Chinese date view
-         * @hide
+         * Scaling factor for fonts, float.
          */
         public static final String FONT_SCALE = "font_scale";
 

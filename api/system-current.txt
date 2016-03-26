@@ -3443,7 +3443,6 @@ package android.app {
     method public android.net.Uri getReferrer();
     method public int getRequestedOrientation();
     method public final android.view.SearchEvent getSearchEvent();
-    method public android.app.SwipeBackLayout getSwipeBackLayout();
     method public int getTaskId();
     method public final java.lang.CharSequence getTitle();
     method public final int getTitleColor();
@@ -3453,7 +3452,6 @@ package android.app {
     method public android.view.WindowManager getWindowManager();
     method public boolean hasWindowFocus();
     method public void invalidateOptionsMenu();
-    method public static boolean isAllowedForSwipeBack(java.lang.String);
     method public boolean isBackgroundVisibleBehind();
     method public boolean isChangingConfigurations();
     method public final boolean isChild();
@@ -3584,8 +3582,6 @@ package android.app {
     method public final void setResult(int);
     method public final void setResult(int, android.content.Intent);
     method public final void setSecondaryProgress(int);
-    method public static boolean setSwipeBackBlacklistStatus(java.lang.String, boolean);
-    method public void setSwipeBackEnable(boolean);
     method public void setTaskDescription(android.app.ActivityManager.TaskDescription);
     method public void setTitle(java.lang.CharSequence);
     method public void setTitle(int);
@@ -5453,34 +5449,6 @@ package android.app {
     method public abstract void onSharedElementsReady();
   }
 
-  public class SwipeBackLayout extends android.widget.FrameLayout {
-    ctor public SwipeBackLayout(android.content.Context);
-    ctor public SwipeBackLayout(android.content.Context, android.util.AttributeSet);
-    ctor public SwipeBackLayout(android.content.Context, android.util.AttributeSet, int);
-    method public void attachToActivity(android.app.Activity);
-    method public void setEdgeSize(int);
-    method public void setEdgeTrackingEnabled(int);
-    method public void setEnableGesture(boolean);
-    method public void setScrimColor(int);
-    method public void setScrollThresHold(float);
-    method public void setShadow(android.graphics.drawable.Drawable, int);
-    method public void setShadow(int, int);
-    method public void setSwipeListener(android.app.SwipeBackLayout.SwipeListener);
-    field public static final int EDGE_ALL = 11; // 0xb
-    field public static final int EDGE_BOTTOM = 8; // 0x8
-    field public static final int EDGE_LEFT = 1; // 0x1
-    field public static final int EDGE_RIGHT = 2; // 0x2
-    field public static final int STATE_DRAGGING = 1; // 0x1
-    field public static final int STATE_IDLE = 0; // 0x0
-    field public static final int STATE_SETTLING = 2; // 0x2
-  }
-
-  public static abstract interface SwipeBackLayout.SwipeListener {
-    method public abstract void onEdgeTouch(int);
-    method public abstract void onScrollOverThreshold();
-    method public abstract void onScrollStateChange(int, float);
-  }
-
   public deprecated class TabActivity extends android.app.ActivityGroup {
     ctor public TabActivity();
     method public android.widget.TabHost getTabHost();
@@ -5568,67 +5536,6 @@ package android.app {
     field public static final int MODE_NIGHT_AUTO = 0; // 0x0
     field public static final int MODE_NIGHT_NO = 1; // 0x1
     field public static final int MODE_NIGHT_YES = 2; // 0x2
-  }
-
-  public class ViewDragHelper {
-    method public void abort();
-    method protected boolean canScroll(android.view.View, boolean, int, int, int, int);
-    method public void cancel();
-    method public void captureChildView(android.view.View, int);
-    method public boolean checkTouchSlop(int);
-    method public boolean checkTouchSlop(int, int);
-    method public boolean continueSettling(boolean);
-    method public static android.app.ViewDragHelper create(android.view.ViewGroup, android.app.ViewDragHelper.Callback);
-    method public static android.app.ViewDragHelper create(android.view.ViewGroup, float, android.app.ViewDragHelper.Callback);
-    method public android.view.View findTopChildUnder(int, int);
-    method public void flingCapturedView(int, int, int, int);
-    method public int getActivePointerId();
-    method public android.view.View getCapturedView();
-    method public int getEdgeSize();
-    method public float getMinVelocity();
-    method public int getTouchSlop();
-    method public int getViewDragState();
-    method public boolean isCapturedViewUnder(int, int);
-    method public boolean isEdgeTouched(int);
-    method public boolean isEdgeTouched(int, int);
-    method public boolean isPointerDown(int);
-    method public boolean isViewUnder(android.view.View, int, int);
-    method public void processTouchEvent(android.view.MotionEvent);
-    method public void setEdgeSize(int);
-    method public void setEdgeTrackingEnabled(int);
-    method public void setMinVelocity(float);
-    method public boolean settleCapturedViewAt(int, int);
-    method public boolean shouldInterceptTouchEvent(android.view.MotionEvent);
-    method public boolean smoothSlideViewTo(android.view.View, int, int);
-    field public static final int DIRECTION_ALL = 3; // 0x3
-    field public static final int DIRECTION_HORIZONTAL = 1; // 0x1
-    field public static final int DIRECTION_VERTICAL = 2; // 0x2
-    field public static final int EDGE_ALL = 15; // 0xf
-    field public static final int EDGE_BOTTOM = 8; // 0x8
-    field public static final int EDGE_LEFT = 1; // 0x1
-    field public static final int EDGE_RIGHT = 2; // 0x2
-    field public static final int EDGE_TOP = 4; // 0x4
-    field public static final int INVALID_POINTER = -1; // 0xffffffff
-    field public static final int STATE_DRAGGING = 1; // 0x1
-    field public static final int STATE_IDLE = 0; // 0x0
-    field public static final int STATE_SETTLING = 2; // 0x2
-  }
-
-  public static abstract class ViewDragHelper.Callback {
-    ctor public ViewDragHelper.Callback();
-    method public int clampViewPositionHorizontal(android.view.View, int, int);
-    method public int clampViewPositionVertical(android.view.View, int, int);
-    method public int getOrderedChildIndex(int);
-    method public int getViewHorizontalDragRange(android.view.View);
-    method public int getViewVerticalDragRange(android.view.View);
-    method public void onEdgeDragStarted(int, int);
-    method public boolean onEdgeLock(int);
-    method public void onEdgeTouched(int, int);
-    method public void onViewCaptured(android.view.View, int);
-    method public void onViewDragStateChanged(int);
-    method public void onViewPositionChanged(android.view.View, int, int, int, int);
-    method public void onViewReleased(android.view.View, float, float);
-    method public abstract boolean tryCaptureView(android.view.View, int);
   }
 
   public final class VoiceInteractor {
@@ -28868,6 +28775,7 @@ package android.provider {
     field public static final java.lang.String DTMF_TONE_TYPE_WHEN_DIALING = "dtmf_tone_type";
     field public static final java.lang.String DTMF_TONE_WHEN_DIALING = "dtmf_tone";
     field public static final java.lang.String END_BUTTON_BEHAVIOR = "end_button_behavior";
+    field public static final java.lang.String FONT_SCALE = "font_scale";
     field public static final java.lang.String HAPTIC_FEEDBACK_ENABLED = "haptic_feedback_enabled";
     field public static final java.lang.String HIDE_PANEL_BATTERY = "hide_panel_battery";
     field public static final deprecated java.lang.String HTTP_PROXY = "http_proxy";
