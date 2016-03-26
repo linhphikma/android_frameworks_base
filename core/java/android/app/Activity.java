@@ -57,7 +57,6 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.session.MediaController;
@@ -71,7 +70,6 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.UserHandle;
-import android.provider.Settings;
 import android.text.Selection;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -86,9 +84,6 @@ import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.ContextThemeWrapper;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.IWindowManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -1155,26 +1150,6 @@ public class Activity extends ContextThemeWrapper
         getApplication().dispatchActivityStarted(this);
     }
 
-    private void setupColorActionBar(boolean reload, int duration) {
-        if (getAppColorEnabled()) {
-            if (mActionBar != null) {
-                if (reload && mActionBar.isShowing()) {
-                    mActionBar.changeColorFromActionBar();
-                }
-            }
-            if (reload) {
-                sendAppColorBroadcast(duration);
-            }
-        }
-    }
-
-    private boolean getAppColorEnabled() {
-        int enabled = Settings.PAC.getIntForUser(
-                    getContentResolver(), Settings.PAC.STATUS_BAR_TINTED_COLOR, 0
-                    , UserHandle.USER_CURRENT_OR_SELF);
-        return (enabled != 0);
-    }
-
     /**
      * Called after {@link #onStop} when the current activity is being
      * re-displayed to the user (the user has navigated back to it).  It will
@@ -1255,7 +1230,6 @@ public class Activity extends ContextThemeWrapper
         final Window win = getWindow();
         if (win != null) win.makeActive();
         if (mActionBar != null) mActionBar.setShowHideAnimationEnabled(true);
-        setupColorActionBar(true, 1000);
         mCalled = true;
     }
 
@@ -2684,9 +2658,6 @@ public class Activity extends ContextThemeWrapper
      * @see View#onWindowFocusChanged(boolean)
      */
     public void onWindowFocusChanged(boolean hasFocus) {
-        if (hasFocus) {
-            setupColorActionBar(true, 300);
-        }
     }
 
     /**
@@ -2801,29 +2772,6 @@ public class Activity extends ContextThemeWrapper
             return true;
         }
         return onTouchEvent(ev);
-    }
-
-    /**
-     * @hide
-     */
-    public void sendActionColorBroadcast(int st_color, int ic_color) {
-        final IWindowManager wm = (IWindowManager) WindowManagerGlobal.getWindowManagerService();
-
-        try {
-             wm.sendActionColorBroadcast(st_color, ic_color);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Could not perform get action bar color", e);
-        }
-    }
-
-    private void sendAppColorBroadcast(int duration) {
-        final IWindowManager wm = (IWindowManager) WindowManagerGlobal.getWindowManagerService();
-
-        try {
-             wm.sendAppColorBroadcast(duration);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Could not perform get app color", e);
-        }
     }
 
     /**

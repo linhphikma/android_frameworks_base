@@ -40,7 +40,6 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.android.internal.util.omni.ColorUtils;
 import android.provider.Settings;
 
 
@@ -90,9 +89,6 @@ public class BatteryMeterView extends View implements DemoMode,
 
     private int mLightModeBackgroundColor;
     private int mLightModeFillColor;
-    
-    private int mChangeColor = -3;
-    private int mBoltColor = -3;
 
     protected BatteryMeterMode mMeterMode = null;
 
@@ -105,7 +101,6 @@ public class BatteryMeterView extends View implements DemoMode,
     private int mIconTint = Color.WHITE;
     private int mBatteryIconColor;
     public boolean mColorSwitch = false;
-
 
     protected class BatteryTracker extends BroadcastReceiver {
         public static final int UNKNOWN_LEVEL = -1;
@@ -422,16 +417,15 @@ public class BatteryMeterView extends View implements DemoMode,
             thresh = mColors[i];
             color = mColors[i+1];
             if (percent <= thresh) {
-                if (mChangeColor != -3) {
-                    return mChangeColor;
+
+                // Respect tinting for "normal" level
+                if (i == mColors.length-2) {
+                    return mIconTint;
                 } else {
                     return color;
                 }
             }
         }
-        if (mChangeColor != -3) {
-            return mChangeColor;
-		}
         return color;
     }
 
@@ -559,8 +553,7 @@ public class BatteryMeterView extends View implements DemoMode,
             mChargeColor = getResources().getColor(R.color.batterymeter_charge_color);
 
             mBoltPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mBoltColor = res.getColor(R.color.batterymeter_bolt_color);
-            mBoltPaint.setColor(mBoltColor);
+            mBoltPaint.setColor(res.getColor(R.color.batterymeter_bolt_color));
             mBoltPoints = loadBoltPoints(res);
         }
 
@@ -628,22 +621,12 @@ public class BatteryMeterView extends View implements DemoMode,
             mFrame.bottom -= mSubpixelSmoothingRight;
 
             // set the battery charging color
-//	    if (mColorSwitch) {
-//	    mBatteryPaint.setColor(tracker.plugged ? mBatteryIconColor : getColorForLevel(level));
-//	    } else {
-//            mBatteryPaint.setColor(tracker.plugged ? mChargeColor : getColorForLevel(level));
-//	    }
-			int color = 0;
-            if (tracker.plugged) {
-                if (mChangeColor != -3) {
-                    color = mChangeColor;
-                } else {
-                    color = mChargeColor;
-                }
-            } else {
-                color = getColorForLevel(level);
-            }
-            
+	    if (mColorSwitch) {
+	    mBatteryPaint.setColor(tracker.plugged ? mBatteryIconColor : getColorForLevel(level));
+	    } else {
+            mBatteryPaint.setColor(tracker.plugged ? mChargeColor : getColorForLevel(level));
+	    }
+
             if (level >= FULL) {
                 drawFrac = 1f;
             } else if (level <= mCriticalLevel) {

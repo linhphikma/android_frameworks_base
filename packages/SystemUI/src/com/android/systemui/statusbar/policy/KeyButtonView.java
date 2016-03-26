@@ -26,7 +26,6 @@ import android.content.res.TypedArray;
 import android.hardware.input.InputManager;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.graphics.PorterDuff;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -34,7 +33,6 @@ import android.view.HapticFeedbackConstants;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
-import android.hardware.input.InputManager;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.View;
@@ -48,7 +46,7 @@ import com.android.systemui.statusbar.phone.NavbarEditor;
 
 import static android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK;
 import static android.view.accessibility.AccessibilityNodeInfo.ACTION_LONG_CLICK;
-import com.android.internal.util.omni.ColorUtils;
+
 import cyanogenmod.power.PerformanceManager;
 
 public class KeyButtonView extends ImageView {
@@ -70,7 +68,6 @@ public class KeyButtonView extends ImageView {
     private PerformanceManager mPerf;
 
     private final Runnable mCheckLongPress = new Runnable() {
-		@Override
         public void run() {
             if (isPressed()) {
                 // Log.d("KeyButtonView", "longpressed: " + this);
@@ -238,24 +235,6 @@ public class KeyButtonView extends ImageView {
 
     private boolean supportsLongPress() {
         return mSupportsLongpress;
-    }
-
-    public void setColorFilterBg(int color, PorterDuff.Mode mode) {
-        setColorFilter(color, mode);
-        if (mGlowBG != null) {
-            int colorBg = ColorUtils.lighten(color, 0.5f);
-            if (ColorUtils.isBrightColor(color)) {
-                colorBg = ColorUtils.darken(color, 0.5f);
-            }
-            mGlowBG.setColorFilter(colorBg, mode);
-        }
-    }
-
-    public void clearColorFilterBg() {
-        clearColorFilter();
-        if (mGlowBG != null) {
-            mGlowBG.clearColorFilter();
-        }
     }
 
     public boolean onTouchEvent(MotionEvent ev) {

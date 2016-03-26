@@ -16,7 +16,6 @@
 
 package com.android.internal.widget;
 
-import android.app.ActionBar;
 import android.annotation.NonNull;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -101,27 +100,6 @@ public class ActionBarContainer extends FrameLayout {
         setWillNotDraw(mIsSplit ? mSplitBackground == null :
                 mBackground == null && mStackedBackground == null);
         invalidate();
-    }
-    
-    /**
-     * @hide
-     */
-    public Drawable getPrimaryBackground() {
-        return mBackground;
-    }
-
-    /**
-     * @hide
-     */
-    public Drawable getStackedBackground() {
-        return mStackedBackground;
-    }
-
-    /**
-     * @hide
-     */
-    public Drawable getSplitBackground() {
-        return mSplitBackground;
     }
 
     public void setStackedBackground(Drawable bg) {

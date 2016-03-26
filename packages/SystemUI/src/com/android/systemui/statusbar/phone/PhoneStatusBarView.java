@@ -82,10 +82,6 @@ public class PhoneStatusBarView extends PanelBar {
         mBar = bar;
     }
 
-    public PhoneStatusBarTransitions getPhoneStatusBarTransitions() {
-        return mBarTransitions;
-    }
-
     public void setScrimController(ScrimController scrimController) {
         mScrimController = scrimController;
     }

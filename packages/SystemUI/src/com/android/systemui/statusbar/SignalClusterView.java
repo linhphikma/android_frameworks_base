@@ -40,7 +40,6 @@ import com.android.systemui.statusbar.policy.NetworkControllerImpl;
 import com.android.systemui.statusbar.policy.SecurityController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
-import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 import android.provider.Settings;
 
@@ -69,7 +68,6 @@ public class SignalClusterView
     private boolean mVpnVisible = false;
     private boolean mEthernetVisible = false;
     private int mEthernetIconId = 0;
-    private PhoneStatusBar mStatusBar;
     private int mLastEthernetIconId = -1;
     private boolean mWifiVisible = false;
     private int mWifiStrengthId = 0;
@@ -115,10 +113,6 @@ public class SignalClusterView
 
     public SignalClusterView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-    }
-    
-    public void setStatusBar(PhoneStatusBar phoneStatusBar) {
-        mStatusBar = phoneStatusBar;
     }
 
     @Override
@@ -194,14 +188,6 @@ public class SignalClusterView
             mMobileSignalGroup.addView(state.mMobileGroup);
         }
             TunerService.get(mContext).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
-
-        mStatusBar.addIconToColor(mVpn);
-        mStatusBar.addIconToColor(mEthernet);
-        mStatusBar.addIconToColor(mEthernetDark);
-        mStatusBar.addIconToColor(mWifi);
-        mStatusBar.addIconToColor(mAirplane);
-        mStatusBar.addIconToColor(mNoSims);
-        mStatusBar.addIconToColor(mNoSimsDark);
 
         apply();
         applyIconTint();
