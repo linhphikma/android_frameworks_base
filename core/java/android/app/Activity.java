@@ -57,6 +57,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ColorDrawable;
@@ -1207,8 +1208,8 @@ public class Activity extends ContextThemeWrapper
         mCalled = true;
         mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 0) == 1) && isAllowedForSwipeBack(this.getPackageName());
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
-            // getWindow().setBackgroundDrawable(new ColorDrawable(0));
-            // getWindow().getDecorView().setBackgroundDrawable(null);
+            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getWindow().getDecorView().setBackgroundDrawable(null);
             mSwipeBackLayout = new SwipeBackLayout(this);
             int mSwipeEdge = Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_EDGE, 0);
             int mEdgeFlag;
@@ -2300,8 +2301,8 @@ public class Activity extends ContextThemeWrapper
     public void setSwipeBackEnable(boolean enable) {
         mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 0) == 1);
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
-            // getWindow().setBackgroundDrawable(new ColorDrawable(0));
-            // getWindow().getDecorView().setBackgroundDrawable(null);
+            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getWindow().getDecorView().setBackgroundDrawable(null);
             mSwipeBackLayout = new SwipeBackLayout(this);
             int mSwipeEdge = Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_EDGE, 0);
             int mEdgeFlag;

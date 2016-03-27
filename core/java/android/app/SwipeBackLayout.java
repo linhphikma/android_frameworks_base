@@ -150,91 +150,33 @@ public class SwipeBackLayout extends FrameLayout {
         mEnable = enable;
     }
 
-    /**
-     * Enable edge tracking for the selected edges of the parent view. The
-     * callback's
-     * {@link me.imid.swipebacklayout.lib.ViewDragHelper.Callback#onEdgeTouched(int, int)}
-     * and
-     * {@link me.imid.swipebacklayout.lib.ViewDragHelper.Callback#onEdgeDragStarted(int, int)}
-     * methods will only be invoked for edges for which edge tracking has been
-     * enabled.
-     * 
-     * @param edgeFlags Combination of edge flags describing the edges to watch
-     * @see #EDGE_LEFT
-     * @see #EDGE_RIGHT
-     * @see #EDGE_BOTTOM
-     */
     public void setEdgeTrackingEnabled(int edgeFlags) {
         mEdgeFlag = edgeFlags;
         mDragHelper.setEdgeTrackingEnabled(mEdgeFlag);
     }
 
-    /**
-     * Set a color to use for the scrim that obscures primary content while a
-     * drawer is open.
-     * 
-     * @param color Color to use in 0xAARRGGBB format.
-     */
     public void setScrimColor(int color) {
         mScrimColor = color;
         invalidate();
     }
 
-    /**
-     * Set the size of an edge. This is the range in pixels along the edges of
-     * this view that will actively detect edge touches or drags if edge
-     * tracking is enabled.
-     * 
-     * @param size The size of an edge in pixels
-     */
     public void setEdgeSize(int size) {
         mDragHelper.setEdgeSize(size);
     }
 
-    /**
-     * Register a callback to be invoked when a swipe event is sent to this
-     * view.
-     * 
-     * @param listener the swipe listener to attach to this view
-     */
     public void setSwipeListener(SwipeListener listener) {
         mSwipeListener = listener;
     }
 
     public static interface SwipeListener {
-        /**
-         * Invoke when state change
-         * 
-         * @param state flag to describe scroll state
-         * @see #STATE_IDLE
-         * @see #STATE_DRAGGING
-         * @see #STATE_SETTLING
-         * @param scrollPercent scroll percent of this view
-         */
+
         public void onScrollStateChange(int state, float scrollPercent);
 
-        /**
-         * Invoke when edge touched
-         * 
-         * @param edgeFlag edge flag describing the edge being touched
-         * @see #EDGE_LEFT
-         * @see #EDGE_RIGHT
-         * @see #EDGE_BOTTOM
-         */
         public void onEdgeTouch(int edgeFlag);
 
-        /**
-         * Invoke when scroll percent over the threshold for the first time
-         */
         public void onScrollOverThreshold();
     }
 
-    /**
-     * Set scroll threshold, we will close the activity, when scrollPercent over
-     * this value
-     * 
-     * @param threshold
-     */
     public void setScrollThresHold(float threshold) {
         if (threshold >= 1.0f || threshold <= 0) {
             throw new IllegalArgumentException("Threshold value should be between 0 and 1.0");
@@ -242,15 +184,6 @@ public class SwipeBackLayout extends FrameLayout {
         mScrollThreshold = threshold;
     }
 
-    /**
-     * Set a drawable used for edge shadow.
-     * 
-     * @param shadow Drawable to use
-     * @param edgeFlags Combination of edge flags describing the edge to set
-     * @see #EDGE_LEFT
-     * @see #EDGE_RIGHT
-     * @see #EDGE_BOTTOM
-     */
     public void setShadow(Drawable shadow, int edgeFlag) {
         if ((edgeFlag & EDGE_LEFT) != 0) {
             mShadowLeft = shadow;
@@ -262,15 +195,6 @@ public class SwipeBackLayout extends FrameLayout {
         invalidate();
     }
 
-    /**
-     * Set a drawable used for edge shadow.
-     * 
-     * @param resId Resource of drawable to use
-     * @param edgeFlags Combination of edge flags describing the edge to set
-     * @see #EDGE_LEFT
-     * @see #EDGE_RIGHT
-     * @see #EDGE_BOTTOM
-     */
     public void setShadow(int resId, int edgeFlag) {
         setShadow(getResources().getDrawable(resId), edgeFlag);
     }
