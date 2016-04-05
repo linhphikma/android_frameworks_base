@@ -185,5 +185,7 @@
     <color name="primary_text_default_material_dark">#ffffffff</color>
     <!-- 70% white -->
     <color name="secondary_text_default_material_dark">#b3ffffff</color>
+    
+    <color name="bg_glass">#88ffffff</color>
 
 </resources>

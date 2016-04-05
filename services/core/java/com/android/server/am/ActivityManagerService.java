@@ -267,7 +267,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-import org.cyanogenmod.internal.util.ThemeUtils;
+import org.bluros.internal.util.ThemeUtils;
 
 public final class ActivityManagerService extends ActivityManagerNative
         implements Watchdog.Monitor, BatteryStatsImpl.BatteryCallback {
@@ -4107,7 +4107,7 @@ public final class ActivityManagerService extends ActivityManagerNative
                 throw new SecurityException("Called with bad activity token: " + resultTo);
             }
             if (!sourceRecord.info.packageName.equals("android") &&
-                    !sourceRecord.info.packageName.equals("org.cyanogenmod.resolver")) {
+                    !sourceRecord.info.packageName.equals("org.bluros.resolver")) {
                 throw new SecurityException(
                         "Must be called from an activity that is declared in the android package");
             }
@@ -12315,7 +12315,7 @@ public final class ActivityManagerService extends ActivityManagerNative
     }
 
     private void sendAppFailureBroadcast(String pkgName) {
-        Intent intent = new Intent(cyanogenmod.content.Intent.ACTION_APP_FAILURE,
+        Intent intent = new Intent(bluros.content.Intent.ACTION_APP_FAILURE,
                 (pkgName != null)? Uri.fromParts("package", pkgName, null) : null);
         mContext.sendBroadcastAsUser(intent, UserHandle.CURRENT_OR_SELF);
     }

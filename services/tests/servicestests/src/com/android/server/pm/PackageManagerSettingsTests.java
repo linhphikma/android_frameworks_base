@@ -358,7 +358,7 @@ public class PackageManagerSettingsTests extends AndroidTestCase {
     // from being installed
      public void testPrebundledDifferentRegionReject() {
         Settings settings = new Settings(getContext().getFilesDir());
-        String expectedPackageNeededForRegion = "org.cyanogenmod.restricted.package";
+        String expectedPackageNeededForRegion = "org.bluros.restricted.package";
         Resources resources = Mockito.mock(Resources.class);
         String[] regionRestrictedPackages = new String[] {
                 expectedPackageNeededForRegion
@@ -374,7 +374,7 @@ public class PackageManagerSettingsTests extends AndroidTestCase {
     // non region locked device
     public void testPrebundledMatchingRegionAccept() {
         Settings settings = new Settings(getContext().getFilesDir());
-        String expectedPackageNeededForRegion = "org.cyanogenmod.restricted.package";
+        String expectedPackageNeededForRegion = "org.bluros.restricted.package";
         Resources resources = Mockito.mock(Resources.class);
         String[] regionLockedPackages = new String[] {
                 expectedPackageNeededForRegion

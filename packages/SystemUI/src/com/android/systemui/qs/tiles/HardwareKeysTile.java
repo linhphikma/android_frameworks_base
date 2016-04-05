@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.UUID;
 import com.android.internal.logging.MetricsLogger;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 
 public class HardwareKeysTile extends QSTile<QSTile.BooleanState> {

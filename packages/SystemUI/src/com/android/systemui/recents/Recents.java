@@ -62,7 +62,7 @@ import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 import java.util.ArrayList;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 /**
  * Annotation for a method that is only called from the primary user's SystemUI process and will be

@@ -62,8 +62,8 @@ import android.view.animation.AnimationUtils;
 
 import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.qs.tiles.LockscreenToggleTile;
-import cyanogenmod.app.Profile;
-import cyanogenmod.app.ProfileManager;
+import bluros.app.Profile;
+import bluros.app.ProfileManager;
 
 import com.android.internal.policy.IKeyguardDrawnCallback;
 import com.android.internal.policy.IKeyguardExitCallback;
@@ -82,7 +82,7 @@ import com.android.systemui.statusbar.phone.PhoneStatusBar;
 import com.android.systemui.statusbar.phone.ScrimController;
 import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
 import com.android.systemui.statusbar.phone.StatusBarWindowManager;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

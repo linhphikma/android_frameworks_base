@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * Copyright (c) 2015 The CyanogenMod Project.
+ * Copyright (c) 2015 The BlurOS Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="com.android.systemui">
 
-    <uses-permission android:name="cyanogenmod.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="cyanogenmod.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="bluros.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="bluros.permission.WRITE_SECURE_SETTINGS" />
     <!-- Quick Settings Tile Listener -->
-    <uses-permission android:name="cyanogenmod.permission.BIND_CUSTOM_TILE_LISTENER_SERVICE"/>
+    <uses-permission android:name="bluros.permission.BIND_CUSTOM_TILE_LISTENER_SERVICE"/>
 
     <!-- Development shortcut -->
     <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA" />
@@ -33,22 +33,22 @@
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
 
     <!-- Publish dynamic tiles -->
-    <uses-permission android:name="cyanogenmod.permission.PUBLISH_CUSTOM_TILE" />
+    <uses-permission android:name="bluros.permission.PUBLISH_CUSTOM_TILE" />
 
-    <uses-permission android:name="cyanogenmod.permission.HARDWARE_ABSTRACTION_ACCESS" />
+    <uses-permission android:name="bluros.permission.HARDWARE_ABSTRACTION_ACCESS" />
 
     <!-- Visualizer -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- Performance Manager -->
-    <uses-permission android:name="cyanogenmod.permission.PERFORMANCE_ACCESS" />
+    <uses-permission android:name="bluros.permission.PERFORMANCE_ACCESS" />
 
     <application>
         <provider android:name=".cm.SpamMessageProvider"
                   android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
                   android:exported="true"
-                  android:authorities="com.cyanogenmod.spam" />
+                  android:authorities="com.bluros.spam" />
 
         <activity
             android:name=".cm.LockscreenShortcutsActivity"

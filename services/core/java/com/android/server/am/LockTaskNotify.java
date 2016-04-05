@@ -27,7 +27,7 @@ import android.view.accessibility.AccessibilityManager;
 import android.widget.Toast;
 
 import com.android.internal.R;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 /**
  *  Helper to manage showing/hiding a image to notify them that they are entering

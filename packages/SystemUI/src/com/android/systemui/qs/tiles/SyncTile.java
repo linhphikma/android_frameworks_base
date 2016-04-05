@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2015 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import android.content.SyncStatusObserver;
 
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
+import org.bluros.internal.logging.CMMetricsLogger;
 
 /** Quick settings tile: Sync **/
 public class SyncTile extends QSTile<QSTile.BooleanState> {

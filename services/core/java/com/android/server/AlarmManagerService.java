@@ -83,12 +83,12 @@ import static android.app.AlarmManager.RTC_POWEROFF_WAKEUP;
 
 import com.android.internal.util.LocalLog;
 
-import cyanogenmod.app.CMStatusBarManager;
-import cyanogenmod.app.CustomTile;
+import bluros.app.CMStatusBarManager;
+import bluros.app.CustomTile;
 
-import org.cyanogenmod.internal.util.QSUtils;
-import org.cyanogenmod.internal.util.QSUtils.OnQSChanged;
-import org.cyanogenmod.internal.util.QSConstants;
+import org.bluros.internal.util.QSUtils;
+import org.bluros.internal.util.QSUtils.OnQSChanged;
+import org.bluros.internal.util.QSConstants;
 
 class AlarmManagerService extends SystemService {
     private static final int RTC_WAKEUP_MASK = 1 << RTC_WAKEUP;

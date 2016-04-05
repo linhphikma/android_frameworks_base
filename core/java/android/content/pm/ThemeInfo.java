@@ -31,15 +31,15 @@ import android.content.res.Resources;
  *
  * Below is an example of the manifest:
  *
- * <meta-data android:name="org.cyanogenmod.theme.name" android:value="Foobar's Theme"/>
- * <meta-data android:name="org.cyanogenmod.theme.author" android:value="Mr.Foo" />
+ * <meta-data android:name="org.bluros.theme.name" android:value="Foobar's Theme"/>
+ * <meta-data android:name="org.bluros.theme.author" android:value="Mr.Foo" />
  *
  * @hide
  */
 public final class ThemeInfo extends BaseThemeInfo {
 
-    public static final String META_TAG_NAME = "org.cyanogenmod.theme.name";
-    public static final String META_TAG_AUTHOR = "org.cyanogenmod.theme.author";
+    public static final String META_TAG_NAME = "org.bluros.theme.name";
+    public static final String META_TAG_AUTHOR = "org.bluros.theme.author";
 
     public ThemeInfo(Bundle bundle) {
         super();

@@ -52,7 +52,7 @@ import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.DragDownHelper;
 import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 
 public class StatusBarWindowView extends FrameLayout {

@@ -145,7 +145,7 @@
     <uses-permission android:name="android.permission.HARDWARE_ABSTRACTION_ACCESS" />
 
     <!-- Weather -->
-    <uses-permission android:name="com.cyanogenmod.lockclock.permission.READ_WEATHER" />
+    <uses-permission android:name="com.bluros.lockclock.permission.READ_WEATHER" />
 
     <!-- Action target -->
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
@@ -164,9 +164,9 @@
     <uses-permission android:name="android.permission.RECOVERY" />
 
     <!-- Themes tile -->
-    <uses-permission android:name="cyanogenmod.permission.ACCESS_THEME_MANAGER" />
-    <uses-permission android:name="cyanogenmod.permission.READ_THEMES" />
-    <uses-permission android:name="cyanogenmod.permission.WRITE_THEMES" />
+    <uses-permission android:name="bluros.permission.ACCESS_THEME_MANAGER" />
+    <uses-permission android:name="bluros.permission.READ_THEMES" />
+    <uses-permission android:name="bluros.permission.WRITE_THEMES" />
 
     <!-- Visualizer -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />

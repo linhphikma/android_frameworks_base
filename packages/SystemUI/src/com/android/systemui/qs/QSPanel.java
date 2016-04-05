@@ -51,8 +51,8 @@ import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import cyanogenmod.app.StatusBarPanelCustomTile;
-import cyanogenmod.providers.CMSettings;
+import bluros.app.StatusBarPanelCustomTile;
+import bluros.providers.CMSettings;
 
 /** View that represents the quick settings tile panel. **/
 public class QSPanel extends ViewGroup {

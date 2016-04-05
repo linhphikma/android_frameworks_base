@@ -91,8 +91,8 @@ import android.content.res.Configuration;
 
 import android.Manifest;
 
-import cyanogenmod.app.CMContextConstants;
-import cyanogenmod.app.suggest.AppSuggestManager;
+import bluros.app.CMContextConstants;
+import bluros.app.suggest.AppSuggestManager;
 
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
@@ -221,8 +221,8 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.view.WindowManagerPolicy;
 
-import cyanogenmod.providers.CMSettings;
-import cyanogenmod.themes.IThemeService;
+import bluros.providers.CMSettings;
+import bluros.themes.IThemeService;
 
 import dalvik.system.DexFile;
 import dalvik.system.VMRuntime;
@@ -257,7 +257,7 @@ import com.android.server.pm.Settings.DatabaseVersion;
 import com.android.server.pm.Settings.VersionInfo;
 import com.android.server.storage.DeviceStorageMonitorInternal;
 
-import org.cyanogenmod.internal.util.ThemeUtils;
+import org.bluros.internal.util.ThemeUtils;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
@@ -1470,7 +1470,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                             }
                             String category = null;
                             if(res.pkg.mIsThemeApk) {
-                                category = cyanogenmod.content.Intent
+                                category = bluros.content.Intent
                                         .CATEGORY_THEME_PACKAGE_INSTALLED_STATE_CHANGE;
                             }
                             sendPackageBroadcast(Intent.ACTION_PACKAGE_ADDED,
@@ -2128,7 +2128,7 @@ public class PackageManagerService extends IPackageManager.Stub {
 
             // Gross hack for now: we know this file doesn't contain any
             // code, so don't dexopt it to avoid the resulting log spew
-            alreadyDexOpted.add(frameworkDir.getPath() + "/org.cyanogenmod.platform-res.apk");
+            alreadyDexOpted.add(frameworkDir.getPath() + "/org.bluros.platform-res.apk");
 
             /**
              * There are a number of commands implemented in Java, which
@@ -13593,7 +13593,7 @@ public class PackageManagerService extends IPackageManager.Stub {
 
                 String category = null;
                 if (info.isThemeApk) {
-                    category = cyanogenmod.content.Intent
+                    category = bluros.content.Intent
                             .CATEGORY_THEME_PACKAGE_INSTALLED_STATE_CHANGE;
                 }
 
@@ -13639,7 +13639,7 @@ public class PackageManagerService extends IPackageManager.Stub {
             if (removedPackage != null) {
                 String category = null;
                 if (isThemeApk) {
-                    category = cyanogenmod.content.Intent
+                    category = bluros.content.Intent
                             .CATEGORY_THEME_PACKAGE_INSTALLED_STATE_CHANGE;
                 }
                 sendPackageBroadcast(Intent.ACTION_PACKAGE_REMOVED, removedPackage, category,
@@ -17760,7 +17760,7 @@ public class PackageManagerService extends IPackageManager.Stub {
     @Override
     public int processThemeResources(String themePkgName) {
         mContext.enforceCallingOrSelfPermission(
-                cyanogenmod.platform.Manifest.permission.ACCESS_THEME_MANAGER, null);
+                bluros.platform.Manifest.permission.ACCESS_THEME_MANAGER, null);
         PackageParser.Package pkg;
         synchronized (mPackages) {
             pkg = mPackages.get(themePkgName);

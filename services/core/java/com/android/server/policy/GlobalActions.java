@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
- * Copyright (C) 2010-2015 CyanogenMod Project
+ * Copyright (C) 2010-2015 BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,13 +99,13 @@ import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.cyanogenmod.internal.util.ThemeUtils;
+import org.bluros.internal.util.ThemeUtils;
 
 import static com.android.internal.util.cm.PowerMenuConstants.*;
 

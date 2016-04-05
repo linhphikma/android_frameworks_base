@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2016 The BlurOS Project
  * Portions copyright (C) 2014, T-Mobile USA, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

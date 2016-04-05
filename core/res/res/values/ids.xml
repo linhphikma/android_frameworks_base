@@ -118,4 +118,7 @@
   
   <!-- Accessibility action identifier for {@link android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction#ACTION_CONTEXT_CLICK}. -->
   <item type="id" name="accessibilityActionContextClick" />
+  
+  <item type="id" name="container"/>
+  <item type="id" name="blur_view"/>
 </resources>

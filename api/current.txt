@@ -3999,6 +3999,16 @@ package android.app {
     field public java.lang.String serviceDetails;
   }
 
+  public class BlurDialogFragmentHelper {
+    ctor public BlurDialogFragmentHelper(android.app.DialogFragment);
+    method public void onActivityCreated();
+    method public void onCreate();
+    method public void onDismiss();
+    method public void onStart();
+    method public void setAnimDuration(int);
+    method public void setBgColorResId(int);
+  }
+
   public class DatePickerDialog extends android.app.AlertDialog implements android.widget.DatePicker.OnDateChangedListener android.content.DialogInterface.OnClickListener {
     ctor public DatePickerDialog(android.content.Context, android.app.DatePickerDialog.OnDateSetListener, int, int, int);
     ctor public DatePickerDialog(android.content.Context, int, android.app.DatePickerDialog.OnDateSetListener, int, int, int);
@@ -4113,6 +4123,7 @@ package android.app {
     method public boolean getShowsDialog();
     method public int getTheme();
     method public boolean isCancelable();
+    method public static android.app.DialogFragment newInstance();
     method public void onCancel(android.content.DialogInterface);
     method public android.app.Dialog onCreateDialog(android.os.Bundle);
     method public void onDismiss(android.content.DialogInterface);

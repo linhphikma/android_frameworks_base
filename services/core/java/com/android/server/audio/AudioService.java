@@ -128,7 +128,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 /**
  * The implementation of the volume manager service.

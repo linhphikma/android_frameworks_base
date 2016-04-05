@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
- * Copyright (C) 2013-2015 The CyanogenMod Project
+ * Copyright (C) 2013-2015 The BlurOS Project
  * Copyright 2014 SlimRoms project
  * Copyright 2014-2015 The Euphoria-OS Project
  *

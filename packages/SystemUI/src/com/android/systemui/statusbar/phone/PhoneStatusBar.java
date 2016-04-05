@@ -226,9 +226,9 @@ import com.android.systemui.statusbar.stack.NotificationStackScrollLayout.OnChil
 import com.android.systemui.statusbar.stack.StackStateAnimator;
 import com.android.systemui.statusbar.stack.StackViewState;
 import com.android.systemui.volume.VolumeComponent;
-import cyanogenmod.app.CMContextConstants;
-import cyanogenmod.app.CustomTileListenerService;
-import cyanogenmod.app.StatusBarPanelCustomTile;
+import bluros.app.CMContextConstants;
+import bluros.app.CustomTileListenerService;
+import bluros.app.StatusBarPanelCustomTile;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -254,8 +254,8 @@ import static com.android.systemui.statusbar.BarTransitions.MODE_TRANSLUCENT;
 import static com.android.systemui.statusbar.BarTransitions.MODE_TRANSPARENT;
 import static com.android.systemui.statusbar.BarTransitions.MODE_WARNING;
 
-import cyanogenmod.providers.CMSettings;
-import cyanogenmod.themes.IThemeService;
+import bluros.providers.CMSettings;
+import bluros.themes.IThemeService;
 
 public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         DragDownHelper.DragDownCallback, ActivityStarter, OnUnlockMethodChangedListener,
@@ -2186,7 +2186,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_KEYGUARD_WALLPAPER_CHANGED);
-        filter.addAction(cyanogenmod.content.Intent.ACTION_SCREEN_CAMERA_GESTURE);
+        filter.addAction(bluros.content.Intent.ACTION_SCREEN_CAMERA_GESTURE);
         context.registerReceiverAsUser(mBroadcastReceiver, UserHandle.ALL, filter, null, null);
 
         IntentFilter demoFilter = new IntentFilter();
@@ -4575,7 +4575,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         Context.WALLPAPER_SERVICE);
                 mKeyguardWallpaper = wm.getKeyguardBitmap();
                 updateMediaMetaData(true);
-            } else if (cyanogenmod.content.Intent.ACTION_SCREEN_CAMERA_GESTURE.equals(action)) {
+            } else if (bluros.content.Intent.ACTION_SCREEN_CAMERA_GESTURE.equals(action)) {
                 boolean userSetupComplete = Settings.Secure.getInt(mContext.getContentResolver(),
                         Settings.Secure.USER_SETUP_COMPLETE, 0) != 0;
                 if (!userSetupComplete) {
@@ -6167,7 +6167,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
      * set and points to a valid app.  Start this activity.
      */
     private void startCustomRecentsLongPressActivity(ComponentName customComponentName) {
-        Intent intent = new Intent(cyanogenmod.content.Intent.ACTION_RECENTS_LONG_PRESS);
+        Intent intent = new Intent(bluros.content.Intent.ACTION_RECENTS_LONG_PRESS);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         // Include the package name of the app currently in the foreground
@@ -6244,7 +6244,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
      * Updates the cache of Recents Long Press applications.
      *
      * These applications must:
-     * - handle the cyanogenmod.contentIntent.ACTION_RECENTS_LONG_PRESS
+     * - handle the bluros.contentIntent.ACTION_RECENTS_LONG_PRESS
      *   (which is permissions protected); and
      * - not be disabled by the user or the system.
      *
@@ -6256,7 +6256,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCustomRecentsLongPressHandlerCandidates.clear();
 
             PackageManager pm = mContext.getPackageManager();
-            Intent intent = new Intent(cyanogenmod.content.Intent.ACTION_RECENTS_LONG_PRESS);
+            Intent intent = new Intent(bluros.content.Intent.ACTION_RECENTS_LONG_PRESS);
 
             // Search for all apps that can handle ACTION_RECENTS_LONG_PRESS
             List<ResolveInfo> activities = pm.queryIntentActivities(intent,

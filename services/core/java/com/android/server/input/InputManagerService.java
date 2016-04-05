@@ -97,7 +97,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 import libcore.io.Streams;
 import libcore.util.Objects;
 

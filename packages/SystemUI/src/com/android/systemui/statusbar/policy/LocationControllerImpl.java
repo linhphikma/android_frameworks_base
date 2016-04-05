@@ -37,7 +37,7 @@ import com.android.systemui.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 /**
  * A controller to manage changes of location related states and update the views accordingly.

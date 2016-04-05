@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2015 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,12 +33,12 @@ import com.android.systemui.R;
 import com.android.systemui.qs.QSDetailItemsList;
 import com.android.systemui.qs.QSTile;
 
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
-import org.cyanogenmod.internal.util.QSUtils;
+import org.bluros.internal.logging.CMMetricsLogger;
+import org.bluros.internal.util.QSUtils;
 
-import cyanogenmod.app.StatusBarPanelCustomTile;
-import cyanogenmod.power.PerformanceManager;
-import cyanogenmod.providers.CMSettings;
+import bluros.app.StatusBarPanelCustomTile;
+import bluros.power.PerformanceManager;
+import bluros.providers.CMSettings;
 
 public class PerfProfileTile extends QSTile<PerfProfileTile.ProfileState> {
 
@@ -64,9 +64,9 @@ public class PerfProfileTile extends QSTile<PerfProfileTile.ProfileState> {
 
         Resources res = mContext.getResources();
 
-        mPerfProfileValues = res.getIntArray(org.cyanogenmod.platform.internal.R.array.perf_profile_values);
+        mPerfProfileValues = res.getIntArray(org.bluros.platform.internal.R.array.perf_profile_values);
 
-        mEntries = res.getStringArray(org.cyanogenmod.platform.internal.R.array.perf_profile_entries);
+        mEntries = res.getStringArray(org.bluros.platform.internal.R.array.perf_profile_entries);
         mDescriptionEntries = res.getStringArray(R.array.perf_profile_description);
         mAnnouncementEntries = res.getStringArray(R.array.perf_profile_announcement);
 

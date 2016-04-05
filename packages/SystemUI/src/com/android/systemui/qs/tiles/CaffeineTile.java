@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2016 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import android.provider.Settings;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.R;
 
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
+import org.bluros.internal.logging.CMMetricsLogger;
 
 /** Quick settings tile: Caffeine **/
 public class CaffeineTile extends QSTile<QSTile.BooleanState> {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, The CyanogenMod Project
+ * Copyright (c) 2015, The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 
 import android.widget.BaseAdapter;
 
-import cyanogenmod.app.CustomTile;
+import bluros.app.CustomTile;
 
 import com.android.systemui.qs.tiles.UserDetailItemView;
 import com.android.systemui.R;

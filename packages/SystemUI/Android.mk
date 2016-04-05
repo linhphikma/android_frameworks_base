@@ -9,7 +9,7 @@ LOCAL_SRC_FILES := $(call all-java-files-under, src) \
 LOCAL_SRC_FILES += $(call all-java-files-under, ../../../../packages/apps/DUI/src)
 
 LOCAL_STATIC_JAVA_LIBRARIES := Keyguard \
-    org.cyanogenmod.platform.internal \
+    org.bluros.platform.internal \
     android-support-v7-palette \
     android-support-v4 \
     android-opt-cards \

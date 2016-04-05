@@ -26,7 +26,7 @@ import android.net.ConnectivityManager;
 
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
+import org.bluros.internal.logging.CMMetricsLogger;
 
 /**
  * USB Tether quick settings tile

@@ -1,10 +1,10 @@
-# Copyright 2015 The CyanogenMod Project
+# Copyright 2015 The BlurOS Project
 #
 LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES := $(call all-subdir-java-files)
-LOCAL_STATIC_JAVA_LIBRARIES := org.cyanogenmod.platform.internal
+LOCAL_STATIC_JAVA_LIBRARIES := org.bluros.platform.internal
 LOCAL_MODULE := tm
 include $(BUILD_JAVA_LIBRARY)
 

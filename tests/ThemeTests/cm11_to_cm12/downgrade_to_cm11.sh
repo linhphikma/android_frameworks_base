@@ -28,7 +28,7 @@ adb shell sqlite3 /data/data/com.android.providers.settings/databases/settings.d
 
 
 #ThemesProvider's default theme is called "Holo"
-adb shell sqlite3 /data/data/org.cyanogenmod.themes.provider/databases/themes.db "UPDATE themes SET pkg_name='holo', title='Holo' WHERE pkg_name='system'"
-adb shell sqlite3 /data/data/org.cyanogenmod.themes.provider/databases/themes.db "pragma user_version=10"
+adb shell sqlite3 /data/data/org.bluros.themes.provider/databases/themes.db "UPDATE themes SET pkg_name='holo', title='Holo' WHERE pkg_name='system'"
+adb shell sqlite3 /data/data/org.bluros.themes.provider/databases/themes.db "pragma user_version=10"
 
-adb shell sqlite3 /data/data/org.cyanogenmod.themes.provider/databases/themes.db "SELECT * FROM themes"
+adb shell sqlite3 /data/data/org.bluros.themes.provider/databases/themes.db "SELECT * FROM themes"

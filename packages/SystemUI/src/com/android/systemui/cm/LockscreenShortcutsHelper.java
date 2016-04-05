@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.systemui.R;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 public class LockscreenShortcutsHelper {
 

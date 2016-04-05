@@ -41,12 +41,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import cyanogenmod.app.StatusBarPanelCustomTile;
-import cyanogenmod.providers.ThemesContract;
-import cyanogenmod.themes.ThemeChangeRequest;
-import cyanogenmod.themes.ThemeManager;
+import bluros.app.StatusBarPanelCustomTile;
+import bluros.providers.ThemesContract;
+import bluros.themes.ThemeChangeRequest;
+import bluros.themes.ThemeManager;
 
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
+import org.bluros.internal.logging.CMMetricsLogger;
 
 /**
  * Quick settings tile: Themes mode
@@ -59,7 +59,7 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
 
     private enum Mode {ALL_THEMES, ICON_PACK, APP_THEME}
 
-    private static final String CATEGORY_THEME_CHOOSER = "cyanogenmod.intent.category.APP_THEMES";
+    private static final String CATEGORY_THEME_CHOOSER = "bluros.intent.category.APP_THEMES";
     private final ThemesDetailAdapter mDetailAdapter;
     private ThemeManager mService;
     private Mode mode;

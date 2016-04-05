@@ -101,9 +101,9 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 import android.telephony.TelephonyManager;
 
-import cyanogenmod.app.CustomTileListenerService;
-import cyanogenmod.app.StatusBarPanelCustomTile;
-import cyanogenmod.providers.CMSettings;
+import bluros.app.CustomTileListenerService;
+import bluros.app.StatusBarPanelCustomTile;
+import bluros.providers.CMSettings;
 import com.android.internal.telephony.PhoneConstants;
 
 import java.util.ArrayList;
@@ -424,7 +424,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 
     protected List<String> loadTileSpecs(String tileList) {
         final Resources res = mContext.getResources();
-        final String defaultTileList = res.getString(org.cyanogenmod.platform.internal.
+        final String defaultTileList = res.getString(org.bluros.platform.internal.
                 R.string.config_defaultQuickSettingsTiles);
         if (tileList == null) {
             tileList = res.getString(R.string.quick_settings_tiles);

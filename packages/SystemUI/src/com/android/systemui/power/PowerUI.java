@@ -39,7 +39,7 @@ import android.util.Slog;
 
 import com.android.systemui.SystemUI;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

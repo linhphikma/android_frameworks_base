@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 import com.android.internal.widget.LockPatternUtils;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 public class NumPadKey extends ViewGroup {
     // list of "ABC", etc per digit, starting with '0'

@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2015 The CyanogenMod Project
+* Copyright (C) 2015 The BlurOS Project
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ import android.view.View;
 
 import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 public class VisualizerView extends View implements Palette.PaletteAsyncListener,
         KeyguardMonitor.Callback {

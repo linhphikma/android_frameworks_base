@@ -71,8 +71,8 @@ import android.view.Display;
 
 import com.android.server.LocalServices;
 
-import cyanogenmod.power.PerformanceManagerInternal;
-import cyanogenmod.providers.CMSettings;
+import bluros.power.PerformanceManagerInternal;
+import bluros.providers.CMSettings;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

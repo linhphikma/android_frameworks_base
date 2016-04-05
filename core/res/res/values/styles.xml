@@ -113,8 +113,8 @@ please see styles_device_defaults.xml.
 
     <!-- Standard animations for a non-full-screen window or activity. -->
     <style name="Animation.Dialog">
-        <item name="windowEnterAnimation">@anim/dialog_enter</item>
-        <item name="windowExitAnimation">@anim/dialog_exit</item>
+        <item name="windowEnterAnimation">@anim/slide_up_dialog</item>
+        <item name="windowExitAnimation">@anim/slide_down_dialog</item>
     </style>
 
     <!-- Standard animations for a translucent window or activity.  This
@@ -1460,6 +1460,12 @@ please see styles_device_defaults.xml.
         <item name="ShadowLeft">@drawable/shadow_left</item>
         <item name="ShadowRight">@drawable/shadow_right</item>
         <item name="ShadowBottom">@drawable/shadow_bottom</item>
+    </style>
+    
+    <!-- dialog animation style -->
+    <style name="DialogSlideAnimation">
+        <item name="windowEnterAnimation">@anim/slide_up_dialog</item>
+        <item name="windowExitAnimation">@anim/slide_down_dialog</item>
     </style>
 
 </resources>

@@ -44,7 +44,7 @@ import com.android.systemui.cm.UserContentObserver;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 public class StatusBarIconView extends AnimatedImageView {
     private static final String TAG = "StatusBarIconView";

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2015 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package com.android.systemui.statusbar;
 
-import cyanogenmod.app.StatusBarPanelCustomTile;
+import bluros.app.StatusBarPanelCustomTile;
 
 import android.util.ArrayMap;
 

@@ -55,7 +55,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 /**
  *  Source of truth for all state / events related to the volume dialog.  No presentation.

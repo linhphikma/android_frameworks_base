@@ -34,7 +34,7 @@ import com.android.systemui.recents.RecentsConfiguration;
 import com.android.systemui.recents.misc.Utilities;
 import com.android.systemui.recents.model.Task;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 /* A task view */
 public class TaskView extends FrameLayout implements Task.TaskCallbacks,

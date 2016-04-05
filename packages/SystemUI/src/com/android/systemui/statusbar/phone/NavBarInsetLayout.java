@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2016 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import android.widget.FrameLayout;
 import com.android.systemui.R;
 import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.statusbar.BaseStatusBar;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 public class NavBarInsetLayout extends FrameLayout {
     public static final String TAG = "NavBarInsetLayout";

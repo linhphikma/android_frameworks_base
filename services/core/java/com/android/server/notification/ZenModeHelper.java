@@ -53,7 +53,7 @@ import android.util.SparseArray;
 import com.android.internal.R;
 import com.android.internal.logging.MetricsLogger;
 import com.android.server.LocalServices;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 import libcore.io.IoUtils;
 

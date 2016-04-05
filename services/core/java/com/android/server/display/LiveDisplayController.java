@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2015 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,9 +47,9 @@ import com.android.server.twilight.TwilightListener;
 import com.android.server.twilight.TwilightManager;
 import com.android.server.twilight.TwilightState;
 
-import cyanogenmod.hardware.CMHardwareManager;
-import cyanogenmod.providers.CMSettings;
-import cyanogenmod.util.ColorUtils;
+import bluros.hardware.CMHardwareManager;
+import bluros.providers.CMSettings;
+import bluros.util.ColorUtils;
 
 import java.io.PrintWriter;
 
@@ -129,11 +129,11 @@ public class LiveDisplayController {
         mHardware = CMHardwareManager.getInstance(mContext);
 
         mDefaultDayTemperature = mContext.getResources().getInteger(
-                org.cyanogenmod.platform.internal.R.integer.config_dayColorTemperature);
+                org.bluros.platform.internal.R.integer.config_dayColorTemperature);
         mDefaultNightTemperature = mContext.getResources().getInteger(
-                org.cyanogenmod.platform.internal.R.integer.config_nightColorTemperature);
+                org.bluros.platform.internal.R.integer.config_nightColorTemperature);
         mDefaultOutdoorLux = mContext.getResources().getInteger(
-                org.cyanogenmod.platform.internal.R.integer.config_outdoorAmbientLux);
+                org.bluros.platform.internal.R.integer.config_outdoorAmbientLux);
 
         mUseOutdoorMode =
                 mHardware.isSupported(CMHardwareManager.FEATURE_SUNLIGHT_ENHANCEMENT);
@@ -539,13 +539,13 @@ public class LiveDisplayController {
                     mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             Notification.Builder builder = new Notification.Builder(mContext)
                     .setContentTitle(mContext.getResources().getString(
-                            org.cyanogenmod.platform.internal.R.string.live_display_title))
+                            org.bluros.platform.internal.R.string.live_display_title))
                     .setContentText(mContext.getResources().getString(
-                            org.cyanogenmod.platform.internal.R.string.live_display_hint))
-                    .setSmallIcon(org.cyanogenmod.platform.internal.R.drawable.ic_livedisplay_notif)
+                            org.bluros.platform.internal.R.string.live_display_hint))
+                    .setSmallIcon(org.bluros.platform.internal.R.drawable.ic_livedisplay_notif)
                     .setStyle(new Notification.BigTextStyle().bigText(mContext.getResources()
                              .getString(
-                                     org.cyanogenmod.platform.internal.R.string.live_display_hint)))
+                                     org.bluros.platform.internal.R.string.live_display_hint)))
                     .setContentIntent(result)
                     .setAutoCancel(true);
 

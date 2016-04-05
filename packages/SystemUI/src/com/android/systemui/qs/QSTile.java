@@ -44,7 +44,7 @@ import com.android.systemui.statusbar.policy.LocationController;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.RotationLockController;
 import com.android.systemui.statusbar.policy.ZenModeController;
-import cyanogenmod.app.StatusBarPanelCustomTile;
+import bluros.app.StatusBarPanelCustomTile;
 
 import java.util.Collection;
 import java.util.Objects;

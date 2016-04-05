@@ -47,7 +47,7 @@ import com.android.systemui.statusbar.phone.NavbarEditor;
 import static android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK;
 import static android.view.accessibility.AccessibilityNodeInfo.ACTION_LONG_CLICK;
 
-import cyanogenmod.power.PerformanceManager;
+import bluros.power.PerformanceManager;
 
 public class KeyButtonView extends ImageView {
 

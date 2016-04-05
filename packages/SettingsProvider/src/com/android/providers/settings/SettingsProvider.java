@@ -77,7 +77,7 @@ import java.util.regex.Pattern;
 
 import com.android.providers.settings.SettingsState.BaseSetting;
 import com.android.providers.settings.SettingsState.Setting;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 /**
  * <p>

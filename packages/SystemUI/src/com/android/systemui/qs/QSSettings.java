@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2015 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import com.android.systemui.statusbar.phone.SystemUIDialog;
 public class QSSettings extends ScrollView {
 
     private static final String RESULT_RECEIVER_EXTRA = "result_receiver";
-    private static final String LOCK_CLOCK_PACKAGENAME = "com.cyanogenmod.lockclock";
+    private static final String LOCK_CLOCK_PACKAGENAME = "com.bluros.lockclock";
     private static final String LOCK_CLOCK_PERM_CLASS = LOCK_CLOCK_PACKAGENAME
             + ".weather.PermissionRequestActivity";
 

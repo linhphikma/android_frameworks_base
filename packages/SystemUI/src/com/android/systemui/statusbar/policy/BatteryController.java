@@ -32,7 +32,7 @@ import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 public class BatteryController extends BroadcastReceiver implements BatteryStateRegistar {
     private static final String TAG = "BatteryController";

@@ -4141,7 +4141,7 @@ final class Settings {
         for (BasePermission basePerm : mPermissions.values()) {
             // Ignore permissions declared by the system
             if (basePerm.sourcePackage.equals("android") ||
-                    basePerm.sourcePackage.equals("cyanogenmod.platform")) {
+                    basePerm.sourcePackage.equals("bluros.platform")) {
                 continue;
             }
             // Ignore permissions other than NORMAL (ignore DYNAMIC and BUILTIN), like the

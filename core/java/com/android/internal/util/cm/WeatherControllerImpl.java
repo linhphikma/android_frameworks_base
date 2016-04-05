@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2015 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,14 +37,14 @@ public class WeatherControllerImpl implements WeatherController {
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     public static final ComponentName COMPONENT_WEATHER_FORECAST = new ComponentName(
-            "com.cyanogenmod.lockclock", "com.cyanogenmod.lockclock.weather.ForecastActivity");
+            "com.bluros.lockclock", "com.bluros.lockclock.weather.ForecastActivity");
     public static final String ACTION_UPDATE_FINISHED
-            = "com.cyanogenmod.lockclock.action.WEATHER_UPDATE_FINISHED";
+            = "com.bluros.lockclock.action.WEATHER_UPDATE_FINISHED";
     public static final String EXTRA_UPDATE_CANCELLED = "update_cancelled";
     public static final String ACTION_FORCE_WEATHER_UPDATE
-            = "com.cyanogenmod.lockclock.action.FORCE_WEATHER_UPDATE";
+            = "com.bluros.lockclock.action.FORCE_WEATHER_UPDATE";
     public static final Uri CURRENT_WEATHER_URI
-            = Uri.parse("content://com.cyanogenmod.lockclock.weather.provider/weather/current");
+            = Uri.parse("content://com.bluros.lockclock.weather.provider/weather/current");
     public static final String[] WEATHER_PROJECTION = new String[]{
             "city",
             "wind",
@@ -54,7 +54,7 @@ public class WeatherControllerImpl implements WeatherController {
             "condition"
 
     };
-    public static final String LOCK_CLOCK_PACKAGE_NAME = "com.cyanogenmod.lockclock";
+    public static final String LOCK_CLOCK_PACKAGE_NAME = "com.bluros.lockclock";
 
     private static final int WEATHER_ICON_MONOCHROME = 0;
     private static final int WEATHER_ICON_COLORED = 1;

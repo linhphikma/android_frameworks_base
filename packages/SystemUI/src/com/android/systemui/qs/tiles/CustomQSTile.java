@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2015 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,12 +42,12 @@ import com.android.internal.logging.MetricsLogger;
 
 import com.android.systemui.qs.QSDetailItemsGrid;
 import com.android.systemui.qs.QSDetailItemsList;
-import cyanogenmod.app.CustomTile;
-import cyanogenmod.app.StatusBarPanelCustomTile;
+import bluros.app.CustomTile;
+import bluros.app.StatusBarPanelCustomTile;
 
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
+import org.bluros.internal.logging.CMMetricsLogger;
 
 import java.util.Arrays;
 

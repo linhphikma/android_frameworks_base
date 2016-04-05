@@ -40,7 +40,7 @@ import com.android.systemui.qs.QSTile;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import cyanogenmod.app.StatusBarPanelCustomTile;
+import bluros.app.StatusBarPanelCustomTile;
 
 public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
 

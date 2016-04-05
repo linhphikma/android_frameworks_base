@@ -1,6 +1,6 @@
 /*
 **
-** Copyright 2015, The CyanogenMod Project
+** Copyright 2015, The BlurOS Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -27,11 +27,11 @@ import android.os.UserHandle;
 import android.util.AndroidException;
 import com.android.internal.os.BaseCommand;
 
-import cyanogenmod.app.CMContextConstants;
-import cyanogenmod.themes.IThemeService;
-import cyanogenmod.themes.ThemeChangeRequest;
+import bluros.app.CMContextConstants;
+import bluros.themes.IThemeService;
+import bluros.themes.ThemeChangeRequest;
 
-import org.cyanogenmod.internal.util.ThemeUtils;
+import org.bluros.internal.util.ThemeUtils;
 
 import java.io.PrintStream;
 import java.util.List;

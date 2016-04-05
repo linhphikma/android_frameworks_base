@@ -93,9 +93,9 @@ import com.android.systemui.tuner.TunerService;
 
 import java.text.NumberFormat;
 
-import cyanogenmod.app.StatusBarPanelCustomTile;
-import cyanogenmod.providers.CMSettings;
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
+import bluros.app.StatusBarPanelCustomTile;
+import bluros.providers.CMSettings;
+import org.bluros.internal.logging.CMMetricsLogger;
 
 /**
  * The view to manage the header area in the expanded status bar.
@@ -991,8 +991,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     private void startForecastLongClickActivity() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setClassName("com.cyanogenmod.lockclock",
-            "com.cyanogenmod.lockclock.preference.Preferences");
+        intent.setClassName("com.bluros.lockclock",
+            "com.bluros.lockclock.preference.Preferences");
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 

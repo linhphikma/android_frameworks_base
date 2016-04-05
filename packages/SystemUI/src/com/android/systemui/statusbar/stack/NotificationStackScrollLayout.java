@@ -53,7 +53,7 @@ import com.android.systemui.statusbar.phone.ScrimController;
 import com.android.systemui.statusbar.policy.HeadsUpManager;
 import com.android.systemui.statusbar.policy.ScrollAdapter;
 
-import cyanogenmod.power.PerformanceManager;
+import bluros.power.PerformanceManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;

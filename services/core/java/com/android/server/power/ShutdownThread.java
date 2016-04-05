@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
- * Copyright (C) 2013 The CyanogenMod Project
+ * Copyright (C) 2013 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ import android.view.IWindowManager;
 import android.view.WindowManager;
 import java.lang.reflect.Method;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 import dalvik.system.PathClassLoader;
 
 import java.io.BufferedReader;
@@ -81,7 +81,7 @@ import java.io.OutputStreamWriter;
 import com.android.internal.R;
 
 import com.android.internal.util.rr.Helpers;
-import org.cyanogenmod.internal.util.ThemeUtils;
+import org.bluros.internal.util.ThemeUtils;
 
 public final class ShutdownThread extends Thread {
     // constants

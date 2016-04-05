@@ -95,7 +95,7 @@ import com.android.server.wallpaper.WallpaperManagerService;
 import com.android.server.webkit.WebViewUpdateService;
 import com.android.server.wm.WindowManagerService;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 import dalvik.system.VMRuntime;
 
 import java.io.File;
@@ -456,7 +456,7 @@ public final class SystemServer {
         boolean disableNetworkTime = SystemProperties.getBoolean("config.disable_networktime", false);
         boolean isEmulator = SystemProperties.get("ro.kernel.qemu").equals("1");
         String[] externalServices = context.getResources().getStringArray(
-                org.cyanogenmod.platform.internal.R.array.config_externalCMServices);
+                org.bluros.platform.internal.R.array.config_externalCMServices);
 
         try {
             Slog.i(TAG, "Reading configuration...");

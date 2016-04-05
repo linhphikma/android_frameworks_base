@@ -89,13 +89,13 @@ import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.stack.StackStateAnimator;
 
-import cyanogenmod.externalviews.KeyguardExternalView;
-import cyanogenmod.providers.CMSettings;
+import bluros.externalviews.KeyguardExternalView;
+import bluros.providers.CMSettings;
 
 import java.util.List;
 import java.util.Objects;
 
-import org.cyanogenmod.internal.util.CmLockPatternUtils;
+import org.bluros.internal.util.CmLockPatternUtils;
 
 public class NotificationPanelView extends PanelView implements
         ExpandableView.OnHeightChangedListener, ObservableScrollView.Listener,

@@ -39,7 +39,7 @@ import android.util.Log;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.widget.LockPatternUtils;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 import libcore.io.IoUtils;
 
 import java.io.BufferedOutputStream;

@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
- * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2016 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 /**
  * <p>BatteryService monitors the charging status, and charge level of the device
@@ -1039,11 +1039,11 @@ public final class BatteryService extends SystemService {
 
             // Is the notification LED brightness changeable ?
             mAdjustableNotificationLedBrightness = context.getResources().getBoolean(
-                    org.cyanogenmod.platform.internal.R.bool.config_adjustableNotificationLedBrightness);
+                    org.bluros.platform.internal.R.bool.config_adjustableNotificationLedBrightness);
 
             // Does the Device have multiple LEDs ?
             mMultipleNotificationLeds = context.getResources().getBoolean(
-                    org.cyanogenmod.platform.internal.R.bool.config_multipleNotificationLeds);
+                    org.bluros.platform.internal.R.bool.config_multipleNotificationLeds);
 
             mBatteryLedOn = context.getResources().getInteger(
                     com.android.internal.R.integer.config_notificationsBatteryLedOn);

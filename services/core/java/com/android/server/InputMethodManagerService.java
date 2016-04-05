@@ -36,8 +36,8 @@ import com.android.server.pm.UserManagerService;
 import com.android.server.statusbar.StatusBarManagerService;
 import com.android.server.wm.WindowManagerService;
 
-import cyanogenmod.app.CMStatusBarManager;
-import cyanogenmod.app.CustomTile;
+import bluros.app.CMStatusBarManager;
+import bluros.app.CustomTile;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -143,12 +143,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-import cyanogenmod.providers.CMSettings;
-import cyanogenmod.hardware.CMHardwareManager;
+import bluros.providers.CMSettings;
+import bluros.hardware.CMHardwareManager;
 
-import org.cyanogenmod.internal.util.QSUtils;
-import org.cyanogenmod.internal.util.QSUtils.OnQSChanged;
-import org.cyanogenmod.internal.util.QSConstants;
+import org.bluros.internal.util.QSUtils;
+import org.bluros.internal.util.QSUtils.OnQSChanged;
+import org.bluros.internal.util.QSConstants;
 /**
  * This class provides a system service that manages input methods.
  */

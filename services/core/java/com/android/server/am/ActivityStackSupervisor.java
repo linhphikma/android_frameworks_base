@@ -118,7 +118,7 @@ import com.android.server.LocalServices;
 import com.android.server.am.ActivityStack.ActivityState;
 import com.android.server.wm.WindowManagerService;
 
-import cyanogenmod.power.PerformanceManagerInternal;
+import bluros.power.PerformanceManagerInternal;
 
 import java.io.FileDescriptor;
 import java.io.IOException;

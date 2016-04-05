@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2015 The BlurOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,9 +26,9 @@ import android.provider.Settings;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.R;
 
-import cyanogenmod.power.PerformanceManager;
+import bluros.power.PerformanceManager;
 
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
+import org.bluros.internal.logging.CMMetricsLogger;
 
 /** Quick settings tile: Battery saver **/
 public class BatterySaverTile extends QSTile<QSTile.BooleanState> {

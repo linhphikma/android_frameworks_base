@@ -53,14 +53,14 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.FgThread;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
-import cyanogenmod.app.CMStatusBarManager;
-import cyanogenmod.app.CustomTile;
+import bluros.app.CMStatusBarManager;
+import bluros.app.CustomTile;
 
-import org.cyanogenmod.internal.util.QSUtils;
-import org.cyanogenmod.internal.util.QSUtils.OnQSChanged;
-import org.cyanogenmod.internal.util.QSConstants;
+import org.bluros.internal.util.QSUtils;
+import org.bluros.internal.util.QSUtils.OnQSChanged;
+import org.bluros.internal.util.QSConstants;
 
 import java.io.File;
 import java.io.FileNotFoundException;

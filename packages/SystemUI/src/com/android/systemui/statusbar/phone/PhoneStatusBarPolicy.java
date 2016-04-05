@@ -58,13 +58,13 @@ import com.android.systemui.statusbar.policy.HotspotController;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.SuController;
 
-import cyanogenmod.app.CMStatusBarManager;
-import cyanogenmod.app.CustomTile;
-import cyanogenmod.providers.CMSettings;
+import bluros.app.CMStatusBarManager;
+import bluros.app.CustomTile;
+import bluros.providers.CMSettings;
 
-import org.cyanogenmod.internal.util.QSUtils;
-import org.cyanogenmod.internal.util.QSUtils.OnQSChanged;
-import org.cyanogenmod.internal.util.QSConstants;
+import org.bluros.internal.util.QSUtils;
+import org.bluros.internal.util.QSUtils.OnQSChanged;
+import org.bluros.internal.util.QSConstants;
 
 import java.util.ArrayList;
 

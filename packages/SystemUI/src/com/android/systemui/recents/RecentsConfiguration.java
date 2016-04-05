@@ -33,7 +33,7 @@ import com.android.systemui.R;
 import com.android.systemui.recents.misc.Console;
 import com.android.systemui.recents.misc.SystemServicesProxy;
 
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 
 /** A static Recents configuration for the current context
  * NOTE: We should not hold any references to a Context from a static instance */

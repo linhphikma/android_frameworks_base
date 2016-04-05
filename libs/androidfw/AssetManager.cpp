@@ -76,7 +76,7 @@ static const char* kDefaultVendor = "default";
 static const char* kAssetsRoot = "assets";
 static const char* kAppZipName = NULL; //"classes.jar";
 static const char* kSystemAssets = "framework/framework-res.apk";
-static const char* kCMSDKAssets = "framework/org.cyanogenmod.platform-res.apk";
+static const char* kCMSDKAssets = "framework/org.bluros.platform-res.apk";
 static const char* kAndroidManifest = "AndroidManifest.xml";
 static const int   kComposedIconAsset = 128;
 

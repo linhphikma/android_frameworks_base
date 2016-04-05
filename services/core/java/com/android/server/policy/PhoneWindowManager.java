@@ -89,7 +89,7 @@ import android.speech.RecognizerIntent;
 import android.telecom.TelecomManager;
 import com.android.internal.os.DeviceKeyHandler;
 import com.android.internal.util.cm.ActionUtils;
-import cyanogenmod.providers.CMSettings;
+import bluros.providers.CMSettings;
 import dalvik.system.DexClassLoader;
 import android.text.Html;
 import android.util.DisplayMetrics;
@@ -2515,7 +2515,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case TYPE_KEYGUARD_PANEL:
                 permission =
-                        org.cyanogenmod.platform.internal.Manifest.permission.THIRD_PARTY_KEYGUARD;
+                        org.bluros.platform.internal.Manifest.permission.THIRD_PARTY_KEYGUARD;
                 break;
             default:
                 permission = android.Manifest.permission.INTERNAL_SYSTEM_WINDOW;
@@ -3080,7 +3080,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case TYPE_KEYGUARD_PANEL:
                 mContext.enforceCallingOrSelfPermission(
-                        org.cyanogenmod.platform.internal.Manifest.permission.THIRD_PARTY_KEYGUARD,
+                        org.bluros.platform.internal.Manifest.permission.THIRD_PARTY_KEYGUARD,
                         "PhoneWindowManager");
                 if (mKeyguardPanel != null) {
                     return WindowManagerGlobal.ADD_MULTIPLE_SINGLETON;
