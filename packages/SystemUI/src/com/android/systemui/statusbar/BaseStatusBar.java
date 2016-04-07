@@ -2673,12 +2673,28 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
     }
 
- protected WindowManager.LayoutParams getAppCircleSidebarLayoutParams() {
+	protected WindowManager.LayoutParams getAppCircleSidebarLayoutParams() {
         int maxWidth =
                 mContext.getResources().getDimensionPixelSize(R.dimen.app_sidebar_trigger_width);
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
                 maxWidth,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.TYPE_STATUS_BAR_SUB_PANEL,
+                0
+                | WindowManager.LayoutParams.FLAG_TOUCHABLE_WHEN_WAKING
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH,
+                PixelFormat.TRANSLUCENT);
+        lp.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_NO_MOVE_ANIMATION;
+        lp.gravity = Gravity.TOP | Gravity.RIGHT;
+        lp.setTitle("AppCircleSidebar");
+
+        return lp;
+    }
+    
     class SidebarObserver extends ContentObserver {
         SidebarObserver(Handler handler) {
             super(handler);

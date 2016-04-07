@@ -902,7 +902,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.APP_SIDEBAR_POSITION),
                     false, this, UserHandle.USER_ALL);
             update();
->>>>>>> 8e3d4c9... App sidebar (1/2)
         }
 
         @Override
