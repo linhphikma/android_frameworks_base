@@ -260,12 +260,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected int mZenMode;
 
-<<<<<<< HEAD
     protected AppCircleSidebar mAppCircleSidebar;
-=======
-    protected AppSidebar mAppSidebar;
-    protected int mSidebarPosition;
->>>>>>> 8e3d4c9... App sidebar (1/2)
 
     @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
     protected GestureAnywhereView mGestureAnywhereView;
@@ -2664,7 +2659,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         return lp;
     }
 
-<<<<<<< HEAD
     protected void addAppCircleSidebar() {
             mAppCircleSidebar = (AppCircleSidebar) View.inflate(mContext, R.layout.app_circle_sidebar, null);
             mWindowManager.addView(mAppCircleSidebar, getAppCircleSidebarLayoutParams());
@@ -2682,49 +2676,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
                 maxWidth,
-=======
-    class SidebarObserver extends ContentObserver {
-        SidebarObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.APP_SIDEBAR_POSITION), false, this);
-            update();
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            update();
-        }
-
-        public void update() {
-            ContentResolver resolver = mContext.getContentResolver();
-            int sidebarPosition = Settings.System.getInt(
-                    resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
-            if (sidebarPosition != mSidebarPosition) {
-                mSidebarPosition = sidebarPosition;
-                mWindowManager.updateViewLayout(mAppSidebar, getAppSidebarLayoutParams(sidebarPosition));
-            }
-        }
-    }
-
-    protected void addSidebarView() {
-        mAppSidebar = (AppSidebar)View.inflate(mContext, R.layout.app_sidebar, null);
-        mWindowManager.addView(mAppSidebar, getAppSidebarLayoutParams(mSidebarPosition));
-    }
-
-    protected void removeSidebarView() {
-        if (mAppSidebar != null)
-            mWindowManager.removeView(mAppSidebar);
-    }
-
-    protected WindowManager.LayoutParams getAppSidebarLayoutParams(int position) {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
-                LayoutParams.WRAP_CONTENT,
->>>>>>> 8e3d4c9... App sidebar (1/2)
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_STATUS_BAR_SUB_PANEL,
                 0
@@ -2735,14 +2686,8 @@ public abstract class BaseStatusBar extends SystemUI implements
                 | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH,
                 PixelFormat.TRANSLUCENT);
         lp.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_NO_MOVE_ANIMATION;
-<<<<<<< HEAD
         lp.gravity = Gravity.TOP | Gravity.RIGHT;
         lp.setTitle("AppCircleSidebar");
-=======
-        lp.gravity = Gravity.TOP;// | Gravity.FILL_VERTICAL;
-        lp.gravity |= position == AppSidebar.SIDEBAR_POSITION_LEFT ? Gravity.LEFT : Gravity.RIGHT;
-        lp.setTitle("AppSidebar");
->>>>>>> 8e3d4c9... App sidebar (1/2)
 
         return lp;
     }
