@@ -57,7 +57,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ColorDrawable;
@@ -724,8 +723,6 @@ public class Activity extends ContextThemeWrapper
     /*package*/ ActivityThread mMainThread;
     Activity mParent;
     boolean mCalled;
-    boolean mCheckedForLoaderManager;
-    boolean mLoadersStarted;
     /*package*/ boolean mResumed;
     private boolean mStopped;
     boolean mFinished;
@@ -744,8 +741,8 @@ public class Activity extends ContextThemeWrapper
     static final class NonConfigurationInstances {
         Object activity;
         HashMap<String, Object> children;
-        ArrayList<Fragment> fragments;
-        ArrayMap<String, LoaderManagerImpl> loaders;
+        List<Fragment> fragments;
+        ArrayMap<String, LoaderManager> loaders;
         VoiceInteractor voiceInteractor;
     }
     /* package */ NonConfigurationInstances mLastNonConfigurationInstances;
@@ -765,24 +762,12 @@ public class Activity extends ContextThemeWrapper
     private CharSequence mTitle;
     private int mTitleColor = 0;
 
-    final FragmentManagerImpl mFragments = new FragmentManagerImpl();
-    final FragmentContainer mContainer = new FragmentContainer() {
-        @Override
-        public View findViewById(int id) {
-            return Activity.this.findViewById(id);
-        }
-        @Override
-        public boolean hasView() {
-            Window window = Activity.this.getWindow();
-            return (window != null && window.peekDecorView() != null);
-        }
-    };
+    // we must have a handler before the FragmentController is constructed
+    final Handler mHandler = new Handler();
+    final FragmentController mFragments = FragmentController.createController(new HostCallbacks());
 
     // Most recent call to requestVisibleBehind().
     boolean mVisibleBehind;
-
-    ArrayMap<String, LoaderManagerImpl> mAllLoaderManagers;
-    LoaderManagerImpl mLoaderManager;
 
     private static final class ManagedCursor {
         ManagedCursor(Cursor cursor) {
@@ -823,8 +808,7 @@ public class Activity extends ContextThemeWrapper
     // SwipeBack Gestures support
     private SwipeBackLayout mSwipeBackLayout;
     private boolean mSwipeBackEnabled = false;
-	
-    final Handler mHandler = new Handler();
+
     ActivityTransitionState mActivityTransitionState = new ActivityTransitionState();
     SharedElementCallback mEnterTransitionListener = SharedElementCallback.NULL_CALLBACK;
     SharedElementCallback mExitTransitionListener = SharedElementCallback.NULL_CALLBACK;
@@ -886,28 +870,7 @@ public class Activity extends ContextThemeWrapper
      * Return the LoaderManager for this activity, creating it if needed.
      */
     public LoaderManager getLoaderManager() {
-        if (mLoaderManager != null) {
-            return mLoaderManager;
-        }
-        mCheckedForLoaderManager = true;
-        mLoaderManager = getLoaderManager("(root)", mLoadersStarted, true);
-        return mLoaderManager;
-    }
-
-    LoaderManagerImpl getLoaderManager(String who, boolean started, boolean create) {
-        if (mAllLoaderManagers == null) {
-            mAllLoaderManagers = new ArrayMap<String, LoaderManagerImpl>();
-        }
-        LoaderManagerImpl lm = mAllLoaderManagers.get(who);
-        if (lm == null) {
-            if (create) {
-                lm = new LoaderManagerImpl(who, this, started);
-                mAllLoaderManagers.put(who, lm);
-            }
-        } else {
-            lm.updateActivity(this);
-        }
-        return lm;
+        return mFragments.getLoaderManager();
     }
 
     /**
@@ -950,10 +913,12 @@ public class Activity extends ContextThemeWrapper
      * @see #onRestoreInstanceState
      * @see #onPostCreate
      */
+    @MainThread
+    @CallSuper
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         if (DEBUG_LIFECYCLE) Slog.v(TAG, "onCreate " + this + ": " + savedInstanceState);
         if (mLastNonConfigurationInstances != null) {
-            mAllLoaderManagers = mLastNonConfigurationInstances.loaders;
+            mFragments.restoreLoaderNonConfig(mLastNonConfigurationInstances.loaders);
         }
         if (mActivityInfo.parentActivityName != null) {
             if (mActionBar == null) {
@@ -1233,6 +1198,7 @@ public class Activity extends ContextThemeWrapper
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      * @see #onCreate
      */
+    @CallSuper
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         if (!isChild()) {
             mTitleReady = true;
@@ -1241,8 +1207,8 @@ public class Activity extends ContextThemeWrapper
         mCalled = true;
         mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 0) == 1) && isAllowedForSwipeBack(this.getPackageName());
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
-            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            getWindow().getDecorView().setBackgroundDrawable(null);
+            // getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            // getWindow().getDecorView().setBackgroundDrawable(null);
             mSwipeBackLayout = new SwipeBackLayout(this);
             int mSwipeEdge = Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_EDGE, 0);
             int mEdgeFlag;
@@ -1299,19 +1265,12 @@ public class Activity extends ContextThemeWrapper
      * @see #onStop
      * @see #onResume
      */
+    @CallSuper
     protected void onStart() {
         if (DEBUG_LIFECYCLE) Slog.v(TAG, "onStart " + this);
         mCalled = true;
 
-        if (!mLoadersStarted) {
-            mLoadersStarted = true;
-            if (mLoaderManager != null) {
-                mLoaderManager.doStart();
-            } else if (!mCheckedForLoaderManager) {
-                mLoaderManager = getLoaderManager("(root)", mLoadersStarted, false);
-            }
-            mCheckedForLoaderManager = true;
-        }
+        mFragments.doLoaderStart();
 
         getApplication().dispatchActivityStarted(this);
     }
@@ -1336,6 +1295,7 @@ public class Activity extends ContextThemeWrapper
      * @see #onStart
      * @see #onResume
      */
+    @CallSuper
     protected void onRestart() {
         mCalled = true;
     }
@@ -1370,6 +1330,7 @@ public class Activity extends ContextThemeWrapper
      * @see #onPostResume
      * @see #onPause
      */
+    @CallSuper
     protected void onResume() {
         if (DEBUG_LIFECYCLE) Slog.v(TAG, "onResume " + this);
         getApplication().dispatchActivityResumed(this);
@@ -1814,6 +1775,7 @@ public class Activity extends ContextThemeWrapper
      * @see #finish
      * @see #isFinishing
      */
+    @CallSuper
     protected void onDestroy() {
         if (DEBUG_LIFECYCLE) Slog.v(TAG, "onDestroy " + this);
         mCalled = true;
@@ -2047,27 +2009,9 @@ public class Activity extends ContextThemeWrapper
     NonConfigurationInstances retainNonConfigurationInstances() {
         Object activity = onRetainNonConfigurationInstance();
         HashMap<String, Object> children = onRetainNonConfigurationChildInstances();
-        ArrayList<Fragment> fragments = mFragments.retainNonConfig();
-        boolean retainLoaders = false;
-        if (mAllLoaderManagers != null) {
-            // prune out any loader managers that were already stopped and so
-            // have nothing useful to retain.
-            final int N = mAllLoaderManagers.size();
-            LoaderManagerImpl loaders[] = new LoaderManagerImpl[N];
-            for (int i=N-1; i>=0; i--) {
-                loaders[i] = mAllLoaderManagers.valueAt(i);
-            }
-            for (int i=0; i<N; i++) {
-                LoaderManagerImpl lm = loaders[i];
-                if (lm.mRetaining) {
-                    retainLoaders = true;
-                } else {
-                    lm.doDestroy();
-                    mAllLoaderManagers.remove(lm.mWho);
-                }
-            }
-        }
-        if (activity == null && children == null && fragments == null && !retainLoaders
+        List<Fragment> fragments = mFragments.retainNonConfig();
+        ArrayMap<String, LoaderManager> loaders = mFragments.retainLoaderNonConfig();
+        if (activity == null && children == null && fragments == null && loaders == null
                 && mVoiceInteractor == null) {
             return null;
         }
@@ -2101,18 +2045,7 @@ public class Activity extends ContextThemeWrapper
      * with this activity.
      */
     public FragmentManager getFragmentManager() {
-        return mFragments;
-    }
-
-    void invalidateFragment(String who) {
-        //Log.v(TAG, "invalidateFragmentIndex: index=" + index);
-        if (mAllLoaderManagers != null) {
-            LoaderManagerImpl lm = mAllLoaderManagers.get(who);
-            if (lm != null && !lm.mRetaining) {
-                lm.doDestroy();
-                mAllLoaderManagers.remove(who);
-            }
-        }
+        return mFragments.getFragmentManager();
     }
 
     /**
@@ -2290,7 +2223,7 @@ public class Activity extends ContextThemeWrapper
 
         mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 0) == 1) && isAllowedForSwipeBack(this.getPackageName());
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
-            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getWindow().setBackgroundDrawable(new ColorDrawable(0));
             getWindow().getDecorView().setBackgroundDrawable(null);
             mSwipeBackLayout = new SwipeBackLayout(this);
             int mSwipeEdge = Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_EDGE, 0);
@@ -2367,8 +2300,8 @@ public class Activity extends ContextThemeWrapper
     public void setSwipeBackEnable(boolean enable) {
         mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 0) == 1);
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
-            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            getWindow().getDecorView().setBackgroundDrawable(null);
+            // getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            // getWindow().getDecorView().setBackgroundDrawable(null);
             mSwipeBackLayout = new SwipeBackLayout(this);
             int mSwipeEdge = Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_EDGE, 0);
             int mEdgeFlag;
@@ -2468,7 +2401,7 @@ public class Activity extends ContextThemeWrapper
      * @see #setContentView(android.view.View)
      * @see #setContentView(android.view.View, android.view.ViewGroup.LayoutParams)
      */
-    public void setContentView(int layoutResID) {
+    public void setContentView(@LayoutRes int layoutResID) {
         getWindow().setContentView(layoutResID);
         initWindowDecorActionBar();
     }
@@ -2806,7 +2739,7 @@ public class Activity extends ContextThemeWrapper
             return;
         }
 
-        if (!mFragments.popBackStackImmediate()) {
+        if (!mFragments.getFragmentManager().popBackStackImmediate()) {
             finishAfterTransition();
         }
     }
@@ -3960,7 +3893,7 @@ public class Activity extends ContextThemeWrapper
      * Convenience for calling
      * {@link android.view.Window#setFeatureDrawableResource}.
      */
-    public final void setFeatureDrawableResource(int featureId, int resId) {
+    public final void setFeatureDrawableResource(int featureId, @DrawableRes int resId) {
         getWindow().setFeatureDrawableResource(featureId, resId);
     }
 
@@ -4015,7 +3948,7 @@ public class Activity extends ContextThemeWrapper
     }
 
     @Override
-    protected void onApplyThemeResource(Resources.Theme theme, int resid,
+    protected void onApplyThemeResource(Resources.Theme theme, @StyleRes int resid,
             boolean first) {
         if (mParent == null) {
             super.onApplyThemeResource(theme, resid, first);
@@ -4286,9 +4219,6 @@ public class Activity extends ContextThemeWrapper
      */
     public void startActivityForResultAsUser(Intent intent, int requestCode,
             @Nullable Bundle options, UserHandle user) {
-        if (options != null) {
-            mActivityTransitionState.startExitOutTransition(this, options);
-        }
         if (mParent != null) {
             throw new RuntimeException("Can't be called from a child");
         }
@@ -4310,10 +4240,7 @@ public class Activity extends ContextThemeWrapper
             mStartedActivity = true;
         }
 
-        final View decor = mWindow != null ? mWindow.peekDecorView() : null;
-        if (decor != null) {
-            decor.cancelPendingInputEvents();
-        }
+        cancelInputsAndStartExitTransition(options);
     }
 
     /**
@@ -4808,6 +4735,7 @@ public class Activity extends ContextThemeWrapper
                 mToken, child.mEmbeddedID, requestCode,
                 ar.getResultCode(), ar.getResultData());
         }
+        cancelInputsAndStartExitTransition(options);
     }
 
     /**
@@ -4850,18 +4778,37 @@ public class Activity extends ContextThemeWrapper
      */
     public void startActivityFromFragment(@NonNull Fragment fragment, Intent intent,
             int requestCode, @Nullable Bundle options) {
-        if (options != null) {
-            mActivityTransitionState.startExitOutTransition(this, options);
+        startActivityForResult(fragment.mWho, intent, requestCode, options);
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public void startActivityForResult(
+            String who, Intent intent, int requestCode, @Nullable Bundle options) {
+        Uri referrer = onProvideReferrer();
+        if (referrer != null) {
+            intent.putExtra(Intent.EXTRA_REFERRER, referrer);
         }
         Instrumentation.ActivityResult ar =
             mInstrumentation.execStartActivity(
-                this, mMainThread.getApplicationThread(), mToken, fragment,
+                this, mMainThread.getApplicationThread(), mToken, who,
                 intent, requestCode, options);
         if (ar != null) {
             mMainThread.sendActivityResult(
-                mToken, fragment.mWho, requestCode,
+                mToken, who, requestCode,
                 ar.getResultCode(), ar.getResultData());
         }
+        cancelInputsAndStartExitTransition(options);
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public boolean canStartActivityForResult() {
+        return true;
     }
 
     /**
@@ -5868,21 +5815,16 @@ public class Activity extends ContextThemeWrapper
                 writer.print(mResumed); writer.print(" mStopped=");
                 writer.print(mStopped); writer.print(" mFinished=");
                 writer.println(mFinished);
-        writer.print(innerPrefix); writer.print("mLoadersStarted=");
-                writer.println(mLoadersStarted);
         writer.print(innerPrefix); writer.print("mChangingConfigurations=");
                 writer.println(mChangingConfigurations);
         writer.print(innerPrefix); writer.print("mCurrentConfig=");
                 writer.println(mCurrentConfig);
 
-        if (mLoaderManager != null) {
-            writer.print(prefix); writer.print("Loader Manager ");
-                    writer.print(Integer.toHexString(System.identityHashCode(mLoaderManager)));
-                    writer.println(":");
-            mLoaderManager.dump(prefix + "  ", fd, writer, args);
+        mFragments.dumpLoaders(innerPrefix, fd, writer, args);
+        mFragments.getFragmentManager().dump(innerPrefix, fd, writer, args);
+        if (mVoiceInteractor != null) {
+            mVoiceInteractor.dump(innerPrefix, fd, writer, args);
         }
-
-        mFragments.dump(prefix, fd, writer, args);
 
         if (getWindow() != null &&
                 getWindow().peekDecorView() != null &&
@@ -6098,6 +6040,7 @@ public class Activity extends ContextThemeWrapper
      * @see #requestVisibleBehind(boolean)
      * @see #onBackgroundVisibleBehindChanged(boolean)
      */
+    @CallSuper
     public void onVisibleBehindCanceled() {
         mCalled = true;
     }
@@ -6251,6 +6194,7 @@ public class Activity extends ContextThemeWrapper
      *
      * @param mode The new action mode.
      */
+    @CallSuper
     @Override
     public void onActionModeStarted(ActionMode mode) {
     }
@@ -6261,6 +6205,7 @@ public class Activity extends ContextThemeWrapper
      *
      * @param mode The action mode that just finished.
      */
+    @CallSuper
     @Override
     public void onActionModeFinished(ActionMode mode) {
     }
@@ -6475,9 +6420,9 @@ public class Activity extends ContextThemeWrapper
             Configuration config, String referrer, IVoiceInteractor voiceInteractor) {
         attachBaseContext(context);
 
-        mFragments.attachActivity(this, mContainer, null);
+        mFragments.attachHost(null /*parent*/);
 
-        mWindow = PolicyManager.makeNewWindow(this);
+        mWindow = new PhoneWindow(this);
         mWindow.setCallback(this);
         mWindow.setOnWindowDismissedCallback(this);
         mWindow.getLayoutInflater().setPrivateFactory(this);
@@ -6560,18 +6505,7 @@ public class Activity extends ContextThemeWrapper
                 " did not call through to super.onStart()");
         }
         mFragments.dispatchStart();
-        if (mAllLoaderManagers != null) {
-            final int N = mAllLoaderManagers.size();
-            LoaderManagerImpl loaders[] = new LoaderManagerImpl[N];
-            for (int i=N-1; i>=0; i--) {
-                loaders[i] = mAllLoaderManagers.valueAt(i);
-            }
-            for (int i=0; i<N; i++) {
-                LoaderManagerImpl lm = loaders[i];
-                lm.finishRetain();
-                lm.doReportStart();
-            }
-        }
+        mFragments.reportLoaderStart();
         mActivityTransitionState.enterReady(this);
     }
 
@@ -6677,16 +6611,7 @@ public class Activity extends ContextThemeWrapper
 
     final void performStop() {
         mDoReportFullyDrawn = false;
-        if (mLoadersStarted) {
-            mLoadersStarted = false;
-            if (mLoaderManager != null) {
-                if (!mChangingConfigurations) {
-                    mLoaderManager.doStop();
-                } else {
-                    mLoaderManager.doRetain();
-                }
-            }
-        }
+        mFragments.doLoaderStop(mChangingConfigurations /*retain*/);
 
         if (!mStopped) {
             if (mWindow != null) {
@@ -6728,9 +6653,7 @@ public class Activity extends ContextThemeWrapper
         mWindow.destroy();
         mFragments.dispatchDestroy();
         onDestroy();
-        if (mLoaderManager != null) {
-            mLoaderManager.doDestroy();
-        }
+        mFragments.doLoaderDestroy();
         if (mVoiceInteractor != null) {
             mVoiceInteractor.detachActivity();
         }
