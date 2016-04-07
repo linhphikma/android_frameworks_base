@@ -1213,6 +1213,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
         final Runnable launchRunnable = new Runnable() {
             @Override
             public void run() {
+				TaskStackView.enableShake(false);
                 if (task.isActive) {
                     // Bring an active task to the foreground
                     ssp.moveTaskToFront(task.key.id, launchOpts);

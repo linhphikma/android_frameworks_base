@@ -115,9 +115,9 @@ public class RecentController implements RecentPanelView.OnExitListener,
     private RecentPanelView mRecentPanelView;
 
     // App Sidebar.
-    private AppSidebarView mAppSidebarView;
-    private boolean mAppSidebarViewEnabled;
-    private float mAppSidebarViewScaleFactor = AppSidebarView.DEFAULT_SCALE_FACTOR;
+    private AppSidebar mAppSidebar;
+    private boolean mAppSidebarEnabled;
+    private float mAppSidebarScaleFactor = AppSidebar.DEFAULT_SCALE_FACTOR;
 
     private Handler mHandler = new Handler();
 
@@ -378,14 +378,14 @@ public class RecentController implements RecentPanelView.OnExitListener,
     private WindowManager.LayoutParams generateLayoutParameter(){
         return generateLayoutParameter(false);
     }
-    private WindowManager.LayoutParams generateLayoutParameter(boolean forAppSidebarView) {
+    private WindowManager.LayoutParams generateLayoutParameter(boolean forAppSidebar) {
         final int width;
-        if (forAppSidebarView){
-            int appSidebarViewPadding = mContext.getResources()
+        if (forAppSidebar){
+            int appSidebarPadding = mContext.getResources()
                     .getDimensionPixelSize(R.dimen.recent_app_sidebar_item_padding);
             width = (int) (mContext.getResources()
                     .getDimensionPixelSize(R.dimen.recent_app_sidebar_item_size)
-                    * mAppSidebarViewScaleFactor + appSidebarViewPadding * 2f);
+                    * mAppSidebarScaleFactor + appSidebarPadding * 2f);
         } else {
             width = (int) (mContext.getResources().getDimensionPixelSize(R.dimen.recent_width)
                     * mScaleFactor);
@@ -408,7 +408,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
 
         // Set gravitiy.
         int gravity;
-        if (forAppSidebarView){
+        if (forAppSidebar){
             gravity = reverseGravity(mMainGravity);
         } else {
             gravity = mMainGravity;
@@ -416,14 +416,14 @@ public class RecentController implements RecentPanelView.OnExitListener,
         params.gravity = Gravity.CENTER_VERTICAL | gravity;
 
         // Set animation for our recent window.
-        if ((mMainGravity == Gravity.LEFT) != forAppSidebarView) {
+        if ((mMainGravity == Gravity.LEFT) != forAppSidebar) {
             params.windowAnimations = com.android.internal.R.style.Animation_RecentScreen_Left;
         } else {
             params.windowAnimations = com.android.internal.R.style.Animation_RecentScreen;
         }
 
         // This title is for debugging only. See: dumpsys window
-        params.setTitle(forAppSidebarView ? "RecentAppSidebar" : "RecentControlPanel");
+        params.setTitle(forAppSidebar ? "RecentAppSidebar" : "RecentControlPanel");
         return params;
     }
 
@@ -466,8 +466,8 @@ public class RecentController implements RecentPanelView.OnExitListener,
         }
         mParentView.setSystemUiVisibility(newVis);
         mVisibility = newVis;
-        if (mAppSidebarView != null){
-            mAppSidebarView.setSystemUiVisibility(newVis);
+        if (mAppSidebar != null){
+            mAppSidebar.setSystemUiVisibility(newVis);
         }
     }
 
@@ -656,10 +656,10 @@ public class RecentController implements RecentPanelView.OnExitListener,
             }
 
             // App sidebar settings
-            String appSidebarViewContent = Settings.System.getStringForUser(
+            String appSidebarContent = Settings.System.getStringForUser(
                     resolver, Settings.System.RECENT_APP_SIDEBAR_CONTENT, UserHandle.USER_CURRENT);
-            mAppSidebarViewEnabled = appSidebarViewContent != null && !appSidebarViewContent.equals("");
-            mAppSidebarViewScaleFactor = Settings.System.getIntForUser(
+            mAppSidebarEnabled = appSidebarContent != null && !appSidebarContent.equals("");
+            mAppSidebarScaleFactor = Settings.System.getIntForUser(
                     resolver, Settings.System.RECENT_APP_SIDEBAR_SCALE_FACTOR, 100,
                     UserHandle.USER_CURRENT) / 100.0f;
         }
@@ -832,24 +832,25 @@ public class RecentController implements RecentPanelView.OnExitListener,
 
     // Methods for app sidebar:
     private void addSidebarView() {
-        if (mAppSidebarViewEnabled) {
-            mAppSidebarView = (AppSidebarView) View.inflate(mContext, R.layout.recent_app_sidebar, null);
-            mAppSidebarView.setSlimRecent(this);
-            mAppSidebarView.setSystemUiVisibility(mVisibility);
-            mWindowManager.addView(mAppSidebarView, generateLayoutParameter(true));
-            AppSidebarView.startBlurTask();
+        if (mAppSidebarEnabled) {
+            mAppSidebar = (AppSidebar) View.inflate(mContext, R.layout.recent_app_sidebar, null);
+            mAppSidebar.setSlimRecent(this);
+            mAppSidebar.setSystemUiVisibility(mVisibility);
+            mWindowManager.addView(mAppSidebar, generateLayoutParameter(true));
+            AppSidebar.startBlurTask();
         }
     }
+    
     private void removeSidebarView() {
-        if (mAppSidebarView != null) {
-            mWindowManager.removeView(mAppSidebarView);
-            mAppSidebarView = null;
+        if (mAppSidebar != null) {
+            mWindowManager.removeView(mAppSidebar);
+            mAppSidebar = null;
         }
     }
     private void removeSidebarViewImmediate() {
-        if (mAppSidebarView != null) {
-            mWindowManager.removeViewImmediate(mAppSidebarView);
-            mAppSidebarView = null;
+        if (mAppSidebar != null) {
+            mWindowManager.removeViewImmediate(mAppSidebar);
+            mAppSidebar = null;
         }
     }
 }

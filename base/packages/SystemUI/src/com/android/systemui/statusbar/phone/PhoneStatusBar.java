@@ -178,9 +178,6 @@ import com.android.systemui.screenshot.TakeScreenshotService;
 import com.android.systemui.statusbar.ActivatableNotificationView;
 import com.android.systemui.statusbar.BackDropView;
 import com.android.systemui.statusbar.BarTransitions;
-import com.android.systemui.statusbar.AppSidebar;
-import com.android.systemui.slimrecent.AppSidebarView;
-import com.android.systemui.slimrecent.RecentController;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.DismissView;
@@ -229,7 +226,8 @@ import com.android.systemui.statusbar.stack.NotificationStackScrollLayout.OnChil
 import com.android.systemui.statusbar.stack.StackStateAnimator;
 import com.android.systemui.statusbar.stack.StackViewState;
 import com.android.systemui.statusbar.appcirclesidebar.AppCircleSidebar;
-import com.android.systemui.doze.ShakeSensorManager;
+import com.android.systemui.slimrecent.RecentController;
+import com.android.systemui.slimrecent.AppSidebar;
 import com.android.systemui.volume.VolumeComponent;
 import bluros.app.CMContextConstants;
 import bluros.app.CustomTileListenerService;
@@ -264,7 +262,7 @@ import bluros.themes.IThemeService;
 
 public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         DragDownHelper.DragDownCallback, ActivityStarter, OnUnlockMethodChangedListener,
-        HeadsUpManager.OnHeadsUpChangedListener, ShakeSensorManager.ShakeListener {
+        HeadsUpManager.OnHeadsUpChangedListener {
     static final String TAG = "PhoneStatusBar";
     public static final boolean DEBUG = BaseStatusBar.DEBUG;
     public static final boolean SPEW = false;
@@ -407,9 +405,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mScreenTurningOn;
     private BatteryMeterView mBatteryView;
     private BatteryLevelTextView mBatteryTextView;
-    
-    private ShakeSensorManager mShakeSensorManager;
-    private Boolean enableShakeCleanByUser;
 
     private boolean mQsColorSwitch = false;
     public boolean mColorSwitch = false ;
@@ -640,8 +635,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         protected void observe() {
             super.observe();
 	ContentResolver resolver = mContext.getContentResolver();
-    resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.SHAKE_CLEAN_NOTIFICATION),false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(CMSettings.System.getUriFor(
 			CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
 			UserHandle.USER_ALL);
@@ -895,21 +888,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            DontStressOnRecreate();
 	}
          update();
-
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.SCREEN_BRIGHTNESS_MODE), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.APP_SIDEBAR_POSITION),
-                    false, this, UserHandle.USER_ALL);
-            update();
         }
 
         @Override
@@ -931,9 +909,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = CMSettings.System.getIntForUser(
 			resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
 			UserHandle.USER_CURRENT) == 1;
-			enableShakeCleanByUser = Settings.System.getIntForUser(
-                   resolver, Settings.System.SHAKE_CLEAN_NOTIFICATION, 1,
-                   UserHandle.USER_CURRENT) == 1;
 		mQsColorSwitch = Settings.System.getIntForUser(resolver,
 			Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
 		mQsIconColor = Settings.System.getIntForUser(resolver,
@@ -1099,16 +1074,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             if (oldWeatherState != mWeatherTempState) {
                 updateWeatherTextState(mWeatherController.getWeatherInfo().temp,
                         mWeatherTempColor, mWeatherTempSize, mWeatherTempFontStyle);
-            }
-            // This method reads CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY
-            updateCustomRecentsLongPressHandler(false);
-
-            int sidebarPosition = Settings.System.getInt(
-                    resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
-            if (sidebarPosition != mSidebarPosition) {
-                mSidebarPosition = sidebarPosition;
-                removeSidebarView();
-                addSidebarView();
             }
 
             mWeatherTempStyle = Settings.System.getIntForUser(
@@ -1583,8 +1548,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         final Context context = mContext;
 
         Resources res = context.getResources();
-        
-        mShakeSensorManager = new ShakeSensorManager(mContext, this);
 
         mScreenWidth = (float) context.getResources().getDisplayMetrics().widthPixels;
         mMinBrightness = context.getResources().getInteger(
@@ -1682,10 +1645,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (mAssistManager == null) {
             mAssistManager = new AssistManager(this, context);
         }
-
-        addGestureAnywhereView();
-        addSidebarView();
-        mAssistManager = new AssistManager(this, context);
+        
         if (mNavigationBarView == null) {
             mAssistManager.onConfigurationChanged();
         }
@@ -2334,7 +2294,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         NotificationPanelView.updatePreferences(context);
         AppCircleSidebar.updatePreferences(context);
         AppSidebar.updatePreferences(context);
-        AppSidebarView.updatePreferences(context);
         RecentsActivity.updatePreferences(context);
         NotificationBackgroundView.updatePreferences(context);
         StatusBarHeaderView.updatePreferences(context);
@@ -3679,7 +3638,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
 
         mExpandedVisible = true;
-        enableShake(true);
         if (mNavigationBarView != null)
             mNavigationBarView.setSlippery(true);
 
@@ -3813,7 +3771,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mNotificationPanel.closeQs();
 
         mExpandedVisible = false;
-        enableShake(false);
         if (mNavigationBarView != null)
             mNavigationBarView.setSlippery(false);
         visibilityChanged(false);
@@ -4613,24 +4570,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 finishBarAnimations();
                 resetUserExpandedStates();
             }
-            else if (Intent.ACTION_CONFIGURATION_CHANGED.equals(action)) {
-                Configuration config = mContext.getResources().getConfiguration();
-                try {
-                    // position app sidebar on left if in landscape orientation and device has a navbar
-                    if (mWindowManagerService.hasNavigationBar() &&
-                            config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        mWindowManager.updateViewLayout(mAppSidebar,
-                                getAppSidebarLayoutParams(AppSidebar.SIDEBAR_POSITION_LEFT));
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mAppSidebar.setPosition(AppSidebar.SIDEBAR_POSITION_LEFT);
-                            }
-                        }, 500);
-                    }
-                } catch (RemoteException e) {
-                }
-            }
+
             else if (Intent.ACTION_SCREEN_ON.equals(action)) {
                 mScreenOn = true;
                 notifyNavigationBarScreenOn(true);
@@ -5409,19 +5349,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         @Override
         public void setBounds(Rect bounds) {
-        }
-    }
-    
-    @Override
-    public synchronized void onShake() {
-        clearAllNotifications();
-    }
-
-    public void enableShake(boolean enableShakeClean) {
-        if (enableShakeClean && enableShakeCleanByUser && mDeviceInteractive) {
-            mShakeSensorManager.enable(20);
-        } else {
-            mShakeSensorManager.disable();
         }
     }
 

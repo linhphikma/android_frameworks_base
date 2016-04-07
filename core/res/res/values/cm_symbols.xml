@@ -155,4 +155,10 @@
     <!-- Uicc hotswapped event configuration needed notification -->
     <java-symbol type="string" name="uicc_hot_swapped_event_title" />
     <java-symbol type="string" name="uicc_hot_swapped_event_text" />
+    
+  <!-- BlurOSDialog -->
+  <java-symbol type="layout" name="sm_dlg" />
+  <java-symbol type="id" name="sm_dlg_title" />
+  <java-symbol type="id" name="sm_color_layout" />
+  <java-symbol type="string" name="android_installing_apk_complete" />
 </resources>

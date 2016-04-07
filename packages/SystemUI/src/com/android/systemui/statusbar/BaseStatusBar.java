@@ -117,6 +117,7 @@ import com.android.systemui.R;
 import com.android.systemui.RecentsComponent;
 import com.android.systemui.SwipeHelper;
 import com.android.systemui.SystemUI;
+import com.android.systemui.statusbar.AppSidebar;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView;
 import com.android.systemui.navigation.Navigator;
@@ -2722,8 +2723,9 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
     }
     protected void addSidebarView() {
-        mAppSidebar = (AppSidebar)View.inflate(mContext, R.layout.app_sidebar, null);
+        mAppSidebar = (AppSidebar) View.inflate(mContext, R.layout.app_sidebar, null);
         mWindowManager.addView(mAppSidebar, getAppSidebarLayoutParams(mSidebarPosition));
+        AppSidebar.startBlurTask();
     }
 
     protected void removeSidebarView() {
