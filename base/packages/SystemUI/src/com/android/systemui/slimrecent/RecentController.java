@@ -837,10 +837,8 @@ public class RecentController implements RecentPanelView.OnExitListener,
             mAppSidebar.setSlimRecent(this);
             mAppSidebar.setSystemUiVisibility(mVisibility);
             mWindowManager.addView(mAppSidebar, generateLayoutParameter(true));
-            AppSidebar.startBlurTask();
         }
     }
-    
     private void removeSidebarView() {
         if (mAppSidebar != null) {
             mWindowManager.removeView(mAppSidebar);
