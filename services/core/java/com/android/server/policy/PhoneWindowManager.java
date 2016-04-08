@@ -38,7 +38,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.CompatibilityInfo;
@@ -112,7 +111,6 @@ import android.view.KeyCharacterMap;
 import android.view.KeyCharacterMap.FallbackAction;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.animation.Animation;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.policy.PhoneWindow;
@@ -134,7 +132,6 @@ import android.widget.Toast;
 import com.android.internal.R;
 import com.android.internal.policy.IKeyguardService;
 import com.android.internal.statusbar.IStatusBarService;
-import com.android.internal.util.xosp.DexoptDialog;
 import com.android.internal.util.ScreenShapeHelper;
 import com.android.internal.view.RotationPolicy;
 import com.android.internal.utils.du.DUActionUtils;
@@ -340,7 +337,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     AccessibilityManager mAccessibilityManager;
     BurnInProtectionHelper mBurnInProtectionHelper;
     AppOpsManager mAppOpsManager;
-    WindowManager mWm;
 
     // Vibrator pattern for haptic feedback of a long press.
     long[] mLongPressVibePattern;
@@ -1735,7 +1731,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 });
 
         mPowerManagerInternal = LocalServices.getService(PowerManagerInternal.class);
-        mWm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 
         // Init display burn-in protection
         boolean burnInProtectionEnabled = context.getResources().getBoolean(
@@ -2442,8 +2437,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             lp.format = PixelFormat.TRANSLUCENT;
             lp.setTitle("PointerLocation");
+            WindowManager wm = (WindowManager)
+                    mContext.getSystemService(Context.WINDOW_SERVICE);
             lp.inputFeatures |= WindowManager.LayoutParams.INPUT_FEATURE_NO_INPUT_CHANNEL;
-            mWm.addView(mPointerLocationView, lp);
+            wm.addView(mPointerLocationView, lp);
             mWindowManagerFuncs.registerPointerEventListener(mPointerLocationView);
         }
     }
@@ -2451,7 +2448,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void disablePointerLocation() {
         if (mPointerLocationView != null) {
             mWindowManagerFuncs.unregisterPointerEventListener(mPointerLocationView);
-            mWm.removeView(mPointerLocationView);
+            WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            wm.removeView(mPointerLocationView);
             mPointerLocationView = null;
         }
     }
@@ -2976,6 +2974,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
             params.setTitle("Starting " + packageName);
 
+            wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
             view = win.getDecorView();
 
             if (win.isFloating()) {
@@ -2993,7 +2992,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 + " / " + appToken + ": "
                 + (view.getParent() != null ? view : null));
 
-            mWm.addView(view, params);
+            wm.addView(view, params);
 
             // Only return the view if it was successfully added to the
             // window manager... which we can tell by it having a parent.
@@ -3010,7 +3009,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         } finally {
             if (view != null && view.getParent() == null) {
                 Log.w(TAG, "view not successfully added to wm, removing view");
-                mWm.removeViewImmediate(view);
+                wm.removeViewImmediate(view);
             }
         }
 
@@ -3024,8 +3023,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 + window + " Callers=" + Debug.getCallers(4));
 
         if (window != null) {
-            WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-            mWm.removeView(window);
+            WindowManager wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
+            wm.removeView(window);
         }
     }
 
@@ -6908,10 +6907,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         if (mBootMsgDialog != null) {
             if (DEBUG_WAKEUP) Slog.d(TAG, "handleHideBootMessage: dismissing");
-                mBootMsgDialog.dismiss();
-                mBootMsgDialog = null;
-            }   
+            mBootMsgDialog.dismiss();
+            mBootMsgDialog = null;
         }
+    }
 
     @Override
     public boolean isScreenOn() {
@@ -7332,8 +7331,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     SudaModDialog mBootMsgDialog = null;
 
-    DexoptDialog mBootMsgDialog = null;
-
     /**
      * name of package currently being dex optimized
      * as shown through this.showBootMessage(msg, always);
@@ -7348,7 +7345,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     /** {@inheritDoc} */
     @Override
-<<<<<<< HEAD
     public void showBootMessage(final CharSequence msg, final boolean always) {
 		final CharSequence cte = mContext.getResources().getString(R.string.android_installing_apk_complete);
         mHandler.post(new Runnable() {
@@ -7380,15 +7376,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
 				mBootMsgDialog.setMessage(mContext.getResources().getString(
                     com.android.internal.R.string.android_upgrading_starting_apps).equals(msg) ? cte : msg);
-=======
-    public void showBootMessage(final ApplicationInfo appInfo, final int currentApp, final int totalApps, final boolean always) {
-        mHandler.post(new Runnable() {
-            @Override public void run() {
-                if (mBootMsgDialog == null) {
-                    mBootMsgDialog = DexoptDialog.create(mContext);
-                }
-                mBootMsgDialog.setProgress(appInfo, currentApp, totalApps);
->>>>>>> 040ca25... Implement XOSP Universal dialog for Shutdown/Reboot and Dexopting Process
             }
         });
     }
