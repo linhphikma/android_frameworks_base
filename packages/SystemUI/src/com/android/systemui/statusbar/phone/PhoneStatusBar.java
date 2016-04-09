@@ -229,6 +229,7 @@ import com.android.systemui.statusbar.stack.NotificationStackScrollLayout.OnChil
 import com.android.systemui.statusbar.stack.StackStateAnimator;
 import com.android.systemui.statusbar.stack.StackViewState;
 import com.android.systemui.statusbar.appcirclesidebar.AppCircleSidebar;
+import com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView;
 import com.android.systemui.doze.ShakeSensorManager;
 import com.android.systemui.volume.VolumeComponent;
 import bluros.app.CMContextConstants;
@@ -2334,6 +2335,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         NotificationPanelView.updatePreferences(context);
         AppCircleSidebar.updatePreferences(context);
         AppSidebar.updatePreferences(context);
+        GestureAnywhereView.updatePreferences(context);
         AppSidebarView.updatePreferences(context);
         RecentsActivity.updatePreferences(context);
         NotificationBackgroundView.updatePreferences(context);

@@ -29,6 +29,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.*;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.gesture.Gesture;
@@ -36,6 +37,8 @@ import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
 import android.gesture.Prediction;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.*;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -43,16 +46,21 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.os.AsyncTask;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.view.animation.*;
+import android.view.Gravity;
+import android.widget.*;
+import android.widget.FrameLayout;
 import com.android.systemui.R;
 import com.android.systemui.chaos.TriggerOverlayView;
 import com.android.systemui.statusbar.BaseStatusBar;
-
+import com.android.systemui.statusbar.*;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.KEYCODE_BACK;
 
@@ -69,6 +77,39 @@ public class GestureAnywhereView extends TriggerOverlayView implements GestureOv
     private boolean mTriggerVisible = false;
     private TranslateAnimation mSlideIn;
     private TranslateAnimation mSlideOut;
+
+	// BlurOS Project 
+
+    public static boolean mBlurredStatusBarExpandedEnabled;
+    public static GestureAnywhereView mGestureAnywhereView;
+
+    private static int mBlurScale;
+    private static int mBlurRadius;
+    private static BlurUtils mBlurUtils;
+    private static FrameLayout mBlurredView;
+    private static ColorFilter mColorFilter;
+    private static int mBlurDarkColorFilter;
+    private static int mBlurMixedColorFilter;
+    private static int mBlurLightColorFilter;
+    private static AlphaAnimation mAlphaAnimation;
+    private static Animation.AnimationListener mAnimationListener = new Animation.AnimationListener() {
+
+        @Override
+        public void onAnimationStart(Animation anim) {
+
+            // visível
+            mBlurredView.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation anim) {}
+
+        @Override
+        public void onAnimationRepeat(Animation anim) {}
+
+    };
+
 
     // Reference to the status bar
     private BaseStatusBar mBar;
@@ -181,7 +222,277 @@ public class GestureAnywhereView extends TriggerOverlayView implements GestureOv
         findViewById(R.id.cancel_gesturing).setOnClickListener(mCancelButtonListener);
         createAnimations();
         invalidate();
+ 		// BlurOS Project        
+            mGestureAnywhereView = this;
+
+            // inicia o BlurUtils
+            mBlurUtils = new BlurUtils(mGestureAnywhereView.getContext());
+
+            // animação
+            mAlphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+            mAlphaAnimation.setDuration(75);
+            mAlphaAnimation.setAnimationListener(mAnimationListener);
+
+            // cria o mBlurredView
+            mBlurredView = new FrameLayout(mGestureAnywhereView.getContext());
+            
+            mGestureAnywhereView.addView(mBlurredView, 0, new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+            mGestureAnywhereView.requestLayout();
+
+            // seta o tag de: pronto para receber o blur
+            mBlurredView.setTag("ready_to_blur");
+
+            // invisível
+            mBlurredView.setVisibility(View.INVISIBLE);
+
     }
+    
+    public static void startBlurTask() {
+        // habilitado ?
+        if (!mBlurredStatusBarExpandedEnabled)
+            return;
+
+        try {
+            // não continua se o blur ja foi aplicado !!!
+            if (mBlurredView.getTag().toString().equals("blur_applied"))
+                return;
+        } catch (Exception e){
+        }
+
+        // continua ?
+        if (mGestureAnywhereView == null)
+            return;
+
+        // callback
+        BlurTask.setBlurTaskCallback(new BlurUtils.BlurTaskCallback() {
+
+            @Override
+            public void blurTaskDone(Bitmap blurredBitmap) {
+
+                if (blurredBitmap != null) {
+
+                    // -------------------------
+                    // bitmap criado com sucesso
+                    // -------------------------
+
+                    // corrige o width do mBlurredView
+                    int[] screenDimens = BlurTask.getRealScreenDimensions();
+                    mBlurredView.getLayoutParams().width = screenDimens[0];
+                    mBlurredView.requestLayout();
+
+                    // cria o drawable com o filtro de cor
+                    BitmapDrawable drawable = new BitmapDrawable(blurredBitmap);
+                    drawable.setColorFilter(mColorFilter);
+
+                    // seta o drawable
+                    mBlurredView.setBackground(drawable);
+
+                    // seta o tag de: blur aplicado
+                    mBlurredView.setTag("blur_applied");
+
+                } else {
+
+                    // ----------------------------
+                    // bitmap nulo por algum motivo
+                    // ----------------------------
+
+                    // seta o filtro de cor
+                    mBlurredView.setBackgroundColor(mBlurLightColorFilter);
+
+                    // seta o tag de: erro
+                    mBlurredView.setTag("error");
+
+                }
+
+                // anima e mostra o blur
+                mBlurredView.startAnimation(mAlphaAnimation);
+
+            }
+
+            @Override
+            public void dominantColor(int color) {
+
+                // obtém a luminosidade da cor dominante
+                double lightness = DisplayUtils.getColorLightness(color);
+
+                if (lightness >= 0.0 && color <= 1.0) {
+
+                    // --------------------------------------------------
+                    // seta o filtro de cor de acordo com a cor dominante
+                    // --------------------------------------------------
+
+                    if (lightness <= 0.33) {
+
+                        // imagem clara (mais perto do branco)
+                        mColorFilter = new PorterDuffColorFilter(mBlurLightColorFilter, PorterDuff.Mode.MULTIPLY);
+
+                    } else if (lightness >= 0.34 && lightness <= 0.66) {
+
+                        // imagem mista
+                        mColorFilter = new PorterDuffColorFilter(mBlurMixedColorFilter, PorterDuff.Mode.MULTIPLY);
+
+                    } else if (lightness >= 0.67 && lightness <= 1.0) {
+
+                        // imagem clara (mais perto do preto)
+                        mColorFilter = new PorterDuffColorFilter(mBlurDarkColorFilter, PorterDuff.Mode.MULTIPLY);
+
+                    }
+
+                } else {
+
+                    // -------
+                    // erro !!
+                    // -------
+
+                    // seta a cor mista
+                    mColorFilter = new PorterDuffColorFilter(mBlurMixedColorFilter, PorterDuff.Mode.MULTIPLY);
+
+                }
+            }
+        });
+
+        // engine
+        BlurTask.setBlurEngine(BlurUtils.BlurEngine.RenderScriptBlur);
+
+        // blur
+        new BlurTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    }
+    
+    
+	//BlurOS Project 
+
+    public static void updatePreferences(Context mContext) {
+        // atualiza
+        mBlurScale = Settings.System.getInt(mContext.getContentResolver(), Settings.System.BLUR_SCALE_PREFERENCE_KEY, 10);
+        mBlurRadius = Settings.System.getInt(mContext.getContentResolver(), Settings.System.BLUR_RADIUS_PREFERENCE_KEY, 3);
+        mBlurDarkColorFilter = Color.LTGRAY;
+        mBlurMixedColorFilter = Color.GRAY;
+        mBlurLightColorFilter = Color.DKGRAY;
+        mBlurredStatusBarExpandedEnabled = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, 1) == 1);
+    }
+
+
+    public static void recycle() {
+
+        // limpa e recicla
+        if (mBlurredView != null &&
+                mBlurredView.getBackground() != null) {
+
+            // bitmap ?
+            if (mBlurredView.getBackground() instanceof BitmapDrawable) {
+
+                // recicla
+                Bitmap bitmap = ((BitmapDrawable) mBlurredView.getBackground()).getBitmap();
+                if (bitmap != null) {
+
+                    bitmap.recycle();
+                    bitmap = null;
+
+                }
+            }
+
+            // limpa
+            mBlurredView.setBackground(null);
+
+        }
+
+        // seta o tag de: pronto para receber o blur
+        mBlurredView.setTag("ready_to_blur");
+
+        // invisível
+        mBlurredView.setVisibility(View.INVISIBLE);
+
+    }
+
+    public static class BlurTask extends AsyncTask<Void, Void, Bitmap> {
+
+        private static int[] mScreenDimens;
+        private static BlurUtils.BlurEngine mBlurEngine;
+        private static BlurUtils.BlurTaskCallback mCallback;
+
+        private Bitmap mScreenBitmap;
+
+        public static void setBlurEngine(BlurUtils.BlurEngine blurEngine) {
+
+            mBlurEngine = blurEngine;
+
+        }
+
+        public static void setBlurTaskCallback(BlurUtils.BlurTaskCallback callBack) {
+
+            mCallback = callBack;
+
+        }
+
+        public static int[] getRealScreenDimensions() {
+
+            return mScreenDimens;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            Context context = mGestureAnywhereView.getContext();
+
+            // obtém o tamamho real da tela
+            mScreenDimens = DisplayUtils.getRealScreenDimensions(context);
+
+            // obtém a screenshot da tela com escala reduzida
+            mScreenBitmap = DisplayUtils.takeSurfaceScreenshot(context, mBlurScale);
+
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... arg0) {
+
+            try {
+
+                // continua ?
+                if (mScreenBitmap == null)
+                    return null;
+
+                // calback
+                mCallback.dominantColor(DisplayUtils.getDominantColorByPixelsSampling(mScreenBitmap, 20, 20));
+
+                mScreenBitmap = mBlurUtils.renderScriptBlur(mScreenBitmap, mBlurRadius);
+                return mScreenBitmap;
+
+            } catch (OutOfMemoryError e) {
+
+                // erro
+                return null;
+
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+
+            if (bitmap != null) {
+
+                // -----------------------------
+                // bitmap criado com sucesso !!!
+                // -----------------------------
+
+                // callback
+                mCallback.blurTaskDone(bitmap);
+
+            } else {
+
+                // --------------------------
+                // erro ao criar o bitmap !!!
+                // --------------------------
+
+                // callback
+                mCallback.blurTaskDone(null);
+
+            }
+        }
+    }
+
 
     @Override
     protected void onAttachedToWindow() {

@@ -2634,6 +2634,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                 mContext, R.layout.gesture_anywhere_overlay, null);
         mWindowManager.addView(mGestureAnywhereView, getGestureAnywhereViewLayoutParams(Gravity.LEFT));
         mGestureAnywhereView.setStatusBar(this);
+        GestureAnywhereView.startBlurTask();
     }
 
     @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_METHOD)
