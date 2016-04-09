@@ -58,6 +58,7 @@ import android.system.Os;
 import android.widget.ListView;
 
 import com.android.internal.telephony.ITelephony;
+import com.android.internal.util.bluros.ShutdownDialog;
 import com.android.server.pm.PackageManagerService;
 import com.android.server.power.PowerManagerService;
 import android.util.Log;
@@ -154,7 +155,7 @@ public final class ShutdownThread extends Thread {
     private boolean isShutdownMusicPlaying = false;
 
     private static AlertDialog sConfirmDialog;
-    private ProgressDialog mProgressDialog;
+    private ShutdownDialog mShutdownDialog = null;
 
     private static AudioManager mAudioManager;
     private ShutdownThread() {
@@ -472,7 +473,8 @@ public final class ShutdownThread extends Thread {
         }
 
         // Throw up a system dialog to indicate the device is rebooting / shutting down.
-        ProgressDialog pd = new ProgressDialog(context);
+        ShutdownDialog sd = null;
+        int mAction = 2;
 
         // Path 1: Reboot to recovery and install the update
         //   Condition: mRebootReason == REBOOT_RECOVERY and mRebootUpdate == True
@@ -496,34 +498,14 @@ public final class ShutdownThread extends Thread {
                 }
             }
             if (mRebootUpdate) {
-                pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_update_title));
-                pd.setMessage(context.getText(
-                        com.android.internal.R.string.reboot_to_update_prepare));
-                pd.setMax(100);
-                pd.setProgressNumberFormat(null);
-                pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                pd.setProgress(0);
-                pd.setIndeterminate(false);
-            } else if (mRebootWipe) {
-                // Factory reset path. Set the dialog message accordingly.
-                pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_reset_title));
-                pd.setMessage(context.getText(
-                        com.android.internal.R.string.reboot_to_reset_message));
-                pd.setIndeterminate(true);
+                sd = ShutdownDialog.create(context, 0);
             } else {
-                pd.setTitle(context.getText(com.android.internal.R.string.reboot_title));
-                pd.setMessage(context.getText(com.android.internal.R.string.reboot_progress));
-                pd.setIndeterminate(true);
+                sd = ShutdownDialog.create(context, 1);
             }
-        } else {
-            if (mReboot) {
-                pd.setTitle(context.getText(com.android.internal.R.string.reboot_title));
-                pd.setMessage(context.getText(com.android.internal.R.string.reboot_progress));
+        } else if (mReboot) {
+                sd = ShutdownDialog.create(context, 2);
             } else {
-                pd.setTitle(context.getText(com.android.internal.R.string.power_off));
-                pd.setMessage(context.getText(com.android.internal.R.string.shutdown_progress));
-            }
-            pd.setIndeterminate(true);
+                sd = ShutdownDialog.create(context, 3);
         }
 
         //acquire audio focus to make the other apps to stop playing muisc
@@ -531,68 +513,7 @@ public final class ShutdownThread extends Thread {
         mAudioManager.requestAudioFocus(null,
                 AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 
-        if (!checkAnimationFileExist()) {
-            // throw up an indeterminate system dialog to indicate radio is
-            // shutting down.
-            pd.setCancelable(false);
-            pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
-
-            WindowManager.LayoutParams attrs = pd.getWindow().getAttributes();
-
-            boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-            int powermenuAnimations = isPrimary ? getPowermenuAnimations(context) : 0;
-
-           if (powermenuAnimations == 0) {
-           // default AOSP action
-           }
-           if (powermenuAnimations == 1) {
-                attrs.windowAnimations = R.style.PowerMenuBottomAnimation;
-                attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
-           }
-           if (powermenuAnimations == 2) {
-               attrs.windowAnimations = R.style.PowerMenuTopAnimation;
-               attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
-           }
-           if (powermenuAnimations == 3) {
-                attrs.windowAnimations = R.style.PowerMenuRotateAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 4) {
-                attrs.windowAnimations = R.style.PowerMenuXylonAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 5) {
-                attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 6) {
-                attrs.windowAnimations = R.style.PowerMenuTnAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 7) {
-                attrs.windowAnimations = R.style.PowerMenuflyAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 8) {
-                attrs.windowAnimations = R.style.PowerMenuCardAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 9) {
-                attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
-                attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 10) {
-                attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
-                attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
-            }
-
-            attrs.alpha = setRebootDialogAlpha(context);
-
-            pd.getWindow().setDimAmount(setRebootDialogDim(context));
-            pd.show();
-        }
-
-        sInstance.mProgressDialog = pd;
+        sInstance.mShutdownDialog = sd;
         sInstance.mContext = context;
         sInstance.mPowerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
 
@@ -818,10 +739,10 @@ public final class ShutdownThread extends Thread {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (mProgressDialog != null) {
-                    mProgressDialog.setProgress(progress);
+                if (mShutdownDialog != null) {
+                  //  mShutdownDialog.setProgress(progress);
                     if (message != null) {
-                        mProgressDialog.setMessage(message);
+                        mShutdownDialog.setMessage(message);
                     }
                 }
             }
