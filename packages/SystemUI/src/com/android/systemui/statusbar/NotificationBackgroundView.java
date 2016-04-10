@@ -168,7 +168,7 @@ public class NotificationBackgroundView extends View {
 
         // atualiza
         mTranslucentNotifications = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY, 1) == 1);
-        mTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(), Settings.System.TRANSLUCENT_PRECENTAGE_PREFERENCE_KEY, 95);
+        mTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(), Settings.System.TRANSLUCENT_PRECENTAGE_PREFERENCE_KEY, 40);
         mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
 
     }
