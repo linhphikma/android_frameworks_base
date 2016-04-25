@@ -15,6 +15,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := Keyguard \
     android-opt-cards \
     trail-drawing \
     rebound
+    uicommon
 
 LOCAL_JAVA_LIBRARIES := telephony-common org.dirtyunicorns.utils
 LOCAL_FULL_LIBS_MANIFEST_FILES := $(LOCAL_PATH)/AndroidManifest_cm.xml
