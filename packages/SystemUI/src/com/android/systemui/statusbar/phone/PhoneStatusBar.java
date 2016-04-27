@@ -738,7 +738,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.ENABLE_APP_CIRCLE_BAR),
 			false, this, UserHandle.USER_ALL);
-
+                    Settings.System.NAVBAR_BUTTON_COLOR),
+                    false, this, UserHandle.USER_ALL);
+        resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.PULSE_CUSTOM_DIMEN),
+                    false, this, UserHandle.USER_ALL);
 		    update();
         }
 
@@ -843,10 +847,29 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	  }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.GESTURE_ANYWHERE_ENABLED))) {
               DontStressOnRecreate();
-	} else if (uri.equals(Settings.System.getUriFor(
+	  } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.ENABLE_APP_CIRCLE_BAR))) {
            DontStressOnRecreate();
-	}
+		} else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.BATTERY_SAVER_MODE_COLOR))) {
+                    mBatterySaverWarningColor = Settings.System.getIntForUser(
+                            mContext.getContentResolver(),
+                            Settings.System.BATTERY_SAVER_MODE_COLOR, 1,
+                            UserHandle.USER_CURRENT);
+                    if (mBatterySaverWarningColor != 0) {
+                        mBatterySaverWarningColor = mContext.getResources()
+                                .getColor(com.android.internal.R.color.battery_saver_mode_color);
+                }
+		} else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NAVBAR_TINT_SWITCH))) {
+		    mNavigationController.updateNavbarOverlay(getNavbarThemedResources());
+		} else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NAVBAR_BUTTON_COLOR))) {
+		    mNavigationController.updateNavbarOverlay(getNavbarThemedResources());
+		} else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.PULSE_CUSTOM_DIMEN))) {
+		    mNavigationController.updateNavbarOverlay(getNavbarThemedResources());
+		} 
          update();
 
             ContentResolver resolver = mContext.getContentResolver();
