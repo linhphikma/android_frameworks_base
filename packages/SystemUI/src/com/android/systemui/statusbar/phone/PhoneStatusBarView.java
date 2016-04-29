@@ -100,6 +100,9 @@ public class PhoneStatusBarView extends PanelBar {
 
     private void updateVisibilities() {
         if (mCarrierLabel != null) {
+			// testt 
+			mCarrierLabel.setVisibility(View.GONE);
+			//end test 
             if (mShowCarrierLabel == 2) {
                 mCarrierLabel.setVisibility(View.VISIBLE);
             } else if (mShowCarrierLabel == 3) {
@@ -243,7 +246,7 @@ public class PhoneStatusBarView extends PanelBar {
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
-                "status_bar_show_carrier"), false, mObserver);
+                "status_bar_show_carrier"), true, mObserver);
     }
 
     @Override

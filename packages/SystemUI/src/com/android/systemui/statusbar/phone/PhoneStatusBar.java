@@ -471,25 +471,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     boolean mExpandedVisible;
 
-
-
-    // RR logo
-    private boolean mRRlogo;
-    private ImageView rrLogo;
-    private int mRRLogoColor;	
-    private int mRRLogoStyle;
-
     // QS Colors
     private int mQsIconColor;
     private int mLabelColor;
-
-   // Custom Logos
-
-    private boolean mCustomlogo;
-    private ImageView mCLogo;
-    private int mCustomlogoColor;	
-    private int mCustomlogoStyle;	
-
+    
     // Weather temperature
     TextView mWeatherTempView;
     private int mWeatherTempState;
@@ -653,12 +638,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	resolver.registerContentObserver(CMSettings.System.getUriFor(
 			CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY), false, this);
 	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.STATUS_BAR_RR_LOGO),
-			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.STATUS_BAR_RR_LOGO_COLOR),
-	        false, this, UserHandle.USER_ALL);	
-	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.BATTERY_SAVER_MODE_COLOR),
 	        false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
@@ -706,15 +685,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR),
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.STATUS_BAR_RR_LOGO),
-			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.STATUS_BAR_RR_LOGO_COLOR),
-			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.STATUS_BAR_RR_LOGO_STYLE),
-			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW),
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
@@ -755,16 +725,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.NAVBAR_RECENTS_SWITCH),
-			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.SHOW_CUSTOM_LOGO),
-			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.CUSTOM_LOGO_COLOR),
-			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.CUSTOM_LOGO_STYLE),
-			false, this, UserHandle.USER_ALL);                   
+			false, this, UserHandle.USER_ALL);               
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.CLEAR_RECENTS_STYLE),
 			false, this, UserHandle.USER_ALL);
@@ -832,9 +793,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		} else if (uri.equals(Settings.System.getUriFor(
 		Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR))) {
 		UpdateNotifDrawerClearAllIconColor();
-		} else if (uri.equals(Settings.System.getUriFor(
-		Settings.System.STATUS_BAR_RR_LOGO_STYLE))) {
-		DontStressOnRecreate();
 		}  else if (uri.equals(Settings.System.getUriFor(
 		Settings.System.STATUS_BAR_NETWORK_ICONS_SIGNAL_COLOR))) {
 		updateNetworkSignalColor();
@@ -876,12 +834,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_BACKGROUND_COLOR))) {
                	updateQsColors();
-       } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.SHOW_CUSTOM_LOGO))) {
-                DontStressOnRecreate();
-	   } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.CUSTOM_LOGO_STYLE))) {
-                DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.CLEAR_RECENTS_STYLE))
                     || uri.equals(Settings.System.getUriFor(
@@ -941,119 +893,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
 		mLabelColor = Settings.System.getIntForUser(resolver,
 			Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF, mCurrentUserId);
-		mRRLogoStyle = Settings.System.getIntForUser(
-			resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
-			UserHandle.USER_CURRENT);
-		mRRlogo = Settings.System.getIntForUser(resolver,
-			Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
-		mRRLogoColor = Settings.System.getIntForUser(resolver,
-			Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-	       if ( mRRLogoStyle == 0) {
-			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
-			} else if ( mRRLogoStyle == 1) {
-			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
-			} else if ( mRRLogoStyle == 2) {
-			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
-			} else if ( mRRLogoStyle == 3) {
-			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);
-			} 
-			showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
-
-		mCustomlogoStyle = Settings.System.getIntForUser(
-		resolver, Settings.System.CUSTOM_LOGO_STYLE, 0,
-		UserHandle.USER_CURRENT);
-		mCustomlogo = Settings.System.getIntForUser(resolver,
-		Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
-		mCustomlogoColor = Settings.System.getIntForUser(resolver,
-		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-		if ( mCustomlogoStyle == 0) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
-		} else if ( mCustomlogoStyle == 1) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
-		} else if ( mCustomlogoStyle == 2) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
-		} else if ( mCustomlogoStyle == 3) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
-		} else if ( mCustomlogoStyle == 4) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
-		} else if ( mCustomlogoStyle == 5) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
-		} else if ( mCustomlogoStyle == 6) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
-		} else if ( mCustomlogoStyle == 7) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
-		} else if ( mCustomlogoStyle == 8) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
-		} else if ( mCustomlogoStyle == 9) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
-		} else if ( mCustomlogoStyle == 10) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
-		} else if ( mCustomlogoStyle == 11) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
-		} else if ( mCustomlogoStyle == 12) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
-		} else if ( mCustomlogoStyle == 13) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
-		} else if ( mCustomlogoStyle == 14) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
-		} else if ( mCustomlogoStyle == 15) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_15);
-		} else if ( mCustomlogoStyle == 16) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_16);
-		} else if ( mCustomlogoStyle == 17) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_17);
-		} else if ( mCustomlogoStyle == 18) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_18);
-		} else if ( mCustomlogoStyle == 19) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_19);
-		} else if ( mCustomlogoStyle == 20) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_20);
-		} else if ( mCustomlogoStyle == 21) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_21);
-		} else if ( mCustomlogoStyle == 22) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_22);
-		} else if ( mCustomlogoStyle == 23) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_23);
-		} else if ( mCustomlogoStyle == 24) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_24);
-		} else if ( mCustomlogoStyle == 25) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_25);
-		} else if ( mCustomlogoStyle == 26) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_26);
-		} else if ( mCustomlogoStyle == 27) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_27);
-		} else if ( mCustomlogoStyle == 28) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_28);
-		} else if ( mCustomlogoStyle == 29) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_29);
-		} else if ( mCustomlogoStyle == 30) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_30);
-		} else if ( mCustomlogoStyle == 31) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_31);
-		} else if ( mCustomlogoStyle == 32) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_32);
-		} else if ( mCustomlogoStyle == 33) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_33);
-		} else if ( mCustomlogoStyle == 34) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_34);
-		} else if ( mCustomlogoStyle == 35) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_35);
-		} else if ( mCustomlogoStyle == 36) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
-		} else if ( mCustomlogoStyle == 37) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_37);
-		} else if ( mCustomlogoStyle == 38) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_38);
-		} else if ( mCustomlogoStyle == 39) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_39);
-		} else if ( mCustomlogoStyle == 40) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_40);
-		}
-
-		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
-
-
-
        
            boolean mGestureAnywhere = Settings.System.getIntForUser(resolver,
                     Settings.System.GESTURE_ANYWHERE_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
@@ -1073,7 +912,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
 
             boolean showTaskManager = Settings.System.getIntForUser(resolver,
-                    Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
+                    Settings.System.ENABLE_TASK_MANAGER, 1, UserHandle.USER_CURRENT) == 1;
 	    if (mShowTaskManager != showTaskManager) {
                 if (!mShowTaskManager) {
                     // explicitly reset click state when disabled
@@ -1926,117 +1765,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         updateWeatherTextState(mWeatherController.getWeatherInfo().temp, mWeatherTempColor,
                 mWeatherTempSize, mWeatherTempFontStyle);
 
-
-	 mRRLogoStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
-                UserHandle.USER_CURRENT);
-        if ( mRRLogoStyle == 0) {
-                rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
-            } else if ( mRRLogoStyle == 1) {
-                rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
-            } else if ( mRRLogoStyle == 2) {
-			 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
-	    }else if ( mRRLogoStyle == 3) {
-                rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);
-		}
-        mRRlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
-        mRRLogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-       showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
-
-	mCustomlogoStyle = Settings.System.getIntForUser(mContext.getContentResolver(), 
-		    Settings.System.CUSTOM_LOGO_STYLE, 0,
-                    UserHandle.USER_CURRENT);
-            mCustomlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
-            mCustomlogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-		if ( mCustomlogoStyle == 0) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
-		} else if ( mCustomlogoStyle == 1) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
-		} else if ( mCustomlogoStyle == 2) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
-		} else if ( mCustomlogoStyle == 3) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
-		} else if ( mCustomlogoStyle == 4) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
-		} else if ( mCustomlogoStyle == 5) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
-		} else if ( mCustomlogoStyle == 6) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
-		} else if ( mCustomlogoStyle == 7) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
-		} else if ( mCustomlogoStyle == 8) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
-		} else if ( mCustomlogoStyle == 9) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
-		} else if ( mCustomlogoStyle == 10) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
-		} else if ( mCustomlogoStyle == 11) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
-		} else if ( mCustomlogoStyle == 12) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
-		} else if ( mCustomlogoStyle == 13) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
-		} else if ( mCustomlogoStyle == 14) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
-		} else if ( mCustomlogoStyle == 15) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_15);
-		} else if ( mCustomlogoStyle == 16) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_16);
-		} else if ( mCustomlogoStyle == 17) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_17);
-		} else if ( mCustomlogoStyle == 18) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_18);
-		} else if ( mCustomlogoStyle == 19) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_19);
-		} else if ( mCustomlogoStyle == 20) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_20);
-		} else if ( mCustomlogoStyle == 21) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_21);
-		} else if ( mCustomlogoStyle == 22) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_22);
-		} else if ( mCustomlogoStyle == 23) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_23);
-		} else if ( mCustomlogoStyle == 24) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_24);
-		} else if ( mCustomlogoStyle == 25) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_25);
-		} else if ( mCustomlogoStyle == 26) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_26);
-		} else if ( mCustomlogoStyle == 27) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_27);
-		} else if ( mCustomlogoStyle == 28) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_28);
-		} else if ( mCustomlogoStyle == 29) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_29);
-		} else if ( mCustomlogoStyle == 30) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_30);
-		} else if ( mCustomlogoStyle == 31) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_31);
-		} else if ( mCustomlogoStyle == 32) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_32);
-		} else if ( mCustomlogoStyle == 33) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_33);
-		} else if ( mCustomlogoStyle == 34) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_34);
-		} else if ( mCustomlogoStyle == 35) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_35);
-		} else if ( mCustomlogoStyle == 36) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
-		} else if ( mCustomlogoStyle == 37) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_37);
-		} else if ( mCustomlogoStyle == 38) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_38);
-		} else if ( mCustomlogoStyle == 39) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_39);
-		} else if ( mCustomlogoStyle == 40) {
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_40);
-		}
-		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
-
         mQsIconColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
 
@@ -2400,9 +2128,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         // Decrease the delay for every row we animate to give the sense of
         // accelerating the swipes
-        int rowDelayDecrement = 9;
-        int currentDelay = 120;
-        int totalDelay = 160;
+        int rowDelayDecrement = 10;
+        int currentDelay = 140;
+        int totalDelay = 180;
         int numItems = hideAnimatedList.size();
         for (int i = numItems - 1; i >= 0; i--) {
             View view = hideAnimatedList.get(i);
@@ -2411,7 +2139,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 endRunnable = animationFinishAction;
             }
             mStackScroller.dismissViewAnimated(view, endRunnable, totalDelay, 240);
-            currentDelay = Math.max(45, currentDelay - rowDelayDecrement);
+            currentDelay = Math.max(50, currentDelay - rowDelayDecrement);
             totalDelay += currentDelay;
         }
     }
@@ -4698,159 +4426,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }
     };
-
-
-
-    public void showRRLogo(boolean show , int color , int style) {
-        if (mStatusBarView == null) return;
-
-  	 if (!show) {
-            rrLogo.setVisibility(View.GONE);
-            return;
-        }
-        rrLogo.setColorFilter(color, Mode.SRC_IN);
-        if (style == 0) {
-            rrLogo.setVisibility(View.GONE);
- 	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
-        } else if (style == 1) {
-            rrLogo.setVisibility(View.GONE);        
-	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
-        }   else if (style == 2) {
-            rrLogo.setVisibility(View.GONE);
-	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);       
-        } else if (style == 3) {
-            rrLogo.setVisibility(View.GONE);
-	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);       
-        }
-        rrLogo.setVisibility(View.VISIBLE);
-	}
-
-    public void showmCustomlogo(boolean show , int color , int style) { 
-
-	if (mStatusBarView == null) return;
-
-  	 if (!show) {
-            mCLogo.setVisibility(View.GONE);
-            return;
-        }
-
-		mCLogo.setColorFilter(color, Mode.MULTIPLY);
-		if ( style == 0) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
-		} else if ( style == 1) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
-		} else if ( style == 2) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
-		} else if ( style == 3) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
-		} else if ( style == 4) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
-		} else if ( style == 5) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
-		} else if ( style == 6) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
-		} else if ( style == 7) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
-		} else if ( style == 8) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
-		} else if ( style == 9) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
-		} else if ( style == 10) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
-		}  else if ( style == 11) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
-		} else if ( style == 12) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
-		} else if ( style == 13) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
-		} else if ( style == 14) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
-		} else if ( style  == 15) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_15);
-		} else if ( style  == 16) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_16);
-		} else if ( style  == 17) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_17);
-		} else if ( style  == 18) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_18);
-		} else if ( style  == 19) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_19);
-		} else if ( style  == 20) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_20);
-		} else if ( style  == 21) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_21);
-		} else if ( style  == 22) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_22);
-		} else if ( style  == 23) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_23);
-		} else if ( style  == 24) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_24);
-		} else if ( style  == 25) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_25);
-		} else if ( style  == 26) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_26);
-		} else if ( style  == 27) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_27);
-		} else if ( style == 28) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_28);
-		} else if ( style == 29) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_29);
-		} else if ( style == 30) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_30);
-		} else if ( style == 31) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_31);
-		} else if ( style == 32) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_32);
-		} else if ( style == 33) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_33);
-		} else if ( style == 34) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_34);
-		} else if ( style == 35) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_35);
-		} else if ( style == 36) {
-		mCLogo.setVisibility(View.GONE);
-		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
-		}
-		mCLogo.setVisibility(View.VISIBLE);
-
-	}
-  
 
     private void resetUserExpandedStates() {
         ArrayList<Entry> activeNotifications = mNotificationData.getActiveNotifications();

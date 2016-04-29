@@ -224,7 +224,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
         // recicla
       //  recycle();
-        RecentsActivity.startBlurTask();
+       // RecentsActivity.startBlurTask();
     }
 
 
@@ -1183,7 +1183,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
     public static void updatePreferences(Context mContext) {
 
         // atualiza
-        mBlurScale = 20;
+        mBlurScale = 10;
         mBlurRadius = 3;
         mBlurDarkColorFilter = Color.LTGRAY;
         mBlurMixedColorFilter = Color.GRAY;

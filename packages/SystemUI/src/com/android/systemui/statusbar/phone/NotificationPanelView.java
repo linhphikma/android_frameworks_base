@@ -578,7 +578,7 @@ public class NotificationPanelView extends PanelView implements
         mBlurLightColorFilter = Color.DKGRAY;
         mTranslucentQuickSettings = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY, 1) == 1);
         mBlurredStatusBarExpandedEnabled = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, 1) == 1);
-        mTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(), Settings.System.TRANSLUCENTCY_PRECENTAGE_PREFERENCE_KEY, 60);
+        mTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(), Settings.System.TRANSLUCENTCY_PRECENTAGE_PREFERENCE_KEY, 70);
         mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
 
         // transparente ?

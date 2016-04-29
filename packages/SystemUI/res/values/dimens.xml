@@ -97,7 +97,7 @@
     <dimen name="status_bar_icon_padding">0dp</dimen>
 
     <!-- half the distance between notifications in the panel -->
-    <dimen name="notification_divider_height">2dp</dimen>
+    <dimen name="notification_divider_height">0dp</dimen>
 
     <!-- The padding on the global screenshot background image -->
     <dimen name="global_screenshot_bg_padding">20dp</dimen>
@@ -139,6 +139,8 @@
     <!-- Height of the status bar header bar when on Keyguard -->
     <dimen name="status_bar_header_height_keyguard">40dp</dimen>
 
+    <dimen name="status_bar_expanded_header_elevation">0.0dp</dimen>
+
     <!-- Width for the notification panel and related windows -->
     <dimen name="match_parent">-1px</dimen>
     <dimen name="standard_notification_panel_width">416dp</dimen><!-- includes notification_side_padding on each side -->
@@ -178,7 +180,7 @@
     <dimen name="qs_tile_spacing">4dp</dimen>
     <dimen name="qs_panel_padding_bottom">8dp</dimen>
     <dimen name="qs_detail_item_height">48dp</dimen>
-    <dimen name="qs_brightness_padding_top">6dp</dimen>
+    <dimen name="qs_brightness_padding_top">10dp</dimen>
     <dimen name="qs_detail_header_text_size">20sp</dimen>
     <dimen name="qs_detail_button_text_size">14sp</dimen>
     <dimen name="qs_detail_item_primary_text_size">16sp</dimen>
@@ -191,7 +193,7 @@
     <dimen name="borderless_button_radius">2dp</dimen>
 
     <!-- How far the expanded QS panel peeks from the header in collapsed state. -->
-    <dimen name="qs_peek_height">8dp</dimen>
+    <dimen name="qs_peek_height">0dp</dimen>
 
     <!-- Zen mode panel: condition item button padding -->
     <dimen name="zen_mode_condition_detail_button_padding">8dp</dimen>
@@ -282,7 +284,7 @@
     <dimen name="top_stack_slow_down_length">12dp</dimen>
 
     <!-- The side padding of the notifications-->
-    <dimen name="notification_side_padding">8dp</dimen>
+    <dimen name="notification_side_padding">0dp</dimen>
 
     <!-- Z distance between notifications if they are in the stack -->
     <dimen name="z_distance_between_notifications">1dp</dimen>
@@ -291,7 +293,7 @@
     <dimen name="notification_padding_dimmed">0dp</dimen>
 
     <!-- The padding between the individual notification cards. -->
-    <dimen name="notification_padding">4dp</dimen>
+    <dimen name="notification_padding">0dp</dimen>
 
     <!-- The minimum amount of top overscroll to go to the quick settings. -->
     <dimen name="min_top_overscroll_to_qs">36dp</dimen>
@@ -311,7 +313,7 @@
     <!-- Falsing threshold used when dismissing notifications from the lockscreen. -->
     <dimen name="swipe_helper_falsing_threshold">70dp</dimen>
 
-    <dimen name="notifications_top_padding">8dp</dimen>
+    <dimen name="notifications_top_padding">0dp</dimen>
     
     <!-- Minimum distance the user has to drag down to go to the full shade. -->
     <dimen name="keyguard_drag_down_min_distance">100dp</dimen>
@@ -358,10 +360,10 @@
     <dimen name="edge_tap_area_width">48dp</dimen>
 
     <!-- radius of the corners of the material rounded rect background -->
-    <dimen name="notification_material_rounded_rect_radius">2dp</dimen>
+    <dimen name="notification_material_rounded_rect_radius">0dp</dimen>
 
     <!-- radius of the corners of the material rounded rect background but negative-->
-    <dimen name="notification_material_rounded_rect_radius_negative">-2dp</dimen>
+    <dimen name="notification_material_rounded_rect_radius_negative">0.0dip</dimen>
 
     <!-- height of the bottom decor below the notification if present (eg. an expand action) -->
     <dimen name="notification_bottom_decor_height">48dp</dimen>
@@ -393,7 +395,7 @@
     <dimen name="data_usage_graph_marker_width">4dp</dimen>
 
     <!-- The padding bottom of the clock group when QS is expanded. -->
-    <dimen name="clock_expanded_bottom_margin">20dp</dimen>
+    <dimen name="clock_expanded_bottom_margin">43.0dip</dimen>
 
     <!-- The padding bottom of the clock group when QS is collapsed. -->
     <dimen name="clock_collapsed_bottom_margin">10dp</dimen>
@@ -590,4 +592,10 @@
 
     <!-- Thickness of the shadows of the assist disclosure beams -->
     <dimen name="assist_disclosure_shadow_thickness">1.5dp</dimen>
+    
+	<!-- Margin on the left side of the battery somc in the header. -->
+    <dimen name="header_battery_somc_expanded">4dp</dimen>
+    
+	<!-- Margin on the left side of the battery somc when on Keyguard. -->
+    <dimen name="header_battery_somc_keyguard">4dp</dimen>
 </resources>

@@ -86,7 +86,7 @@ public class ClockController {
             case STYLE_CLOCK_RIGHT:
             case STYLE_HIDE_CLOCK:
             default:
-                clockForAlignment = mRightClock;
+                clockForAlignment = mCenterClock;
                 break;
         }
         return clockForAlignment;

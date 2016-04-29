@@ -47,7 +47,7 @@ public class CarrierLabel extends TextView {
     private Context mContext;
     private boolean mAttached;
     private static boolean isCN;
-    private int mCarrierFontSize = 10;
+    private int mCarrierFontSize = 14;
 
     Handler mHandler;
 
@@ -76,7 +76,7 @@ public class CarrierLabel extends TextView {
     }
 
     public CarrierLabel(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, 3);
     }
 
     public CarrierLabel(Context context, AttributeSet attrs, int defStyle) {
@@ -182,7 +182,7 @@ public class CarrierLabel extends TextView {
 
     private void updateSize() {
         mCarrierFontSize = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_CARRIER_FONT_SIZE, 10,
+                Settings.System.STATUS_BAR_CARRIER_FONT_SIZE, 14,
                 UserHandle.USER_CURRENT);
 
         setTextSize(mCarrierFontSize);

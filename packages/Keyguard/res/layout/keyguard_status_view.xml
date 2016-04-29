@@ -2,6 +2,7 @@
 <!--
 **
 ** Copyright 2009, The Android Open Source Project
+** Copyright 2016, The Xperia Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License")
 ** you may not use this file except in compliance with the License.
@@ -18,54 +19,80 @@
 -->
 
 <!-- This is a view that shows general status information in Keyguard. -->
-<com.android.keyguard.KeyguardStatusView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:androidprv="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/keyguard_status_view"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<com.android.keyguard.KeyguardStatusView 
+    android:gravity="center|top" 
+    android:orientation="vertical" 
+    android:id="@+id/keyguard_status_view" 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    androidprv:layout_maxHeight="@dimen/keyguard_security_height" 
     androidprv:layout_maxWidth="@dimen/keyguard_security_width"
-    androidprv:layout_maxHeight="@dimen/keyguard_security_height"
-    android:gravity="center_horizontal|top">
-    <LinearLayout
-        android:id="@+id/keyguard_clock_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:orientation="vertical" >
-        <TextClock
-            android:id="@+id/clock_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/clock_white"
-            android:singleLine="true"
-            style="@style/widget_big_thin"
-            android:format12Hour="@string/keyguard_widget_12_hours_format"
-            android:format24Hour="@string/keyguard_widget_24_hours_format"
-            android:layout_marginBottom="@dimen/bottom_text_spacing_digital" />
-
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:androidprv="http://schemas.android.com/apk/res-auto">
+    
+    <LinearLayout 
+        android:layout_gravity="center|top" 
+        android:orientation="vertical" 
+        android:id="@+id/keyguard_clock_container" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_centerInParent="true">
+        <LinearLayout 
+            android:layout_gravity="center_horizontal" 
+            android:orientation="vertical" 
+            android:id="@+id/clock" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content">
+            <TextClock 
+                android:textAppearance="@style/BoldHoursTextStyle" 
+                android:textColor="@color/clock_white" 
+                android:layout_gravity="center_horizontal" 
+                android:id="@+id/clock" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:layout_marginTop="-13.5dip" 
+                android:layout_marginBottom="-11.5dip" 
+                android:singleLine="true" 
+                android:format12Hour="hh" 
+                android:format24Hour="HH" />
+            <TextClock 
+	            android:textAppearance="@style/LightMinutesTextStyle" 
+	            android:textColor="@color/clock_white" 
+	            android:layout_gravity="center_horizontal" 
+	            android:id="@+id/clock" 
+	            android:layout_width="wrap_content" 
+	            android:layout_height="wrap_content" 
+	            android:layout_marginTop="-13.5dip" 
+	            android:layout_marginBottom="-11.5dip" 
+	            android:singleLine="true" 
+	            android:layout_below="@id/clock" 
+	            android:format12Hour="mm" 
+	            android:format24Hour="mm" />
+        </LinearLayout>
+        <TextClock 
+            android:textColor="@color/clock_white" 
+            android:layout_gravity="center_horizontal" 
+            android:id="@+id/clock_view" 
+            android:layout_width="0.0dip" 
+            android:layout_height="0.0dip" 
+            android:layout_marginBottom="0.0dip" 
+            android:singleLine="true" 
+            android:textAllCaps="true" 
+            android:format12Hour="@string/keyguard_widget_12_hours_format" 
+            android:format24Hour="@string/keyguard_widget_24_hours_format" 
+            style="@style/widget_big_thin" />
         <include layout="@layout/keyguard_status_area" />
-        <include layout="@layout/keyguard_weather_view" />
-        <TextView
-            android:id="@+id/owner_info"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/date_owner_info_margin"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/clock_gray"
-            android:textSize="@dimen/widget_label_font_size"
-            android:letterSpacing="0.05"
-            android:ellipsize="marquee"
+	<include layout="@layout/keyguard_weather_view" />
+        <TextView 
+            android:textSize="@dimen/widget_label_font_size" 
+            android:textColor="#ccffffff" 
+            android:ellipsize="marquee" 
+            android:layout_gravity="center_horizontal" 
+            android:id="@+id/owner_info" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="16.0dip" 
+            android:layout_marginTop="@dimen/date_owner_info_margin" 
+            android:layout_marginRight="16.0dip" 
             android:singleLine="true" />
-
-        <include layout="@layout/keyguard_shortcuts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"/>
-
     </LinearLayout>
 </com.android.keyguard.KeyguardStatusView>

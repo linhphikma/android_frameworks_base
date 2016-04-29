@@ -40,7 +40,7 @@
     <integer name="config_recents_max_icon_count">20</integer>
 
     <!-- Whether to use cheap, less good looking shadows for recents -->
-    <bool name="config_recents_fake_shadows">false</bool>
+    <bool name="config_recents_fake_shadows">true</bool>
 
     <!-- Whether to clip notification contents with a rounded rectangle. Might be expensive on
          certain GPU's and thus can be turned off with only minimal visual impact. -->
@@ -128,7 +128,7 @@
     <integer name="quick_settings_brightness_dialog_long_timeout">4000</integer>
 
     <!-- The maximum number of items to be displayed in quick settings -->
-    <integer name="quick_settings_detail_max_item_count">7</integer>
+    <integer name="quick_settings_detail_max_item_count">12</integer>
 
     <!-- Whether or not we also show rsrp level for LTE. -->
     <bool name="config_showRsrpSignalLevelforLTE">false</bool>
@@ -189,7 +189,7 @@
     <integer name="recents_nav_bar_scrim_enter_duration">400</integer>
 
     <!-- The animation duration for animating the removal of a task view. -->
-    <integer name="recents_animate_task_view_remove_duration">250</integer>
+    <integer name="recents_animate_task_view_remove_duration">450</integer>
 
     <!-- The animation duration for scrolling the stack to a particular item. -->
     <integer name="recents_animate_task_stack_scroll_duration">225</integer>
