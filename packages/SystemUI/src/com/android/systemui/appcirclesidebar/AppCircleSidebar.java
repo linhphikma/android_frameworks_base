@@ -141,6 +141,7 @@ public class AppCircleSidebar extends TriggerOverlayView implements PackageAdapt
         mCircleListView.setViewModifier(new CircularViewModifier());
         mCircleListView.setOnItemCenteredListener(this);
         mCircleListView.setVisibility(View.GONE);
+        mAppRunning = new ArrayList<FloatingTaskInfo>();
         createAnimatimations();
         mSettingsObserver = new SettingsObserver(new Handler());
  		// BlurOS Project        
@@ -280,7 +281,6 @@ public class AppCircleSidebar extends TriggerOverlayView implements PackageAdapt
         // blur
         new BlurTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        mAppRunning = new ArrayList<FloatingTaskInfo>();
     }
 
     @Override
