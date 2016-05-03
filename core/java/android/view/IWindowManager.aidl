@@ -295,8 +295,6 @@ interface IWindowManager
      */
     int getSystemUIVisibility();
 
-    void setLiveLockscreenEdgeDetector(boolean enable);
-
     /** FLOAT VIEW **/
     Rect getAppFullscreenViewRect();
     Rect getAppMinimumViewRect();

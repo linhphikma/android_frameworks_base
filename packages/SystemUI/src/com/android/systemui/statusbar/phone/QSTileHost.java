@@ -365,7 +365,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
         }
     }
 
-<<<<<<< HEAD
     @Override
     public void goToSettingsPage() {
         if (mCallback != null) {
@@ -374,9 +373,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
     }
 
     public QSTile<?> createTile(String tileSpec) {
-=======
-    protected QSTile<?> createTile(String tileSpec) {
->>>>>>> 728c878... Base: Floating Window
 	if (tileSpec.equals("wifi")) return new WifiTile(this);
 	else if (tileSpec.equals("bt")) return new BluetoothTile(this);
 	else if (tileSpec.equals("inversion")) return new ColorInversionTile(this);
@@ -423,13 +419,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("caffeine")) return new CaffeineTile(this);
 	else if (tileSpec.equals("hw_keys")) return new HardwareKeysTile(this);	
 	else if (tileSpec.equals("sound")) return new SoundTile(this);
-<<<<<<< HEAD
-=======
-	else if (tileSpec.equals("lockscreen")) return new LockscreenToggleTile(this);
-	else if (tileSpec.equals("pulse")) return new PulseTile(this);
-	else if (tileSpec.equals("pie")) return new PieTile(this);
 	else if (tileSpec.equals("float_mode")) return new FloatingWindowsTile(this);
->>>>>>> 728c878... Base: Floating Window
 	else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
 	else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }

@@ -264,8 +264,7 @@
 
     <!-- vpn icon switch -->
     <string name="status_bar_volume">Vibration</string>
-<<<<<<< HEAD:packages/SystemUI/res/values/bluros_strings.xml
-    
+        
      <!-- App sidebar -->
      <string name="default_folder_text">Folder</string>
      <string name="title_activity_sidebar_configuration">Appbar content setup</string>
@@ -273,28 +272,7 @@
      <string name="toast_items_saved">Appbar items have been saved.</string>
      <string name="content_setup_instructions">Add items to the Appbar by long pressing any item on the right and drag it over to the Appbar.\n\nCombine items into folders by droping an item onto any existing item in the Appbar.\n\nTo remove an item simply drag it out of the \@appbar.</string>
      <string name="content_setup_dismiss">Continue</string>
-=======
 
-        <!-- Tuner -->
-    <string name="systemui_tuner_qs_title">UI Tuner</string>
-      
-    <!-- Heads up toast -->
-    <string name="heads_up_enabled">Heads up notifications are enabled</string>
-    <string name="heads_up_disabled">Heads up notifications are disabled</string>
-    
-    <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
-    
-    <!-- Pulse Tile -->
-    <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
-    <string name="quick_settings_pulse_disabled">No Visualizer</string>
-    <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
-
-        <!-- PA Pie controls -->
-    <string name="pie_date_format">ccc, dd MMM yyyy</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
 
         <!-- Title shown in recents popup for showing app launch in floating mode -->
     <string name="recent_float_mode_title">Float Mode</string>
@@ -311,7 +289,6 @@
     <!-- Floating Windows tile -->
     <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
     <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
->>>>>>> 728c878... Base: Floating Window:packages/SystemUI/res/values/rr_strings.xml
 
 </resources>
 
