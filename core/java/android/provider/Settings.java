@@ -5392,6 +5392,8 @@ public final class Settings {
 
         public static final String APP_SIDEBAR_TRANSPARENCY = "app_sidebar_transparency";
 
+        public static final String BATTERY_SAVER_MODE_COLOR = "battery_save_mode_color";
+
         /**
          *  List of apps hidden from recents
          * @hide
