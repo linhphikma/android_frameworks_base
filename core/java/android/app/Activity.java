@@ -1003,6 +1003,9 @@ public class Activity extends ContextThemeWrapper
             // disable swipe back on launchers or blocked
             setSwipeBackEnable(false);
         }
+        mPreviousOrientation = getResources().getConfiguration().orientation;
+        mScaleGestureDetector = new ScaleGestureDetector(getApplicationContext(), mScaleGestureListener);
+        mScaleGestureDetector.setQuickScaleEnabled(false);
     }
 
     /**
@@ -1081,9 +1084,6 @@ public class Activity extends ContextThemeWrapper
             return false;
         }
         return true;
-        mPreviousOrientation = getResources().getConfiguration().orientation;
-        mScaleGestureDetector = new ScaleGestureDetector(getApplicationContext(), mScaleGestureListener);
-        mScaleGestureDetector.setQuickScaleEnabled(false);
     }
 
     /**
