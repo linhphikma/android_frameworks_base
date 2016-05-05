@@ -3317,9 +3317,9 @@ package android.app {
     method public void finishAffinity();
     method public void finishAfterTransition();
     method public void finishAndRemoveTask();
+    method public void finishFloating();
     method public void finishFromChild(android.app.Activity);
     method public android.app.ActionBar getActionBar();
-    method public void finishFloating();
     method public final android.app.Application getApplication();
     method public android.content.ComponentName getCallingActivity();
     method public java.lang.String getCallingPackage();
@@ -5396,8 +5396,8 @@ package android.app {
     method public android.content.Intent[] getIntents();
     method public android.app.PendingIntent getPendingIntent(int, int);
     method public android.app.PendingIntent getPendingIntent(int, int, android.os.Bundle);
-    method public void startActivities();
     method public void setTaskOnHome(boolean);
+    method public void startActivities();
     method public void startActivities(android.os.Bundle);
   }
 
@@ -39535,6 +39535,7 @@ package android.widget {
     method public void setFastScrollStyle(int);
     method public void setFilterText(java.lang.String);
     method public void setFriction(float);
+    method public void setGridView(boolean);
     method public void setItemChecked(int, boolean);
     method public void setMultiChoiceModeListener(android.widget.AbsListView.MultiChoiceModeListener);
     method public void setOnScrollListener(android.widget.AbsListView.OnScrollListener);

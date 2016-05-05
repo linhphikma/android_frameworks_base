@@ -27,7 +27,7 @@
     
 
 	<!-- Shutdown/reboot dialog -->
-    <color name="shutdown_background">#ff2c3e50</color>
+    <color name="shutdown_background">#ff000000</color>
     <color name="shutdown_primary_text">#ffffffff</color>
     <color name="shutdown_progress_tint">#ffe67e22</color>
 </resources>

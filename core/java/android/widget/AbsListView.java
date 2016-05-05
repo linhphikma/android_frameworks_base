@@ -739,12 +739,14 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      * for ListView Animations
      */
     private boolean mIsWidget;
-    private int mListAnimationMode = 0;
+    private int mListAnimationMode = 3;
     private int mListAnimationInterpolatorMode = 0;
     private boolean mListAnimationModeSet = false;
     private int mWidth, mHeight = 0;
     private int mPositionV;
     private boolean mIsTap = false;
+    private boolean mIsGridView = false;
+    
 
     /**
      * Interface definition for a callback to be invoked when the list or grid
@@ -2551,7 +2553,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         view.startAnimation(anim);
         return view;
     }
-
+    
+	public void setGridView(boolean bool){
+        mIsGridView = bool;
+    }
+    
     class ListItemAccessibilityDelegate extends AccessibilityDelegate {
         @Override
         public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
@@ -4554,13 +4560,13 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             mLastScrollState = newState;
             if (newState == OnScrollListener.SCROLL_STATE_IDLE) {
                 mListAnimationModeSet = false;
-                mListAnimationMode = 0;
+                mListAnimationMode = 3;
             } else if (!mListAnimationModeSet) {
                 mListAnimationModeSet = true;
                 mListAnimationMode = Settings.System.getIntForUser(
                         mContext.getContentResolver(),
                         Settings.System.LISTVIEW_ANIMATION,
-                        0, UserHandle.USER_CURRENT_OR_SELF);
+                        3, UserHandle.USER_CURRENT_OR_SELF);
                 if (mListAnimationMode != 0) {
                     mListAnimationInterpolatorMode = Settings.System.getIntForUser(
                             mContext.getContentResolver(),
