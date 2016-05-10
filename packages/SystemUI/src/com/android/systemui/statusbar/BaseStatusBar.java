@@ -1082,7 +1082,7 @@ public abstract class BaseStatusBar extends SystemUI implements
             });
 
             if (Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.FLOATING_WINDOW_MODE, 0) == 1) {
+                    Settings.System.FLOATING_WINDOW_MODE, 1) == 1) {
                 floatButton.setVisibility(View.VISIBLE);
             } else {
                 floatButton.setVisibility(View.GONE);

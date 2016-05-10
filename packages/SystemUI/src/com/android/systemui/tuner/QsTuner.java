@@ -188,7 +188,7 @@ public class QsTuner extends Fragment implements Callback {
         else if (mSpec.equals("screenshot")) return R.string.quick_settings_screenshot_label;
         else if (mSpec.equals("expanded_desktop")) return R.string.quick_settings_expanded_desktop_label;
         else if (mSpec.equals("reboot")) return R.string.quick_settings_reboot_label;
-        else if (mSpec.equals("configurations")) return R.string.quick_settings_rrtools;
+        else if (mSpec.equals("configurations")) return R.string.quick_settings_bluros;
         else if (mSpec.equals("heads_up")) return R.string.quick_settings_heads_up_label;
         else if (mSpec.equals("lte")) return R.string.qs_lte_label;
         else if (mSpec.equals("themes")) return R.string.quick_settings_themes;

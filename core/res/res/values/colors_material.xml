@@ -36,10 +36,15 @@
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
 
-    <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
-    <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <color name="switch_thumb_disabled_material_dark">#ff616161</color>
-    <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
+    <color name="switch_thumb_normal_material_dark">#ff9E9E9E</color>
+    <color name="switch_thumb_normal_material_light">#ffFAFAFA</color>
+    <color name="switch_thumb_disabled_material_dark">#ffFFEE58</color>
+    <color name="switch_thumb_disabled_material_light">#ffEEEEEE</color>
+<!--
+    <color name="switch_thumb_normal_material_dark">#ff9E9E9E</color>
+    <color name="switch_thumb_normal_material_light">#ffFAFAFA</color>
+    <color name="switch_thumb_disabled_material_dark">#ffFFEE58</color>
+    <color name="switch_thumb_disabled_material_light">#ffEEEEEE</color> -->
 
     <!-- Text & foreground colors -->
     <eat-comment />

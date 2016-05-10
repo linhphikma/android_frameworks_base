@@ -53,7 +53,7 @@ public class SudaModDialog extends Dialog {
         View v = inflater.inflate(R.layout.sm_dlg, null);
         mColorLayout = (LinearLayout) v.findViewById(R.id.sm_color_layout);
         mMessage = (TextView) v.findViewById(R.id.sm_dlg_title);
-        int currHourColor = Color.parseColor("#1E90FF");
+        int currHourColor = Color.parseColor("#000000");
         mColorLayout.setBackgroundColor(currHourColor);
         this.setContentView(v);
 

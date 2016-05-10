@@ -97,7 +97,7 @@
     <dimen name="status_bar_icon_padding">0dp</dimen>
 
     <!-- half the distance between notifications in the panel -->
-    <dimen name="notification_divider_height">0dp</dimen>
+    <dimen name="notification_divider_height">2dp</dimen>
 
     <!-- The padding on the global screenshot background image -->
     <dimen name="global_screenshot_bg_padding">20dp</dimen>
@@ -166,8 +166,8 @@
     <dimen name="pull_span_min">25dp</dimen>
 
     <dimen name="qs_tile_height">88dp</dimen>
-    <dimen name="qs_tile_icon_size">24dp</dimen>
-    <dimen name="qs_tile_text_size">12sp</dimen>
+    <dimen name="qs_tile_icon_size">35dp</dimen>
+    <dimen name="qs_tile_text_size">10sp</dimen>
     <dimen name="qs_tile_divider_height">1dp</dimen>
     <dimen name="qs_panel_padding">16dp</dimen>
     <dimen name="qs_dual_tile_height">112dp</dimen>
@@ -492,7 +492,7 @@
     <dimen name="keyguard_indication_margin_bottom">65dp</dimen>
 
     <!-- The text size for battery level -->
-    <dimen name="battery_level_text_size">10sp</dimen>
+    <dimen name="battery_level_text_size">9sp</dimen>
 
     <!-- TrustDrawable: Minimum inner radius of the breathing animation -->
     <dimen name="trust_circle_inner_radius_visible_min">22dp</dimen>

@@ -243,7 +243,7 @@ public class TaskViewHeader extends FrameLayout {
         mMoveTaskButton.setVisibility((mConfig.multiStackEnabled) ? View.VISIBLE : View.GONE);
         mMoveTaskButton.setImageDrawable(t.useLightOnPrimaryColor ?
                 mLightMultiwindowDrawable : mDarkMultiwindowDrawable);
-        boolean floatingswitch = Settings.System.getInt(mContext.getContentResolver(), Settings.System.FLOATING_WINDOW_MODE, 0) == 1;
+        boolean floatingswitch = Settings.System.getInt(mContext.getContentResolver(), Settings.System.FLOATING_WINDOW_MODE, 1) == 1;
         mMoveTaskButton.setVisibility((floatingswitch) ? View.VISIBLE : View.INVISIBLE);
 		mFloatButton.setImageDrawable(t.useLightOnPrimaryColor ?
                 mLightFloatDrawable : mDarkFloatDrawable);
@@ -317,7 +317,7 @@ public class TaskViewHeader extends FrameLayout {
         /** If we disabled the floating button in settings, do not make it visible */
             if (mFloatButton.getVisibility() != View.VISIBLE) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.FLOATING_WINDOW_MODE, 0) == 1) {
+                    Settings.System.FLOATING_WINDOW_MODE, 1) == 1) {
                    mFloatButton.setVisibility(View.VISIBLE);
                 } else {
                     mFloatButton.setVisibility(View.GONE);
@@ -350,7 +350,7 @@ public class TaskViewHeader extends FrameLayout {
         if (mFloatButton.getVisibility() != View.VISIBLE) {
             mFloatButton.animate().cancel();
             if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FLOATING_WINDOW_MODE, 0) == 1) {
+                Settings.System.FLOATING_WINDOW_MODE, 1) == 1) {
                 mFloatButton.setVisibility(View.VISIBLE);
             } else {
                 mFloatButton.setVisibility(View.GONE);

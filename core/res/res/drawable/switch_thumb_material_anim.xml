@@ -2,91 +2,91 @@
 <animated-selector android:constantSize="true"
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="false" android:id="@*android:id/off">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+        <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00001" />
     </item>
     <item android:state_checked="true" android:id="@*android:id/on">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+        <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on" />
     </item>
     <item android:id="@*android:id/off">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+        <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00001" />
     </item>
     <transition android:toId="@*android:id/on" android:fromId="@*android:id/off">
         <animation-list>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00001" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00002" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00003" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00004" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00005" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00006" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00007" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00008" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00009" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00010" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00011" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on" />
             </item>
         </animation-list>
     </transition>
     <transition android:toId="@*android:id/off" android:fromId="@*android:id/on">
         <animation-list>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00001" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00002" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00003" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00004" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00005" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_on_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00006" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00007" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00008" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00009" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00010" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00011" />
             </item>
-            <item android:duration="15">
-                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_001"/>
+            <item android:duration="12">
+                <nine-patch android:gravity="center" android:src="@drawable/btn_switch_to_off_mtrl_00012" />
             </item>
         </animation-list>
     </transition>

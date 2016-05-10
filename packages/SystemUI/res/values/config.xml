@@ -128,7 +128,7 @@
     <integer name="quick_settings_brightness_dialog_long_timeout">4000</integer>
 
     <!-- The maximum number of items to be displayed in quick settings -->
-    <integer name="quick_settings_detail_max_item_count">12</integer>
+    <integer name="quick_settings_detail_max_item_count">7</integer>
 
     <!-- Whether or not we also show rsrp level for LTE. -->
     <bool name="config_showRsrpSignalLevelforLTE">false</bool>

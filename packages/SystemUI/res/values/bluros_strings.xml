@@ -107,7 +107,7 @@
     <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
 
 	<!-- Configurations Tile -->
-    <string name="quick_settings_rrtools">Configurations</string>
+    <string name="quick_settings_bluros">Configurations</string>
 
      <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>

@@ -125,7 +125,7 @@ public class QSPanel extends ViewGroup {
 	mTileView = new QSTileView(mContext);
 	boolean brightnessIconEnabled = Settings.System.getIntForUser(
             mContext.getContentResolver(), Settings.System.BRIGHTNESS_ICON,
-                1, UserHandle.USER_CURRENT) == 1;
+                0, UserHandle.USER_CURRENT) == 1;
 	boolean addtileenabled = Settings.System.getIntForUser(
             mContext.getContentResolver(), Settings.System.PERSIST_ADD,
                 1, UserHandle.USER_CURRENT) == 1;
@@ -154,7 +154,7 @@ public class QSPanel extends ViewGroup {
                 0, UserHandle.USER_CURRENT) == 1;
  	boolean brightnessIconEnabled = Settings.System.getIntForUser(
             mContext.getContentResolver(), Settings.System.BRIGHTNESS_ICON,
-                1, UserHandle.USER_CURRENT) == 1;
+                0, UserHandle.USER_CURRENT) == 1;
         ToggleSlider brightnessSlider = (ToggleSlider) findViewById(R.id.brightness_slider);
         ImageView brightnessIcon = (ImageView) findViewById(R.id.brightness_icon);
         if (brightnessSliderEnabled) {

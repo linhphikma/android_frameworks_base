@@ -113,7 +113,7 @@
     <string name="statusbar_tuner_category_title">상태 표시줄에서 항목 숨기기</string>
 
 	<!-- Configurations Tile -->
-    <string name="quick_settings_rrtools">환경설정</string>
+    <string name="quick_settings_bluros">환경설정</string>
 
     <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_heads_up_off">헤드업 알림 꺼짐.</string>

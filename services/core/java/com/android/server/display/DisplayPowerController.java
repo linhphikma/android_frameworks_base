@@ -524,7 +524,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 if ((mKeyguardService != null && !mKeyguardService.isShowing())
                         && request.policy == DisplayPowerRequest.POLICY_OFF) {
                     boolean seeThrough = Settings.System.getBoolean(mContext.getContentResolver(),
-                            Settings.System.LOCKSCREEN_SEE_THROUGH, false);
+                            Settings.System.LOCKSCREEN_SEE_THROUGH, true);
                     Bitmap bmp = null;
                     if (seeThrough) {
                         WindowManager wm = (WindowManager)

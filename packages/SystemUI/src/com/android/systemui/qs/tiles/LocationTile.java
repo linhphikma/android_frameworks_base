@@ -57,9 +57,9 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
     };
 
     private final AnimationIcon mEnable =
-            new AnimationIcon(R.drawable.ic_signal_location_enable_animation);
+            new AnimationIcon(R.drawable.ic_qs_location_on);
     private final AnimationIcon mDisable =
-            new AnimationIcon(R.drawable.ic_signal_location_disable_animation);
+            new AnimationIcon(R.drawable.ic_qs_location_off);
 
     private final LocationController mController;
     private final LocationDetailAdapter mDetailAdapter;

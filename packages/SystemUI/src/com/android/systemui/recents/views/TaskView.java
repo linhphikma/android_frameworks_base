@@ -669,7 +669,7 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
                 mHeaderView.mApplicationIcon.setOnClickListener(this);
             }
             mHeaderView.mDismissButton.setOnClickListener(this);
-            boolean floatingswitch = Settings.System.getInt(mContext.getContentResolver(), Settings.System.FLOATING_WINDOW_MODE, 0) == 1;
+            boolean floatingswitch = Settings.System.getInt(mContext.getContentResolver(), Settings.System.FLOATING_WINDOW_MODE, 1) == 1;
             if (floatingswitch) {
                 mHeaderView.mMoveTaskButton.setOnClickListener(this);
             }
@@ -690,7 +690,7 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
             // Unbind any listeners
             mHeaderView.mApplicationIcon.setOnClickListener(null);
             mHeaderView.mDismissButton.setOnClickListener(null);
-            boolean floatingswitch = Settings.System.getInt(mContext.getContentResolver(), Settings.System.FLOATING_WINDOW_MODE, 0) == 1;
+            boolean floatingswitch = Settings.System.getInt(mContext.getContentResolver(), Settings.System.FLOATING_WINDOW_MODE, 1) == 1;
             if (floatingswitch) {
                 mHeaderView.mMoveTaskButton.setOnClickListener(null);
             }

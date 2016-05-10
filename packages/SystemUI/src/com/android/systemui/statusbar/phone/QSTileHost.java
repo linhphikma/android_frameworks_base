@@ -517,7 +517,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("screenshot")) return R.string.quick_settings_screenshot_label;
         else if (spec.equals("expanded_desktop")) return R.string.quick_settings_expanded_desktop_label;
         else if (spec.equals("reboot")) return R.string.quick_settings_reboot_label;
-        else if (spec.equals("configurations")) return R.string.quick_settings_rrtools;
+        else if (spec.equals("configurations")) return R.string.quick_settings_bluros;
         else if (spec.equals("heads_up")) return R.string.quick_settings_heads_up_label;
         else if (spec.equals("lte")) return R.string.qs_lte_label;
         else if (spec.equals("themes")) return R.string.quick_settings_themes;
@@ -568,7 +568,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("screenshot")) return R.drawable.ic_qs_screenshot;
         else if (spec.equals("expanded_desktop")) return R.drawable.ic_qs_expanded_desktop;
         else if (spec.equals("reboot")) return R.drawable.ic_qs_reboot;
-        else if (spec.equals("configurations")) return R.drawable.ic_qs_rrtools;
+        else if (spec.equals("configurations")) return R.drawable.ic_qs_bluros;
         else if (spec.equals("heads_up")) return R.drawable.ic_qs_heads_up_on;
         else if (spec.equals("lte")) return R.drawable.ic_qs_lte_on;
         else if (spec.equals("themes")) return R.drawable.ic_qs_themes;

@@ -49,7 +49,7 @@ public class RRTile extends QSTile<QSTile.BooleanState> {
     private static final Intent RR_SETTINGS = new Intent().setComponent(new ComponentName(
             "com.android.settings", "com.android.settings.Settings$MainSettingsActivity"));
     private static final Intent RR_OTA = new Intent().setComponent(new ComponentName(
-            "com.resurrection.ota", "com.resurrection.ota.MainActivity"));
+            "com.bluros.updater", "com.bluros.updater.UpdatesSettings"));
 
     public RRTile(Host host) {
         super(host);
@@ -84,8 +84,8 @@ public class RRTile extends QSTile<QSTile.BooleanState> {
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = true;
-        state.icon = ResourceIcon.get(R.drawable.ic_qs_rrtools);
-        state.label = mContext.getString(R.string.quick_settings_rrtools);
+        state.icon = ResourceIcon.get(R.drawable.ic_qs_bluros);
+        state.label = mContext.getString(R.string.quick_settings_bluros);
 
 	}
 
