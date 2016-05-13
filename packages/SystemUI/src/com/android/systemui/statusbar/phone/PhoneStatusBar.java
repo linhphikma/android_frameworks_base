@@ -738,8 +738,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.ENABLE_APP_CIRCLE_BAR),
 			false, this, UserHandle.USER_ALL);
-                    Settings.System.NAVBAR_BUTTON_COLOR),
-                    false, this, UserHandle.USER_ALL);
 		    update();
         }
 
@@ -857,13 +855,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         mBatterySaverWarningColor = mContext.getResources()
                                 .getColor(com.android.internal.R.color.battery_saver_mode_color);
                 }
-		} else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.NAVBAR_TINT_SWITCH))) {
-		    mNavigationController.updateNavbarOverlay(getNavbarThemedResources());
-		} else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.NAVBAR_BUTTON_COLOR))) {
-		    mNavigationController.updateNavbarOverlay(getNavbarThemedResources());
-		} 
+         }
          update();
 
             ContentResolver resolver = mContext.getContentResolver();

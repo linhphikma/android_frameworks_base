@@ -1318,7 +1318,7 @@ public class Activity extends ContextThemeWrapper
             onTitleChanged(getTitle(), getTitleColor());
         }
         mCalled = true;
-        mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 0) == 1) && isAllowedForSwipeBack(this.getPackageName());
+        mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 1) == 1) && isAllowedForSwipeBack(this.getPackageName());
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
             // getWindow().setBackgroundDrawable(new ColorDrawable(0));
             // getWindow().getDecorView().setBackgroundDrawable(null);
