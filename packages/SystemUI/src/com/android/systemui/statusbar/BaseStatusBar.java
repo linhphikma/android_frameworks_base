@@ -2684,7 +2684,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                 mContext, R.layout.gesture_anywhere_overlay, null);
         mWindowManager.addView(mGestureAnywhereView, getGestureAnywhereViewLayoutParams(Gravity.LEFT));
         mGestureAnywhereView.setStatusBar(this);
-        GestureAnywhereView.startBlurTask();
+        //GestureAnywhereView.startBlurTask();
     }
 
     @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_METHOD)
@@ -2715,7 +2715,7 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected void addAppCircleSidebar() {
             mAppCircleSidebar = (AppCircleSidebar) View.inflate(mContext, R.layout.app_circle_sidebar, null);
             mWindowManager.addView(mAppCircleSidebar, getAppCircleSidebarLayoutParams());
-            AppCircleSidebar.startBlurTask();
+            //AppCircleSidebar.startBlurTask();
     }
 
     protected void removeAppCircleSidebar() {

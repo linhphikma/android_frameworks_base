@@ -7283,7 +7283,7 @@ public class Activity extends ContextThemeWrapper
 
     private boolean makeNewWindow(Context context, Intent intent, ActivityInfo info) {
         boolean floating = (intent.getFlags() & Intent.FLAG_FLOATING_WINDOW) == Intent.FLAG_FLOATING_WINDOW;
-        boolean floatingswitch = Settings.System.getInt(getContentResolver(), Settings.System.FLOATING_WINDOW_MODE, 0) == 1;
+        boolean floatingswitch = Settings.System.getInt(getContentResolver(), Settings.System.FLOATING_WINDOW_MODE, 1) == 1;
         if (intent != null && floating && floatingswitch) {
 
             TypedArray styleArray = context.obtainStyledAttributes(info.theme, com.android.internal.R.styleable.Window);

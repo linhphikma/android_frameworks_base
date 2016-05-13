@@ -287,8 +287,6 @@
 
     <!-- Content description of the dock battery level icon for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_dock_battery_level">Dock battery <xliff:g id="number">%d</xliff:g> percent.</string>
-<<<<<<< HEAD
-=======
 
    <!-- Play queue -->
    <string name="play_queue_extention">Show play queue</string>
@@ -305,5 +303,4 @@
 
     <!-- Path data for circle battery -->
     <string name="battery_circle_path">M 12 3.5 C 16.6944203736 3.5 20.5 7.30557962644 20.5 12 C 20.5 16.6944203736 16.6944203736 20.5 12 20.5 C 7.30557962644 20.5 3.5 16.6944203736 3.5 12 C 3.5 7.30557962644 7.30557962644 3.5 12 3.5 Z</string>
->>>>>>> db5cf5d... SysUI: Use VectorDrawable's for rendering battery
 </resources>

@@ -28,9 +28,7 @@ import android.content.res.ThemeConfig;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.DashPathEffect;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -47,15 +45,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
-<<<<<<< HEAD
-import android.provider.Settings;
-
-=======
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BatteryStateRegistar;
 
-import org.cyanogenmod.graphics.drawable.StopMotionVectorDrawable;
->>>>>>> db5cf5d... SysUI: Use VectorDrawable's for rendering battery
+import com.android.internal.util.bluros.StopMotionVectorDrawable;
 
 public class BatteryMeterView extends View implements DemoMode,
         BatteryController.BatteryStateChangeCallback {
@@ -71,7 +64,6 @@ public class BatteryMeterView extends View implements DemoMode,
         BATTERY_METER_ICON_PORTRAIT,
         BATTERY_METER_ICON_LANDSCAPE,
         BATTERY_METER_CIRCLE,
-        BATTERY_METER_DOTTED_CIRCLE,
         BATTERY_METER_TEXT
     }
 
@@ -101,8 +93,6 @@ public class BatteryMeterView extends View implements DemoMode,
     protected BatteryTracker mTracker = new BatteryTracker();
     private BatteryMeterDrawable mBatteryMeterDrawable;
     private int mIconTint = Color.WHITE;
-    private int mBatteryIconColor;
-    public boolean mColorSwitch = false;
 
     protected class BatteryTracker extends BroadcastReceiver {
         public static final int UNKNOWN_LEVEL = -1;
@@ -264,14 +254,6 @@ public class BatteryMeterView extends View implements DemoMode,
     protected BatteryMeterDrawable createBatteryMeterDrawable(BatteryMeterMode mode) {
         Resources res = getResources();
         switch (mode) {
-<<<<<<< HEAD
-            case BATTERY_METER_DOTTED_CIRCLE:
-            case BATTERY_METER_CIRCLE:
-                return new CircleBatteryMeterDrawable(res);
-            case BATTERY_METER_ICON_LANDSCAPE:
-                return new NormalBatteryMeterDrawable(res, true);
-=======
->>>>>>> db5cf5d... SysUI: Use VectorDrawable's for rendering battery
             case BATTERY_METER_TEXT:
             case BATTERY_METER_GONE:
                 return null;
@@ -285,15 +267,7 @@ public class BatteryMeterView extends View implements DemoMode,
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
-<<<<<<< HEAD
-        if (mMeterMode == BatteryMeterMode.BATTERY_METER_CIRCLE ||
-                mMeterMode == BatteryMeterMode.BATTERY_METER_DOTTED_CIRCLE) {
-            height += (CircleBatteryMeterDrawable.STROKE_WITH / 3);
-            width = height;
-        } else if (mMeterMode == BatteryMeterMode.BATTERY_METER_TEXT) {
-=======
         if (mMeterMode == BatteryMeterMode.BATTERY_METER_TEXT) {
->>>>>>> db5cf5d... SysUI: Use VectorDrawable's for rendering battery
             onSizeChanged(width, height, 0, 0); // Force a size changed event
         }
 
@@ -340,9 +314,6 @@ public class BatteryMeterView extends View implements DemoMode,
         switch (style) {
             case BatteryController.STYLE_CIRCLE:
                 meterMode = BatteryMeterMode.BATTERY_METER_CIRCLE;
-                break;
-            case BatteryController.STYLE_DOTTED_CIRCLE:
-                meterMode = BatteryMeterMode.BATTERY_METER_DOTTED_CIRCLE;
                 break;
             case BatteryController.STYLE_GONE:
                 meterMode = BatteryMeterMode.BATTERY_METER_GONE;
@@ -426,16 +397,7 @@ public class BatteryMeterView extends View implements DemoMode,
         if (mBatteryMeterDrawable != null) {
             int backgroundColor = getBackgroundColor(darkIntensity);
             int fillColor = getFillColor(darkIntensity);
-            mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
-	    mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
-	    if (mColorSwitch) {
-	    mBatteryMeterDrawable.setDarkIntensity(backgroundColor, mBatteryIconColor);
-	     } else {
             mBatteryMeterDrawable.setDarkIntensity(backgroundColor, fillColor);
-            
-	     }
         }
     }
 
@@ -446,7 +408,7 @@ public class BatteryMeterView extends View implements DemoMode,
 
     private int getFillColor(float darkIntensity) {
         return getColorForDarkIntensity(
-                darkIntensity, mLightModeFillColor, mDarkModeFillColor);               
+                darkIntensity, mLightModeFillColor, mDarkModeFillColor);
     }
 
     private int getColorForDarkIntensity(float darkIntensity, int lightColor, int darkColor) {
@@ -557,81 +519,8 @@ public class BatteryMeterView extends View implements DemoMode,
         public void onDraw(Canvas c, BatteryTracker tracker) {
             if (mDisposed) return;
 
-<<<<<<< HEAD
-            final int level = tracker.level;
-
-            if (level == BatteryTracker.UNKNOWN_LEVEL) return;
-
-            float drawFrac = (float) level / 100f;
-            final int pt = getPaddingTop() + (mHorizontal ? (int)(mHeight * 0.12f) : 0);
-            final int pl = getPaddingLeft();
-            final int pr = getPaddingRight();
-            final int pb = getPaddingBottom() + (mHorizontal ? (int)(mHeight * 0.08f) : 0);
-            final int height = mHeight - pt - pb;
-            final int width = mWidth - pl - pr;
-
-            final int buttonHeight = (int) ((mHorizontal ? width : height) * mButtonHeightFraction);
-
-
-	    mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
-	    mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
-
-            mFrame.set(0, 0, width, height);
-            mFrame.offset(pl, pt);
-
-            if (mHorizontal) {
-                mButtonFrame.set(
-                        /*cover frame border of intersecting area*/
-                        width - buttonHeight - mFrame.left,
-                        mFrame.top + Math.round(height * 0.25f),
-                        mFrame.right,
-                        mFrame.bottom - Math.round(height * 0.25f));
-
-                mButtonFrame.top += mSubpixelSmoothingLeft;
-                mButtonFrame.bottom -= mSubpixelSmoothingRight;
-                mButtonFrame.right -= mSubpixelSmoothingRight;
-            } else {
-                // button-frame: area above the battery body
-                mButtonFrame.set(
-                        mFrame.left + Math.round(width * 0.25f),
-                        mFrame.top,
-                        mFrame.right - Math.round(width * 0.25f),
-                        mFrame.top + buttonHeight);
-
-                mButtonFrame.top += mSubpixelSmoothingLeft;
-                mButtonFrame.left += mSubpixelSmoothingLeft;
-                mButtonFrame.right -= mSubpixelSmoothingRight;
-            }
-
-            // frame: battery body area
-
-            if (mHorizontal) {
-                mFrame.right -= buttonHeight;
-            } else {
-                mFrame.top += buttonHeight;
-            }
-            mFrame.left += mSubpixelSmoothingLeft;
-            mFrame.top += mSubpixelSmoothingLeft;
-            mFrame.right -= mSubpixelSmoothingRight;
-            mFrame.bottom -= mSubpixelSmoothingRight;
-
-            // set the battery charging color
-	    if (mColorSwitch) {
-	    mBatteryPaint.setColor(tracker.plugged ? mBatteryIconColor : getColorForLevel(level));
-	    } else {
-            mBatteryPaint.setColor(tracker.plugged ? mChargeColor : getColorForLevel(level));
-	    }
-
-            if (level >= FULL) {
-                drawFrac = 1f;
-            } else if (level <= mCriticalLevel) {
-                drawFrac = 0f;
-=======
             if (!mInitialized) {
                 init();
->>>>>>> db5cf5d... SysUI: Use VectorDrawable's for rendering battery
             }
 
             drawBattery(c, tracker);
@@ -647,20 +536,10 @@ public class BatteryMeterView extends View implements DemoMode,
 
         @Override
         public void setDarkIntensity(int backgroundColor, int fillColor) {
-<<<<<<< HEAD
-	    mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
-            	mIconTint = fillColor;
-		mFramePaint.setColor(backgroundColor);
-                mBoltPaint.setColor(fillColor);
-                mChargeColor = fillColor;
-                invalidate();
-=======
             mIconTint = fillColor;
             mBoltDrawable.setTint(fillColor);
             updateBoltDrawableLayer(mBatteryDrawable, mBoltDrawable);
             invalidate();
->>>>>>> db5cf5d... SysUI: Use VectorDrawable's for rendering battery
         }
 
         @Override
@@ -722,13 +601,6 @@ public class BatteryMeterView extends View implements DemoMode,
             }
         }
 
-<<<<<<< HEAD
-        private DashPathEffect mPathEffect;
-
-        private int     mAnimOffset;
-        private boolean mIsAnimating;   // stores charge-animation status to reliably
-        //remove callbacks
-=======
         private void loadBatteryDrawables(Resources res, BatteryMeterMode mode) {
             if (isThemeApplied()) {
                 try {
@@ -745,7 +617,6 @@ public class BatteryMeterView extends View implements DemoMode,
                     }
                 }
             }
->>>>>>> db5cf5d... SysUI: Use VectorDrawable's for rendering battery
 
             int drawableResId = getBatteryDrawableResourceForMode(mode);
             mBatteryDrawable = (LayerDrawable) res.getDrawable(drawableResId);
@@ -804,18 +675,9 @@ public class BatteryMeterView extends View implements DemoMode,
             // not much we can do with zero width or height, we'll get another pass later
             if (mWidth <= 0 || mHeight <=0) return;
 
-<<<<<<< HEAD
-            mPathEffect = new DashPathEffect(new float[]{3,2},0);
-
-            mBoltPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mBoltPaint.setColor(res.getColor(R.color.batterymeter_bolt_color));
-            mBoltPoints = loadBoltPoints(res);
-        }
-=======
             final float widthDiv2 = mWidth / 2f;
             mTextAndBoltPaint.setTextSize(widthDiv2);
             mWarningTextPaint.setTextSize(widthDiv2);
->>>>>>> db5cf5d... SysUI: Use VectorDrawable's for rendering battery
 
             int pLeft = getPaddingLeft();
             Rect iconBounds = new Rect(pLeft, 0, pLeft + mWidth, mHeight);
@@ -853,14 +715,6 @@ public class BatteryMeterView extends View implements DemoMode,
             mInitialized = true;
         }
 
-<<<<<<< HEAD
-        @Override
-        public void setDarkIntensity(int backgroundColor, int fillColor) {
-            mIconTint = fillColor;
-	    mBoltPaint.setColor(fillColor);
-            mChargeColor = fillColor;
-            invalidate();
-=======
         private int getBatteryDrawableResourceForMode(BatteryMeterMode mode) {
             switch (mode) {
                 case BATTERY_METER_ICON_LANDSCAPE:
@@ -872,7 +726,6 @@ public class BatteryMeterView extends View implements DemoMode,
                 default:
                     return 0;
             }
->>>>>>> db5cf5d... SysUI: Use VectorDrawable's for rendering battery
         }
 
         private int getBatteryDrawableStyleResourceForMode(BatteryMeterMode mode) {
@@ -919,39 +772,6 @@ public class BatteryMeterView extends View implements DemoMode,
                 newBoltDrawable = new BitmapDrawable(getResources(), boltBitmap);
                 newBoltDrawable.setBounds(bounds);
             }
-<<<<<<< HEAD
-
-            if (mMeterMode == BatteryMeterMode.BATTERY_METER_DOTTED_CIRCLE) {
-                paint.setPathEffect(mPathEffect);
-            } else {
-                paint.setPathEffect(null);
-            }
-
-            // draw thin gray ring first
-            canvas.drawArc(drawRect, 270, 360, false, mBackPaint);
-            if (level != 0) {
-                // draw colored arc representing charge level
-                canvas.drawArc(drawRect, 270 + mAnimOffset, 3.6f * level, false, paint);
-            }
-            // if chosen by options, draw percentage text in the middle
-            // always skip percentage when 100, so layout doesnt break
-            if (unknownStatus) {
-                mTextPaint.setColor(paint.getColor());
-                canvas.drawText("?", textX, mTextY, mTextPaint);
-
-            } else if (tracker.plugged) {
-                canvas.drawPath(mBoltPath, mBoltPaint);
-            } else {
-                if (level > mCriticalLevel
-                        && (mShowPercent && !(tracker.level == 100 && !SHOW_100_PERCENT))) {
-                    // draw the percentage text
-                    String pctText = String.valueOf(SINGLE_DIGIT_PERCENT ? (level/10) : level);
-                    mTextPaint.setColor(paint.getColor());
-                    canvas.drawText(pctText, textX, mTextY, mTextPaint);
-                } else if (level <= mCriticalLevel) {
-                    // draw the warning text
-                    canvas.drawText(mWarningString, textX, mTextY, mWarningTextPaint);
-=======
             newBoltDrawable.getPaint().setXfermode(new PorterDuffXfermode(
                     PorterDuff.Mode.XOR));
             batteryDrawable.setDrawableByLayerId(R.id.battery_charge_indicator, newBoltDrawable);
@@ -971,7 +791,6 @@ public class BatteryMeterView extends View implements DemoMode,
                     Canvas c = new Canvas(bolt);
                     c.drawColor(-1, PorterDuff.Mode.CLEAR);
                     boltDrawable.draw(c);
->>>>>>> db5cf5d... SysUI: Use VectorDrawable's for rendering battery
                 }
             } else {
                 bolt = ((BitmapDrawable) boltDrawable).getBitmap();
