@@ -2485,7 +2485,7 @@ public class Activity extends ContextThemeWrapper
         if (v != null)
             return v;
 
-        mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 0) == 1) && isAllowedForSwipeBack(this.getPackageName());
+        mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 1) == 1) && isAllowedForSwipeBack(this.getPackageName());
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
             getWindow().setBackgroundDrawable(new ColorDrawable(0));
             getWindow().getDecorView().setBackgroundDrawable(null);
@@ -2524,7 +2524,7 @@ public class Activity extends ContextThemeWrapper
      * @return The layout used for swipe back gestures
      */
     public SwipeBackLayout getSwipeBackLayout() {
-        mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 0) == 1) && isAllowedForSwipeBack(this.getPackageName());
+        mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 1) == 1) && isAllowedForSwipeBack(this.getPackageName());
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
             getWindow().setBackgroundDrawable(new ColorDrawable(0));
             getWindow().getDecorView().setBackgroundDrawable(null);
@@ -2562,7 +2562,7 @@ public class Activity extends ContextThemeWrapper
      *
      */
     public void setSwipeBackEnable(boolean enable) {
-        mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 0) == 1);
+        mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 1) == 1);
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
             // getWindow().setBackgroundDrawable(new ColorDrawable(0));
             // getWindow().getDecorView().setBackgroundDrawable(null);
