@@ -173,8 +173,8 @@ please see themes_device_defaults.xml.
         <item name="galleryItemBackground">@drawable/gallery_item_background</item>
 
         <!-- Window attributes -->
-        <item name="windowBackground">@drawable/screen_background_selector_dark</item>
-        <item name="windowBackgroundFallback">?attr/colorBackground</item>
+        <item name="windowBackground">@color/transparent</item>
+        <item name="windowBackgroundFallback">@color/transparent</item>
         <item name="windowClipToOutline">false</item>
         <item name="windowFrame">@null</item>
         <item name="windowNoTitle">false</item>
@@ -474,7 +474,7 @@ please see themes_device_defaults.xml.
          <p>This is designed for API level 10 and lower.</p>-->
     <style name="Theme.Light">
         <item name="isLightTheme">true</item>
-        <item name="windowBackground">@drawable/screen_background_selector_light</item>
+        <item name="windowBackground">@color/transparent</item>
         <item name="windowClipToOutline">false</item>
 
         <item name="colorBackground">@color/background_light</item>
@@ -576,7 +576,7 @@ please see themes_device_defaults.xml.
          media players.   If you want the normal (dark background) theme
          do <em>not</em> use this, use {@link #Theme}. -->
     <style name="Theme.Black">
-        <item name="windowBackground">@color/black</item>
+        <item name="windowBackground">@color/transparent</item>
         <item name="colorBackground">@color/black</item>
     </style>
 
@@ -616,7 +616,7 @@ please see themes_device_defaults.xml.
     <!-- Theme for a wallpaper's setting activity, which is designed to be a transparent
          background with a dark shade, so the previous Activity is visible in the background. -->
     <style name="Theme.WallpaperSettings">
-        <item name="windowBackground">@drawable/screen_background_dark_transparent</item>
+        <item name="windowBackground">@color/transparent</item>
         <item name="colorBackgroundCacheHint">@null</item>
         <item name="windowIsTranslucent">true</item>
         <item name="windowAnimationStyle">@style/Animation.Translucent</item>
@@ -625,7 +625,7 @@ please see themes_device_defaults.xml.
     <!-- Theme for a wallpaper's setting activity, which is designed to be a transparent
          background with a light shade, so the previous Activity is visible in the background. -->
     <style name="Theme.Light.WallpaperSettings">
-        <item name="windowBackground">@drawable/screen_background_light_transparent</item>
+        <item name="windowBackground">@color/transparent</item>
         <item name="colorBackgroundCacheHint">@null</item>
         <item name="windowIsTranslucent">true</item>
         <item name="windowAnimationStyle">@style/Animation.Translucent</item>
@@ -667,7 +667,7 @@ please see themes_device_defaults.xml.
     <!-- Default theme for activities that don't actually display a UI; that
          is, they finish themselves before being resumed.  -->
     <style name="Theme.NoDisplay">
-        <item name="windowBackground">@null</item>
+        <item name="windowBackground">@color/transparent</item>
         <item name="windowContentOverlay">@null</item>
         <item name="windowIsTranslucent">true</item>
         <item name="windowAnimationStyle">@null</item>
