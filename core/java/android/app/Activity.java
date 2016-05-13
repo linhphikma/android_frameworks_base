@@ -823,7 +823,6 @@ public class Activity extends ContextThemeWrapper
     // SwipeBack Gestures support
     private SwipeBackLayout mSwipeBackLayout;
     private boolean mSwipeBackEnabled = false;
-	private Activity mActivity; 
 	
     ActivityTransitionState mActivityTransitionState = new ActivityTransitionState();
     SharedElementCallback mEnterTransitionListener = SharedElementCallback.NULL_CALLBACK;
@@ -1337,7 +1336,7 @@ public class Activity extends ContextThemeWrapper
                     mEdgeFlag = SwipeBackLayout.EDGE_BOTTOM;
                     break;
                 case 3:
-                    mEdgeFlag = SwipeBackLayout.EDGE_ALL;
+                    mEdgeFlag = SwipeBackLayout.TOP;
                     break;
                 default:
                     mEdgeFlag = SwipeBackLayout.EDGE_LEFT;
@@ -2504,7 +2503,7 @@ public class Activity extends ContextThemeWrapper
                     mEdgeFlag = SwipeBackLayout.EDGE_BOTTOM;
                     break;
                 case 3:
-                    mEdgeFlag = SwipeBackLayout.EDGE_ALL;
+                    mEdgeFlag = SwipeBackLayout.TOP;
                     break;
                 default:
                     mEdgeFlag = SwipeBackLayout.EDGE_LEFT;
@@ -2543,7 +2542,7 @@ public class Activity extends ContextThemeWrapper
                     mEdgeFlag = SwipeBackLayout.EDGE_BOTTOM;
                     break;
                 case 3:
-                    mEdgeFlag = SwipeBackLayout.EDGE_ALL;
+                    mEdgeFlag = SwipeBackLayout.TOP;
                     break;
                 default:
                     mEdgeFlag = SwipeBackLayout.EDGE_LEFT;
@@ -2581,7 +2580,7 @@ public class Activity extends ContextThemeWrapper
                     mEdgeFlag = SwipeBackLayout.EDGE_BOTTOM;
                     break;
                 case 3:
-                    mEdgeFlag = SwipeBackLayout.EDGE_ALL;
+                    mEdgeFlag = SwipeBackLayout.TOP;
                     break;
                 default:
                     mEdgeFlag = SwipeBackLayout.EDGE_LEFT;
