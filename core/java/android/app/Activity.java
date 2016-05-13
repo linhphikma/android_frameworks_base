@@ -823,7 +823,8 @@ public class Activity extends ContextThemeWrapper
     // SwipeBack Gestures support
     private SwipeBackLayout mSwipeBackLayout;
     private boolean mSwipeBackEnabled = false;
-
+	private Activity mActivity; 
+	
     ActivityTransitionState mActivityTransitionState = new ActivityTransitionState();
     SharedElementCallback mEnterTransitionListener = SharedElementCallback.NULL_CALLBACK;
     SharedElementCallback mExitTransitionListener = SharedElementCallback.NULL_CALLBACK;
@@ -2487,8 +2488,8 @@ public class Activity extends ContextThemeWrapper
 
         mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 1) == 1) && isAllowedForSwipeBack(this.getPackageName());
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
-            getWindow().setBackgroundDrawable(new ColorDrawable(0));
-            getWindow().getDecorView().setBackgroundDrawable(null);
+            // getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            // getWindow().getDecorView().setBackgroundDrawable(null);
             mSwipeBackLayout = new SwipeBackLayout(this);
             int mSwipeEdge = Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_EDGE, 0);
             int mEdgeFlag;
@@ -2526,8 +2527,8 @@ public class Activity extends ContextThemeWrapper
     public SwipeBackLayout getSwipeBackLayout() {
         mSwipeBackEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_ENABLED, 1) == 1) && isAllowedForSwipeBack(this.getPackageName());
         if (mSwipeBackEnabled == true && mSwipeBackLayout == null) {
-            getWindow().setBackgroundDrawable(new ColorDrawable(0));
-            getWindow().getDecorView().setBackgroundDrawable(null);
+            // getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            // getWindow().getDecorView().setBackgroundDrawable(null);
             mSwipeBackLayout = new SwipeBackLayout(this);
             int mSwipeEdge = Settings.System.getInt(getContentResolver(), Settings.System.SWIPE_BACK_GESTURE_EDGE, 0);
             int mEdgeFlag;
