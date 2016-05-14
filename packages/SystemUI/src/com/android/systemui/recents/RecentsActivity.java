@@ -62,10 +62,10 @@ import com.android.systemui.recents.views.DebugOverlayView;
 import com.android.systemui.recents.views.RecentsView;
 import com.android.systemui.recents.views.SystemBarScrimViews;
 import com.android.systemui.recents.views.ViewAnimation;
+import com.android.systemui.recents.views.TaskStackView;
 import com.android.systemui.statusbar.BlurUtils;
 import com.android.systemui.statusbar.DisplayUtils;
 import com.android.systemui.statusbar.phone.NotificationPanelView;
-import com.android.systemui.recents.views.TaskStackView;
 import com.android.systemui.statusbar.phone.NavigationBarView;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
@@ -224,7 +224,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
         // recicla
       //  recycle();
-       // RecentsActivity.startBlurTask();
+       RecentsActivity.startBlurTask();
     }
 
 
