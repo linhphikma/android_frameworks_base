@@ -224,7 +224,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
         // recicla
       //  recycle();
-       // RecentsActivity.startBlurTask();
+        RecentsActivity.startBlurTask();
     }
 
 
@@ -584,14 +584,14 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
                 }
             });
             mRecentsView.setSearchBarVisibility(View.GONE);
-            findViewById(R.id.floating_action_button).setVisibility(View.GONE);
+       //     findViewById(R.id.floating_action_button).setVisibility(View.GONE);
         } else {
             if (mEmptyView != null) {
                 mEmptyView.setVisibility(View.GONE);
                 mEmptyView.setOnClickListener(null);
             }  
        TaskStackView.enableShake(true && enableShakeCleanByUser);
-	   findViewById(R.id.floating_action_button).setVisibility(View.VISIBLE);
+	 //  findViewById(R.id.floating_action_button).setVisibility(View.VISIBLE);
             if (!mConfig.searchBarEnabled) {
                 mRecentsView.setSearchBarVisibility(View.GONE);
             } else {
@@ -1055,7 +1055,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
     private void setImmersiveRecents() {
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int immersiveRecents = isPrimary ? getImmersiveRecents() : 0;
+        int immersiveRecents = isPrimary ? getImmersiveRecents() : 1;
 
         if (immersiveRecents == 0) {
          // default AOSP action
@@ -1083,7 +1083,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
     private int getImmersiveRecents() {
         return Settings.System.getInt(getContentResolver(),
-                Settings.System.IMMERSIVE_RECENTS, 0);
+                Settings.System.IMMERSIVE_RECENTS, 1);
     }
 
     /**** RecentsResizeTaskDialog ****/

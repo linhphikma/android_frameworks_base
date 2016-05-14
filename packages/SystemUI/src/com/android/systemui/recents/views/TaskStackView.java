@@ -96,9 +96,10 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
     Rect mTaskStackBounds = new Rect();
     DismissView mDismissAllButton;
     boolean mDismissAllButtonAnimating;
+    static ShakeSensorManager mShakeSensorManager;
     int mFocusedTaskIndex = -1;
     int mPrevAccessibilityFocusedIndex = -1;
-	static ShakeSensorManager mShakeSensorManager;
+
     private PopupMenu mPopup;
 
     // Optimizations
