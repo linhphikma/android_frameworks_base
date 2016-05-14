@@ -3,7 +3,7 @@
 <!--
 /*
 **
-** Copyright 2015 The BlurOS Project
+** Copyright 2015 The CyanogenMod Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -23,5 +23,5 @@
   <string name="picker_activities">Attività</string>
   <string name="select_custom_app_title">Seleziona app personalizzata</string>
   <string name="select_custom_activity_title">Seleziona attività personalizzata</string>
-  <string name="lockscreen_targets_message">Scorciatoie schermata di sblocco</string>
+  <string name="lockscreen_targets_message">Scorciatoie schermata di blocco</string>
 </resources>
