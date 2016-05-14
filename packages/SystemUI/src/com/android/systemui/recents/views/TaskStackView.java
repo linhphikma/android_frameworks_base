@@ -53,7 +53,7 @@ import com.android.systemui.recents.model.RecentsTaskLoader;
 import com.android.systemui.recents.model.Task;
 import com.android.systemui.recents.model.TaskStack;
 import com.android.systemui.statusbar.DismissView;
-import com.android.systemui.bluros.ShakeSensorManager;
+import com.android.systemui.doze.ShakeSensorManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -96,9 +96,9 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
     Rect mTaskStackBounds = new Rect();
     DismissView mDismissAllButton;
     boolean mDismissAllButtonAnimating;
-    static ShakeSensorManager mShakeSensorManager;
     int mFocusedTaskIndex = -1;
     int mPrevAccessibilityFocusedIndex = -1;
+	static ShakeSensorManager mShakeSensorManager;
     private PopupMenu mPopup;
 
     // Optimizations
